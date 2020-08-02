@@ -10,7 +10,7 @@
 
         echo "Hi";
         echo "Jane";
-        echo "Hi"
+        echo "Hi";
         echo "World"
 
         ?>
