@@ -7,7 +7,8 @@
     </head>
     <body>
         <?php
-        echo "Hi"
+        echo "Hi";
+        echo "Jane";
         ?>
     </body>
 </html>
