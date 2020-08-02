@@ -8,6 +8,7 @@
     <body>
         <?php
         echo "Hi"
+        echo "World"
         ?>
     </body>
 </html>
