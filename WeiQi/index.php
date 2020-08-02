@@ -7,8 +7,12 @@
     </head>
     <body>
         <?php
+
         echo "Hi";
         echo "Jane";
+        echo "Hi"
+        echo "World"
+
         ?>
     </body>
 </html>
