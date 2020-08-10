@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2020 at 07:11 AM
+-- Generation Time: Aug 10, 2020 at 01:18 PM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.31
+-- PHP Version: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -74,6 +74,77 @@ INSERT INTO `competition` (`competition_ID`, `competition_year`, `competition_na
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `history`
+--
+
+CREATE TABLE `history` (
+  `history_ID` int(10) UNSIGNED NOT NULL,
+  `history_Start_Date` datetime NOT NULL,
+  `history_End_Date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `history`
+--
+
+INSERT INTO `history` (`history_ID`, `history_Start_Date`, `history_End_Date`) VALUES
+(1, '2016-07-03 09:00:00', '2016-07-06 18:00:00'),
+(2, '2017-08-05 09:00:00', '2017-08-08 18:00:00'),
+(3, '2017-11-07 09:00:00', '2017-11-10 18:00:00'),
+(4, '2018-12-12 09:00:00', '2018-12-16 18:00:00'),
+(5, '2019-03-03 09:00:00', '2019-03-05 18:00:00'),
+(6, '2019-05-05 09:00:00', '2019-05-09 18:00:00'),
+(7, '2019-08-02 09:00:00', '2019-08-05 18:00:00'),
+(8, '2020-05-04 09:00:00', '2020-05-09 18:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `historymatch`
+--
+
+CREATE TABLE `historymatch` (
+  `match_ID` varchar(20) NOT NULL,
+  `history_ID` int(10) UNSIGNED NOT NULL,
+  `match_Detail` text NOT NULL,
+  `start_Time` time NOT NULL,
+  `end_Time` time NOT NULL,
+  `black_User` int(11) NOT NULL,
+  `white_User` int(11) NOT NULL,
+  `board_Size` int(11) NOT NULL,
+  `black_Score` int(11) NOT NULL,
+  `white_Score` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `historymatch`
+--
+
+INSERT INTO `historymatch` (`match_ID`, `history_ID`, `match_Detail`, `start_Time`, `end_Time`, `black_User`, `white_User`, `board_Size`, `black_Score`, `white_Score`) VALUES
+('M1', 1, 'Something happened but I dunno what happen but there is something happened', '09:30:00', '11:30:00', 1, 2, 13, 50, 60);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `historyremarklist`
+--
+
+CREATE TABLE `historyremarklist` (
+  `hremark_ID` int(10) UNSIGNED NOT NULL,
+  `history_ID` int(10) UNSIGNED NOT NULL,
+  `remark` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `historyremarklist`
+--
+
+INSERT INTO `historyremarklist` (`hremark_ID`, `history_ID`, `remark`) VALUES
+(1, 1, 'Something happened but I dunno what happen but there is something happened');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `participant`
 --
 
@@ -91,6 +162,31 @@ CREATE TABLE `participant` (
 INSERT INTO `participant` (`participant_ID`, `list_of_participation`, `total_score`, `role`) VALUES
 (1, 'WeiQi Middle Class Match (2016)\r\nWeiQi Open Category Competition (2017)\r\nWeiQi Student Grade 2 Exam (2017)\r\nWeiQi Gloabal Competition (2018)\r\nWeiQi Competition Teenager (2019)\r\nWeiQi Student Grade 3 Exam (2019)\r\n', 8672, 'student'),
 (4, 'WeiQi Open Category Competition (2019)\r\nWeiQi May Competition PJ (2020)', 3555, 'non-student');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `participantlist`
+--
+
+CREATE TABLE `participantlist` (
+  `participant_List_ID` int(10) UNSIGNED NOT NULL,
+  `history_ID` int(10) UNSIGNED NOT NULL,
+  `user_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `participantlist`
+--
+
+INSERT INTO `participantlist` (`participant_List_ID`, `history_ID`, `user_ID`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 2, 1),
+(7, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -215,10 +311,34 @@ ALTER TABLE `competition`
   ADD KEY `competition_PIC` (`competition_PIC`);
 
 --
+-- Indexes for table `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`history_ID`);
+
+--
+-- Indexes for table `historymatch`
+--
+ALTER TABLE `historymatch`
+  ADD PRIMARY KEY (`match_ID`);
+
+--
+-- Indexes for table `historyremarklist`
+--
+ALTER TABLE `historyremarklist`
+  ADD PRIMARY KEY (`hremark_ID`);
+
+--
 -- Indexes for table `participant`
 --
 ALTER TABLE `participant`
   ADD PRIMARY KEY (`participant_ID`);
+
+--
+-- Indexes for table `participantlist`
+--
+ALTER TABLE `participantlist`
+  ADD PRIMARY KEY (`participant_List_ID`);
 
 --
 -- Indexes for table `participation`
@@ -256,6 +376,24 @@ ALTER TABLE `user`
 --
 ALTER TABLE `competition`
   MODIFY `competition_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `history`
+--
+ALTER TABLE `history`
+  MODIFY `history_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `historyremarklist`
+--
+ALTER TABLE `historyremarklist`
+  MODIFY `hremark_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `participantlist`
+--
+ALTER TABLE `participantlist`
+  MODIFY `participant_List_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `participation`
