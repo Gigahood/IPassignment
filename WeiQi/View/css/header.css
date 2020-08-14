@@ -1,0 +1,62 @@
+body{
+    padding:0;
+    margin:0;
+}
+
+.headerContainer{
+    display: flex;
+    padding-bottom : 10px;
+    background-image: url("../image/Picture1.png");
+    background-size : cover;
+    background-position: center;
+    background-repeat: no-repeat;
+   
+}
+
+.topContainer{
+    width : 85%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerLogo{
+    text-align: center;
+    height: 50%;
+    font-size : 45px;
+    margin-bottom : 10px;
+    color : white;
+}
+
+.headerLink{
+    height: 50%;
+}
+
+.userNameContainer{
+    display : flex;
+    width: 15%;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    color : white;
+}
+
+.profilePic{
+    height : 50px;
+    width: 50px;
+}
+
+.topContainer a {
+    font-size: 30px;
+    margin : 10px;
+    color : white;
+}
+
+img {
+    color : white;
+}
+
+.logo {
+    width : 50px;
+    height : 50px;
+}
