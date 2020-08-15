@@ -1,5 +1,6 @@
 <?php
 include 'MasterPage.html';
+include 'Store.html';
 ?>
 <html>
     <head>
@@ -7,6 +8,8 @@ include 'MasterPage.html';
         <title></title>
     </head>
     <body>
-        <h1>this is Store Page</h1>
+        <?php
+        
+        ?>
     </body>
 </html>
