@@ -1,0 +1,78 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14 Aug 2020, 3:57:32 pm
+    Author     : Jane Chew
+*/
+
+/* Login Page */
+.loginHeader {
+    font-size: 35px;
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.loginForm {
+    font-size: 25px;
+    font-family: Arial;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 40%;
+    margin: 50px auto 50px auto;
+    border-radius: 5px;
+}
+
+.paddingClass {
+    margin: 10px 30px 10px 30px;
+    width: 80%;
+}
+
+.loginStyle {
+    font-size: 25px;
+    background-color: #4959EA;
+    font-family: Century;
+    color: white;
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 50px;
+}
+
+.registerStyle {
+    font-size: 20px;
+    background-color: #D7EDF9;
+    font-family: Century;
+    color: #003A91;
+    width:100%;
+    margin-left: 0px;
+    text-align: left;
+    height: 40px;
+    padding-left: 30px;
+    border-style: outset;
+    border-width: 1px;
+    border-color: black;
+}
+
+/* Registration Page & UpdateProfile Page & UpdatePassword Page*/
+#registerFormStyle {
+    border-style: solid; 
+    border-color: black; 
+    border-width: 1px; 
+    width: 60%; 
+    background-color: #F2EDED;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lblRightStyle {
+    width: 28%;
+    text-align: right;
+    display: inline-block;
+}
+
