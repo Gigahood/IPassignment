@@ -1,17 +1,28 @@
+<?php
+     include('../MasterPage.html');
+?>
+
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+
+<!-- 
+ * Description of Authentication
+ *
+ * @author Kuek Yong Boon
 -->
+
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <link rel="stylesheet" type="text/css" href="../css/history.css">
     </head>
     <body>
-        <?php
-        // put your code here
-        ?>
+        <div class="container">
+            <div class="detailContainer">
+                <h1>Detail Area</h1>
+            </div>
+            <div class="resultListContainer">
+                <h1>Result Area</h1>
+            </div>
+        </div>
     </body>
 </html>
