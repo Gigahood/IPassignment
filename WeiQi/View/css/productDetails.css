@@ -1,18 +1,19 @@
 /* 
-    Created on : 15 Aug 2020
-    Author     : LIM YI EN
+    Created on : 16 Aug 2020, 1:22:05 am
+    Author     : Lim Yi En
 */
-body{
+
+body {
     padding:0;
     margin:0;
 }
 
-.storeContainer{
+.proDetailsContainer {
     margin-right: 20px;
     margin-left: 20px;
 }
 
-.noteContainer{
+.notesContainer {
     padding-top: 1px;
     padding-bottom: 1px;
     padding-left: 10px;
@@ -22,9 +23,13 @@ body{
     background-color: #D7EDF9;
 }
 
-.item{
-    padding-left: 5px;
-    padding-right: 5px;
-    size: 14sp;
+.proDetailContainer{
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+img{
+    float: left;
+    margin-right: 20px;
 }
 

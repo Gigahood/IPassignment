@@ -1,0 +1,41 @@
+<?php
+include('../MasterPage.html');
+?>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="../css/productDetails.css">
+        <title></title>
+    </head>
+    <body>
+        <div class="proDetailsContainer">
+
+            <hr />
+            <div class="notesContainer">
+                <p>Note To Customer : Products below are for displayed purpose. We do not accept online payment. 
+                    If you are interested in any of the products, please contact us via email (
+                    <a target="_blank" href="" style="color: blue">weiqi@gmail.com</a>
+                    ) or phone number ( 03-8888 8888 ). Thank you.</p>
+            </div>
+            <hr />
+
+            <div class="proDetailContainer">
+                <p>Category: <span style="color: red"><b>value here</b></span></p>
+
+                <p>
+                    <img src="../image/Picture1.png" width="500" height="300" alt="Picture1"/> 
+                    
+                    <h1><b>Item Name</b><br/></h1>
+                    <h2><b>Normal Price <br/>
+                            <a style="color: red">Member Price</a></b></h2>
+
+                    <p class="description"><b>Description:</b> 
+                        details here...
+                    </p>
+                </p>
+            </div>
+        </div>
+
+    </body>
+</html>
+
