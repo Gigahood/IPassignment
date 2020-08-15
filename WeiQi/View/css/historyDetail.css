@@ -15,22 +15,7 @@ and open the template in the editor.
     width: 80%;
 }
 
-.resultListContainer{
-    width: 20%;
-    border : 1px black solid;
-}
-
-.detailContainer > h3 {
-    text-align: center;
-}
-
-.resultListContainer > p {
-    text-align: center;
-}
-
-.tableStyle{
-    width : 100%;
-    margin-left: auto;
-    margin-right: auto;
+.remarkArea{
+    width:20%;
 }
 
