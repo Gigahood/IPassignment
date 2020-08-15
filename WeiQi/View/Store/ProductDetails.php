@@ -4,7 +4,7 @@ include('../MasterPage.html');
 <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="../css/productDetails.css">
+        <link rel="stylesheet" type="text/css" href="CSS/productDetails.css">
         <title></title>
     </head>
     <body>
