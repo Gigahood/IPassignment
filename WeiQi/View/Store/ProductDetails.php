@@ -8,7 +8,7 @@ include('../MasterPage.html');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="CSS/store.css">
-        
+
     </head>
     <body>
         <div class="proDetailsContainer">
@@ -23,18 +23,18 @@ include('../MasterPage.html');
             <hr />
 
             <div class="proDetailContainer">
-                <p>Category: <span style="color: red"><b>value here</b></span></p>
+                <p style="font-size: 20px">Category: <span style="color: red"><b>category</b></span></p>
 
                 <p>
                     <img src="../image/Picture1.png" width="500" height="300" alt="Picture1"/> 
-                    
-                    <h1><b>Item Name</b><br/></h1>
-                    <h2><b>Normal Price <br/>
-                            <a style="color: red">Member Price</a></b></h2>
 
-                    <p class="description"><b>Description:</b> 
-                        details here...
-                    </p>
+                <h1><b>Item Name</b><br/></h1>
+                <h2><b>Normal Price <br/>
+                        <a style="color: red">Member Price</a></b></h2>
+
+                <p class="description"><b>Description:</b> 
+                    details here...
+                </p>
                 </p>
             </div>
         </div>
