@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Author     : Kuek Yong Boon
+*/
+
+.formContainer{
+    display : flex;
+}
+
+.container > h3 {
+    text-align: center;
+}
+
+.formStyle {
+    display : table;
+    margin-left: auto;
+    margin-right: auto;
+}
