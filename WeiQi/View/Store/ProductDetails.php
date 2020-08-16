@@ -1,17 +1,20 @@
+<!DOCTYPE html>
 <?php
 include('../MasterPage.html');
 ?>
+
 <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="CSS/productDetails.css">
-        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="CSS/store.css">
+        
     </head>
     <body>
         <div class="proDetailsContainer">
 
             <hr />
-            <div class="notesContainer">
+            <div class="hearderNote">
                 <p>Note To Customer : Products below are for displayed purpose. We do not accept online payment. 
                     If you are interested in any of the products, please contact us via email (
                     <a target="_blank" href="" style="color: blue">weiqi@gmail.com</a>
