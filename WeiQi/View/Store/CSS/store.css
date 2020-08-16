@@ -1,0 +1,134 @@
+/* 
+    Created on : 15 Aug 2020
+    Author     : LIM YI EN
+*/
+
+/* -- Products css -- */
+body {
+    padding:0;
+    margin:0;
+}
+
+#productContainer {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.hearderNote {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: #D7EDF9;
+}
+
+#btnAddNew {
+    background-color: #2EDD74;
+    font-style: bold;
+    font-size: 20px;
+    border-radius: 50px; 
+    float: right;
+}
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 30%;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.itemRow::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.item {
+    padding-left: 5px;
+    padding-right: 5px;
+    size: 14sp;
+}
+
+.productsContainer {
+    margin-top: 10px;
+}
+
+/* -- Product Details css -- */
+.proDetailsContainer {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+img {
+    float: left;
+    margin-right: 20px;
+}
+
+/* -- Add New Item css -- */
+#addNewItemFormStyle {
+    border-style: solid; 
+    border-color: black; 
+    border-width: 1px; 
+    width: 60%; 
+    padding:10px;
+    background-color: #F2EDED;
+    margin: 50px auto 50px auto;
+}
+
+#headerImage {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto; 
+    display: block;
+}
+
+#formHeader {
+    margin-top: 100px;
+}
+
+.label{
+    font-size: 20px;
+    width: 22%;
+    text-align: right;
+    display: inline-block;
+}
+
+.btnReset {
+    font-size: 20px;
+    background-color: #F60606;
+    font-family: Century;
+    color: white;
+    width: 20%;
+    margin-left: 15%;
+    display: inline;
+    height: 40px;
+}
+
+.btnCreate {
+    font-size: 20px;
+    background-color: #4959EA;
+    font-family: Century;
+    color: white;
+    width: 20%;
+    float: right;
+    margin-right: 15%;
+    display: inline;
+    height: 40px;
+}
+
+.uploadImg {
+    width: 300px;
+    height: 300px;
+    margin: 5px auto 0px auto;
+    border-style: solid; 
+    border-color: black; 
+    border-width: 1px; 
+    background-color: #F2EDED;
+}
