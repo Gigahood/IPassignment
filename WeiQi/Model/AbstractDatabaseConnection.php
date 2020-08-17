@@ -8,7 +8,7 @@
 abstract class AbstractDatabaseConnection {
 
     protected static $instance = null;
-    protected $db;
+    protected static $db;
     public static $count;
     public static $session;
 
@@ -16,42 +16,45 @@ abstract class AbstractDatabaseConnection {
         $host = 'localhost';
         $dbName = 'ip_weiqi';
 
-
         $dsn = "mysql:host=$host;dbname=$dbName";
 
-        self::$count = 1;
-
-        self::$session = $dSession;
+        static::$session = $dSession;
 
         try {
             if ($dSession == "staff") {
+                $user = 'staff@tarc.edu.my';
+                $password = 'staff123';
+                static::$db = new PDO($dsn, $user, $password);
+            } else if ($dSession == "student") {
+                $user = 'student@tarc.edu.my';
+                $password = 'student123';
+                static::$db = new PDO($dsn, $user, $password);
+            }else {
                 $user = 'root';
                 $password = '';
-                $this->db = new PDO($dsn, $user, $password);
-                echo "<p>Connection to database successful</p>";
-            } else {
-                $user = 'root';
-                $password = '';
-                $this->db = new PDO($dsn, $user, $password);
-                echo "<p>Connection to database successful</p>";
+                static::$db = new PDO($dsn, $user, $password);
             }
         } catch (PDOException $ex) {
             echo "<p>ERROR: " . $ex->getMessage() . "</p>";
             exit;
         }
     }
+
+    public static function getInstance($dSession) {
+        static $instances = array();
+
+        $calledClass = get_called_class();
+
+        if (!isset($instances[$calledClass]) || self::$session != $dSession)
+        {
+            $instances[$calledClass] = new $calledClass($dSession);
+        } 
+        return $instances[$calledClass];
+    }
     
-    protected static function getInstance($dSession) {
-        if (self::$instance == null || self::$session != $dSession) {
-
-            self::$instance = new DatabaseConnection($dSession);
-        } else {
-            self::$count += 1;
-        }
-
-        echo self::$count;
-
-        return self::$instance;
+    // close connection
+    public function closeConnection() {
+        static::$db = null;
     }
 
 }

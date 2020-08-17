@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
-    require_once 'Authentication.php';
+//    require_once 'Authentication.php';
+    include_once '../Model/UserDBConnection.php';
 ?>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -40,6 +41,10 @@ and open the template in the editor.
         </form>
         
         <?php
+        session_start();
+        $_SESSION["role"] = "admin";
+        
+        
             // put your code here
         if(isset($_POST['email']) && isset($_POST['PW'])){
             $useremail = trim($_POST['email']);
@@ -51,7 +56,8 @@ and open the template in the editor.
             exit;
             }
 
-            $db = Authentication::getIntance();
+            $db = UserDBConnection::getInstance($_SESSION["role"]);
+
             $result = $db->retrieveUser($useremail, $userpw);
         
             if($result == null){
@@ -67,7 +73,7 @@ and open the template in the editor.
             $db->closeConnection();
         }
             
-            
+            session_destroy();
         ?>
     </body>
 </html>
