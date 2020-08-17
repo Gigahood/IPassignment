@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Description of AbstractDatabaseConnection
  *
@@ -13,25 +12,37 @@ abstract class AbstractDatabaseConnection {
     public static $session;
 
     private function __construct($dSession) {
-        $host = 'localhost';
-        $dbName = 'ip_weiqi';
+//        $host = 'localhost';
+//        $dbName = 'ip_weiqi';
 
+        $ini = parse_ini_file('../Ultilities/config.ini');
+        
+        
+        $host = $ini['db_host'];
+        $dbName = $ini['db_name'];
+        
         $dsn = "mysql:host=$host;dbname=$dbName";
 
         static::$session = $dSession;
 
         try {
-            if ($dSession == "staff") {
-                $user = 'staff@tarc.edu.my';
-                $password = 'staff123';
+            if ($dSession == "student") {
+//                $user = 'staff@tarc.edu.my';
+//                $password = 'staff123';
+                $user = $ini['db_student_user'];
+                $password = $ini['db_student_password'];
                 static::$db = new PDO($dsn, $user, $password);
-            } else if ($dSession == "student") {
-                $user = 'student@tarc.edu.my';
-                $password = 'student123';
+            } else if ($dSession == "staff") {
+//                $user = 'student@tarc.edu.my';
+//                $password = 'student123';
+                $user = $ini['db_staff_user'];
+                $password = $ini['db_student_password'];
                 static::$db = new PDO($dsn, $user, $password);
             }else {
-                $user = 'root';
+//                $user = 'root';
                 $password = '';
+                $user = $ini['db_admin_user'];
+//                $password = $ini['db_admin_password'];
                 static::$db = new PDO($dsn, $user, $password);
             }
         } catch (PDOException $ex) {

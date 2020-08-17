@@ -42,7 +42,7 @@ and open the template in the editor.
         
         <?php
         session_start();
-        $_SESSION["role"] = "admin";
+        $_SESSION["role"] = "student";
         
         
             // put your code here

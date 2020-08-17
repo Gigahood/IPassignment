@@ -3,7 +3,7 @@ include_once 'AbstractDatabaseConnection.php';
 /**
  * Description of UserDBConnection
  *
- * @author User
+ * @author Chew Jane
  */
 class UserDBConnection extends AbstractDatabaseConnection {
     
