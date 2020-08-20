@@ -1,5 +1,5 @@
 <?php
-     include('../MasterPage.html');
+include('../MasterPage.html');
 ?>
 
 <!DOCTYPE html>
@@ -18,10 +18,30 @@
     <body>
         <div class="container">
             <div class="detailContainer">
-                <h1>Detail Area</h1>
+                <h3>xxx Competition History</h3>
+                <div>
+                    detail info
+                </div>
+                <div >
+                    <table class="tableStyle">
+                        <thead>
+                        <th>Matches</th>
+                        <th>Black</th>
+                        <th>White</th>
+                        <th>View Final Board</th>
+                        </thead>
+                    </table>
+                </div>
             </div>
             <div class="resultListContainer">
-                <h1>Result Area</h1>
+                <p>Result : </p>
+                <table class="tableStyle">
+                    <thead>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    </thead>
+                </table>
             </div>
         </div>
     </body>
