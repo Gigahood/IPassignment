@@ -7,30 +7,16 @@ and open the template in the editor.
     Author     : Kuek Yong Boon
 */
 
-.container{
+.formContainer{
     display : flex;
 }
 
-.detailContainer{
-    width: 80%;
-}
-
-.resultListContainer{
-    width: 20%;
-    border : 1px black solid;
-}
-
-.detailContainer > h3 {
+.container > h3 {
     text-align: center;
 }
 
-.resultListContainer > p {
-    text-align: center;
-}
-
-.tableStyle{
-    width : 100%;
+.formStyle {
+    display : table;
     margin-left: auto;
     margin-right: auto;
 }
-
