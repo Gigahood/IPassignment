@@ -14,7 +14,7 @@ abstract class AbstractDatabaseConnection {
 
     private function __construct($dSession) {
 
-        $ini = parse_ini_file('../Ultilities/config.ini');
+        $ini = parse_ini_file('../../Ultilities/config.ini');
 
 
         $host = $ini['db_host'];
