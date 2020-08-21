@@ -47,12 +47,17 @@ session_start();
                         </thead>
 
 <?php
+
 foreach ($compHistory->getMatches() as $value) {
     echo "<tr>";
     echo "<td>". $value["black_User"] . " vs ". $value["white_User"] ."</td>";
     echo "<td>". $value["black_User"] ."</td>";
     echo "<td>". $value["white_User"] ."</td>";
-    echo "<td><a href='HistoryDetail.php'>Board</a><a href='EditMatch.php'>Edit</a><a href='HistoryDetail.php'>Delete</a></td>";
+    echo "<td data-id='". $value["match_ID"] . "'>"
+    . "<a class='link' href='' data-href='HistoryDetail.php' >Board</a>"
+            . "<a class='link' href='EditMatch.php' data-href='EditMatch.php'>Edit</a>"
+            . "<a class='link' href='HistoryDetail.php' data-href='HistoryDetail.php'>Delete</a>"
+            . "</td>";
     echo "</tr>";
 }
 ?>
@@ -83,5 +88,20 @@ foreach ($compHistory->getMatches() as $value) {
                 </table>
             </div>
         </div>
+        
+        <script type="text/javascript">
+            var a = document.getElementsByClassName("link");
+            
+            for(var i = 0; i < a.length; i++) {
+                a[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                   console.log(this.parentNode.getAttribute('data-id'));
+                   console.log(this.getAttribute('data-href'))
+                   window.location.href= this.getAttribute('data-href') + "?id="
+                   + this.parentNode.getAttribute('data-id') + "";
+                });
+            }
+        </script>
+        
     </body>
 </html>

@@ -50,6 +50,23 @@ class HistoryDBConnection extends AbstractDatabaseConnection {
         }
     }
 
+    public function getMatchDetail($matchID) {
+        $query = "SELECT * FROM historymatch WHERE match_ID  = ?";
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $matchID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
+
+        if ($totalrows == 0) {
+            return null;
+        } else {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        }
+    }
+
     public function getRemark($historyID) {
         $query = "SELECT * FROM historyremarklist WHERE history_ID = ?";
         $stmt = parent::$db->prepare($query);
@@ -64,6 +81,28 @@ class HistoryDBConnection extends AbstractDatabaseConnection {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
+    }
+
+    public function updateHistory($black, $white, $wScore, $bScore, $remark, $sTime, $eTime,
+            $board, $matchID) {
+        $query = "Update historymatch Set black_User=?, white_User=?, "
+                . "white_Score = ?, black_Score = ?, match_Detail = ?, "
+                . "start_Time = ?, end_Time = ?, board_Size = ? where match_ID = ?";
+        
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $black, PDO::PARAM_INT);
+        $stmt->bindParam(2, $white, PDO::PARAM_INT);
+        $stmt->bindParam(3, $wScore, PDO::PARAM_STR);
+        $stmt->bindParam(4, $bScore, PDO::PARAM_INT);
+        $stmt->bindParam(5, $remark, PDO::PARAM_STR);
+        $stmt->bindParam(6, $sTime, PDO::PARAM_STR);
+        $stmt->bindParam(7, $eTime, PDO::PARAM_STR);
+        $stmt->bindParam(8, $board, PDO::PARAM_INT);
+        $stmt->bindParam(9, $matchID, PDO::PARAM_INT);
+        
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
     }
 
 }

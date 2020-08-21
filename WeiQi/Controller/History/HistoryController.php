@@ -59,13 +59,29 @@ function calculateHistoryScore($matches) {
     
     return $participants;
     
-    foreach ($participants as $value) {
-        print_r($value);
-        echo "<br/>";
-        echo "<br/>";
-        echo "<br/>";
-        echo "<br/>";
-    }
+//    foreach ($participants as $value) {
+//        print_r($value);
+//        echo "<br/>";
+//        echo "<br/>";
+//        echo "<br/>";
+//        echo "<br/>";
+//    }
+}
+
+function getMatch($matchID,$dSession) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+
+    $result = $db->getMatchDetail($matchID);
+    
+    return $result;
+}
+
+function update($black, $white, $wScore, $bScore, $remark, $sTime,
+                    $eTime, $board, $dSession, $matchID) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+    
+    $db->updateHistory($black, $white, $wScore, $bScore, $remark, $sTime,
+                    $eTime, $board,$matchID);
 }
 
 function closeCon($dSession) {
@@ -75,5 +91,5 @@ function closeCon($dSession) {
 }
 
 
-getHistoryDetail("1", "student");
+
 

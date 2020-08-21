@@ -21,14 +21,18 @@ include('../MasterPage.html');
                 <form class="formStyle" action="CreateHistoryAdmin.php" method="POST">
                     <label class="labelStyle" for="black">Black : </label>
                     <input type="text" name="black" value="" />
-                    <input type="radio" name="winner" id="blackWinner" value="blackWinner" />
-                    <label for="blackWinner">Winner</label>
+                    <br/>
+                    <br/>
+                    <label class="labelStyle" for="blackScore">Black Score : </label>
+                    <input type="text" name="blackScore" value="" />
                     <br/>
                     <br/>
                     <label class="labelStyle" for="white">White : </label>
                     <input type="text" name="white" value="" />
-                    <input type="radio" name="winner" id="whiteWinner" value="whiteWinner" />
-                    <label for="whiteWinner">Winner</label>
+                    <br/>
+                    <br/>
+                    <label class="labelStyle" for="whiteScore">White Score : </label>
+                    <input type="text" name="whiteScore" value="" />
                     <br/>
                     <br/>
                     <div class="multilineStyle">

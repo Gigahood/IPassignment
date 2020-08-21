@@ -9,6 +9,11 @@ include('../MasterPage.html');
     </head>
     <body>
         <div class="container">
+            <?php
+            
+            ?>
+
+
             <div class="detailContainer">
                 detail
             </div>

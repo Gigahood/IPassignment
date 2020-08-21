@@ -1,6 +1,7 @@
 <?php
 
 class HistoryMatch {
+    private $matchID;
     private $matchDetail;
     private $startTime;
     private $endTime;
@@ -10,7 +11,8 @@ class HistoryMatch {
     private $b_Score;
     private $w_Score;
     
-    function __construct($matchDetail, $startTime, $endTime, $black, $white, $boardSize, $b_Score, $w_Score) {
+    function __construct($matchID, $matchDetail, $startTime, $endTime, $black, $white, $boardSize, $b_Score, $w_Score) {
+        $this->matchID = $matchID;
         $this->matchDetail = $matchDetail;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
@@ -21,7 +23,15 @@ class HistoryMatch {
         $this->w_Score = $w_Score;
     }
     
-    function getMatchDetail() {
+    function getMatchID() {
+        return $this->matchID;
+    }
+
+    function setMatchID($matchID): void {
+        $this->matchID = $matchID;
+    }
+
+        function getMatchDetail() {
         return $this->matchDetail;
     }
 
