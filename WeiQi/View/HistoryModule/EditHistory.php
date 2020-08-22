@@ -19,8 +19,7 @@ session_start();
     <body>
         <div class="container">
             <?php
-            $_SESSION["compID"] = 1;
-            $compID = $_SESSION["compID"];
+            $compID = $_SESSION["id"];
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
 
@@ -31,22 +30,25 @@ session_start();
             <div class="formContainer">
                 <form class="formStyle" method="POST" action="EditHistory.php">
                     <label for="startDate">Start Date : </label>
-                    <input type="Date" name="startDate" value="" />
                     <?php
-                   
+                    echo "<input type=\"Date\" name=\"startDate\" value=\"" . date('Y-m-d', strtotime($compHistory->getHstart())) . "\" />";
+//                    echo "<input id='hiddenButton' name'history_ID' type='hidden' value='" . $compHistory->getHistory_ID() . "'/>";
                      echo "<input id='hiddenButton' type=\"hidden\" name=\"history_ID\" value=\"" .  $compHistory->getHistory_ID() . "\" />";
                     
                     ?>
                     <br/>
                     <br/>
                     <label for="endDate">End Date : </label>
-                    <input type="Date" name="endDate" value="" />
-                  
+                    <?php
+                    echo "<input type=\"Date\" name=\"endDate\" value=\"" . date('Y-m-d', strtotime($compHistory->getHstart())) . "\" />"
+                    ?>
                     <br/>
                     <br/>
                     <label for="remark">Remark : </label>
-                    <input type="text" name="remark" value="" />
-                  
+                     <label for="remark2">Remark : </label>
+                    <?php
+                    echo "<input type='text' name='remark' value='" . $compHistory->getRemark() . "' />";
+                    ?>
                     <br/>
                     <br/>
                     <input id="addMatchButton" class="addMatchButton" type="button" value="Add New Match" name="addMatch" />

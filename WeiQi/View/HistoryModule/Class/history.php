@@ -11,12 +11,12 @@ class History extends Competition {
     private $participantList;
     private $matches;
 
-    function __construct($history_ID, $hstart, $hend, $compID, $name) {
+    function __construct($history_ID, $hstart, $hend, $compID, $name, $remark) {
         parent::__construct($compID, $name);
         $this->history_ID = $history_ID;
         $this->hstart = $hstart;
         $this->hend = $hend;
-        $this->remark = array();
+        $this->remark =  $remark;
         $this->participantList = array();
         $this->matches = array();
     }
@@ -34,9 +34,10 @@ class History extends Competition {
     }
 
     function setRemark($remark): void {
-        array_push($this->remark, $remark);
+        $this->remark = $remark;
     }
 
+    
     function getHend() {
         return $this->hend;
     }

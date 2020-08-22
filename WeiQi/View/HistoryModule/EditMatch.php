@@ -27,7 +27,7 @@ require '../../Controller/History/HistoryController.php';
             if (!isset($_GET["id"])) {
                 header("Location: HistoryView.php");
             } else {
-                $match = getMatch($_GET["id"], $_SESSION["role"]);
+                $match = getMatch($_GET["id"], $_SESSION["role"]);   
             }
             ?>
 

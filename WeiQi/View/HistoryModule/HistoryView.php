@@ -22,23 +22,29 @@ session_start();
             <div class="detailContainer">
                 <?php
                 $_SESSION["compID"] = 1;
-                $_SESSION["role"] = "student";
+                $_SESSION["role"] = "admin";
                 $compID = $_SESSION["compID"];
                 $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
+                $listOfMatches = viewHistoryScore($compHistory->getHistory_ID(), $_SESSION["role"]);
                 closeCon($_SESSION["role"]);
 
 
-                echo "<h3> " . $compHistory->getName() . " Competition History</h3>";
+                echo "<h1> " . $compHistory->getName() . " Competition History</h1>";
+                echo "<h3>". $compHistory->getHstart() . " - " . $compHistory->getHend() ."</h3>"
+                ?>
+
+                <?php
+                if ($_SESSION["role"] == "admin") {
+                    echo "<button onCLick=\"window.location='EditHistory.php?id=" . $_SESSION["compID"] . "'\">" . "Edit History</button>";
+                }
                 ?>
                 <div>
                     <?php
-                    foreach ($compHistory->getRemark() as $value) {
-                        echo $value . "<br/>";
-                    }
+                    echo "<div style='text-align:center;'>" . $compHistory->getRemark() . "</div>";
                     ?>
                 </div>
                 <div >
-                    <table class="tableStyle">
+                    <table class="tableStyle" style='text-align:center;' border="1" >
                         <thead>
                         <th>Matches</th>
                         <th>Black</th>
@@ -46,21 +52,26 @@ session_start();
                         <th>View Final Board</th>
                         </thead>
 
-<?php
+                        <?php
+                        foreach ($compHistory->getMatches() as $value) {
+                            echo "<tr>";
+                            echo "<td style='text-align:center;'>" . $value["black_User"] . " vs " . $value["white_User"] . "</td>";
+                            echo "<td>" . $value["black_User"] . "</td>";
+                            echo "<td>" . $value["white_User"] . "</td>";
 
-foreach ($compHistory->getMatches() as $value) {
-    echo "<tr>";
-    echo "<td>". $value["black_User"] . " vs ". $value["white_User"] ."</td>";
-    echo "<td>". $value["black_User"] ."</td>";
-    echo "<td>". $value["white_User"] ."</td>";
-    echo "<td data-id='". $value["match_ID"] . "'>"
-    . "<a class='link' href='' data-href='HistoryDetail.php' >Board</a>"
-            . "<a class='link' href='EditMatch.php' data-href='EditMatch.php'>Edit</a>"
-            . "<a class='link' href='HistoryDetail.php' data-href='HistoryDetail.php'>Delete</a>"
-            . "</td>";
-    echo "</tr>";
-}
-?>
+                            if ($_SESSION["role"] == "admin") {
+                                echo "<td data-id='" . $value["match_ID"] . "'>"
+                                . "<a style='margin-left: 5px; class='link' href='' data-href='HistoryDetail.php' >Board</a>"
+                                . "<a style='margin-left: 5px;' class='link' href='EditMatch.php' data-href='EditMatch.php'>Edit</a>"
+                                . "<a style='margin-left: 5px; class='link' href='HistoryDetail.php' data-href='HistoryDetail.php'>Delete</a>"
+                                . "</td>";
+                                echo "</tr>";
+                            } else {
+                                echo "<td data-id='" . $value["match_ID"] . "'>"
+                                . "<a style='margin-left: 5px; class='link' href='' data-href='HistoryDetail.php' >Board</a>";
+                            }
+                        }
+                        ?>
                     </table>
                 </div>
             </div>
@@ -73,35 +84,35 @@ foreach ($compHistory->getMatches() as $value) {
                     <th>Score</th>
                     </thead>
                     <?php
-                    $listOfMatches = calculateHistoryScore($compHistory->getMatches());
+                     $listOfMatches = calculateHistoryScore($compHistory->getMatches());
                     $index = 1;
 
-                    foreach($listOfMatches as $match) {
+                    foreach ($listOfMatches as $match) {
+                  
                         echo "<tr>";
-                        echo "<td>". $index ."</td>";
-                        echo "<td>" . $match["Name"] ."</td>";
-                        echo "<td>". $match["Score"] ."</td>";
-                        $index+=1;
+                        echo "<td style='text-align:center;'>" . $index . "</td>";
+                        echo "<td style='text-align:center;'>" . $match["Name"] . "</td>";
+                        echo "<td style='text-align:center;'>" . $match["Score"] . "</td>";
+                        $index += 1;
                     }
-                    
-?>
+                    ?>
                 </table>
             </div>
         </div>
-        
+
         <script type="text/javascript">
             var a = document.getElementsByClassName("link");
-            
-            for(var i = 0; i < a.length; i++) {
-                a[i].addEventListener('click', function(e) {
+
+            for (var i = 0; i < a.length; i++) {
+                a[i].addEventListener('click', function (e) {
                     e.preventDefault();
-                   console.log(this.parentNode.getAttribute('data-id'));
-                   console.log(this.getAttribute('data-href'))
-                   window.location.href= this.getAttribute('data-href') + "?id="
-                   + this.parentNode.getAttribute('data-id') + "";
+                    console.log(this.parentNode.getAttribute('data-id'));
+                    console.log(this.getAttribute('data-href'))
+                    window.location.href = this.getAttribute('data-href') + "?id="
+                            + this.parentNode.getAttribute('data-id') + "";
                 });
             }
         </script>
-        
+
     </body>
 </html>
