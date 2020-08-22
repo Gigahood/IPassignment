@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-include_once ('../MasterPage.html');
+include '../MasterPage.html';
 include_once '../../Model/StoreDBConnection.php';
 ?>
 
@@ -9,8 +9,8 @@ include_once '../../Model/StoreDBConnection.php';
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="CSS/store.css">
-
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="CSS/store.css">  
     </head>
     <body>
         <div id="productContainer">
@@ -29,10 +29,15 @@ include_once '../../Model/StoreDBConnection.php';
             $_SESSION["role"] = "admin";
 
             $db = StoreDBConnection::getInstance($_SESSION["role"]);
-
-            $result = $db->retrieveStoreData();
-            $isUnique = $db->isUniqueCat();
             
+            if (!isset($_POST['category'][0]) || $_POST['category'][0] == "All" ) {
+                $result = $db->retrieveStoreData("null");
+            } else {
+                $result = $db->retrieveStoreData($_POST["category"][0]);
+            }
+
+
+            $isUnique = $db->isUniqueCat();
             ?>
 
             <br/>
@@ -41,12 +46,12 @@ include_once '../../Model/StoreDBConnection.php';
 
                 <form action="#" method="post" style="display: inline;">
                     <select id="category" name="category[]" style="width: 300px;">
-                        <option value="all">--Category--</option>
+                        <option value="ctgTitle" disabled>-- Category --</option>
                         <option value="all">ALL</option>
 
                         <?php
                         foreach ($isUnique as $value) {
-                            echo "<option value='categories'>" . $value['pro_category'] . "</option>";
+                            echo "<option value='" . $value['pro_category'] . "'>" . $value['pro_category'] . "</option>";
                         }
                         ?>
                     </select>
@@ -56,14 +61,8 @@ include_once '../../Model/StoreDBConnection.php';
                 <?php
                 if (isset($_POST['submit'])) {
                     
-                    echo $_POST['categories'];
                     foreach ($_POST['category'] as $select) {
-                        echo 'Your selected:' . $select;
-                    }
-                    foreach ($isUnique as $value) {
-                        if($value['pro_category']==$select){
-                            echo $value['pro_category'];
-                        }
+                        echo 'Your selection is: ' . $select;
                     }
                 }
                 ?>
@@ -74,34 +73,55 @@ include_once '../../Model/StoreDBConnection.php';
             </div>
 
             <br/><br/>
+
             <div class="product">
-                <?php
-                
-                
-                foreach ($result as $value) {
-                    $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
-                    
-                    echo '<form method="POST" action="../Store/ProductDetails.php">';
-                    echo '<div class="column">';
-                    
-                    //-- Display Image-- //
-                    echo '<input name= "imageButton" id="product_img" type= "image" '
-                            . 'src="data:image;base64,' . base64_encode($value['pro_image']) 
-                            . '" alt="Product Img" style="height:190px; width:100%;">';
-                    
-                    echo '<p class="itemDetails">';
-                    echo "<b><a target='_self' href='../Store/ProductDetails.php' style='color: black'>" . $value['pro_name'] . " </a></b>";
-                    echo "<br/>RM " . number_format($value['normal_price'],2) . " <br/>";
-                    echo "<a style='color: red'>RM ". number_format($memPrice,2)."</a>";
-                    echo '</p></div>';
-                    echo '</form>';
-                }
-                
-              // print_r($result) ;
+                <form method="POST" name="productItem" action="">
+                 
+                    <?php
+                    foreach ($result as $value) {
+                        
+                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
 
-                $db->closeConnection();
-                ?>
+                        echo '<div class="column">';
 
+                        //-- Display Image-- //
+                        echo '<input name= "imageButton" id="product_img" type= "image" '
+                                . 'src="data:image;base64,' . base64_encode($value['pro_image'])
+                                . '" alt="Product Img" style="height:190px; width:100%;">';
+
+                        echo '<p>';
+                        echo "<b><a target='_self' href='../Store/ProductDetails.php' style='color: black'>" 
+                                . $value['pro_name'] . " </a></b>";
+                        echo "<br/>RM " . number_format($value['normal_price'], 2) . " <br/>";
+                        echo "<span style='color: red'>RM " . number_format($memPrice, 2) . "</span>";
+                        echo '</p></div>';
+                        
+                        
+                    }?>
+                    <input type="hidden" name="hidden_name" value="
+                        <?php echo $result["pro_name"]; ?> " />
+                    
+                    
+                    
+                        <?php
+                        echo $_POST["hidden_name"];
+//                    print_r($_POST["hidden_name"]);
+//                    // print_r($result) ;
+//                    if (isset($_POST["imageButton"])) {
+//                        if (isset($_SESSION["products"])) {
+//                            print_r($_SESSION["products"]);
+//                        } else {
+//                            $item_array = array (
+//                                'product_id' => $POST['hidden_name'] );
+//                        }
+//                        
+//                        $_SESSION['products'][0] = $item_array;
+//                        print_r($_SESSION['products']);
+//                    }
+//                    $db->closeConnection();
+//                    ?>
+                </form>
+               
             </div>
 
         </div>

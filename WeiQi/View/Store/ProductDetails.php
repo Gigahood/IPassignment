@@ -2,6 +2,7 @@
 <?php
 include('../MasterPage.html');
 include_once '../../Model/StoreDBConnection.php';
+require_once 'Produts.php';
 ?>
 
 <html>
@@ -26,37 +27,37 @@ include_once '../../Model/StoreDBConnection.php';
             <div class="proDetailContainer">
                 <?php
                 session_start();
-                if (isset($_POST["add_to_cart"])) {
-                    if (isset($_SESSION["shopping_cart"])) {
-                        $item_array_id = array_column($_SESSION["shopping_cart"], "item_id");
+                if (isset($_POST["imageButton"])) {
+                    if (isset($_SESSION["products"])) {
+                        $item_array_id = array_column($_SESSION["products"], "pro_ID");
                         if (!in_array($_GET["id"], $item_array_id)) {
-                            $count = count($_SESSION["shopping_cart"]);
+                            $count = count($_SESSION["products"]);
                             $item_array = array(
-                                'item_id' => $_GET["id"],
-                                'item_name' => $_POST["hidden_name"],
-                                'item_price' => $_POST["hidden_price"],
-                                'item_quantity' => $_POST["quantity"]
+                                'pro_name' => $_GET["itemName"],
+                                'pro_desc' => $_POST["description"],
+                                'normal_price' => $_POST["price"],
+                                'total_qty' => $_POST["quantity"]
                             );
-                            $_SESSION["shopping_cart"][$count] = $item_array;
+                            $_SESSION["products"][$count] = $item_array;
                         } else {
                             echo '<script>alert("Item Already Added")</script>';
                             echo '<script>window.location="addtocart.php"</script>';
                         }
                     } else {
                         $item_array = array(
-                            'item_id' => $_GET["id"],
-                            'item_name' => $_POST["hidden_name"],
-                            'item_price' => $_POST["hidden_price"],
-                            'item_quantity' => $_POST["quantity"]
+                            'pro_name' => $_GET["itemName"],
+                            'pro_desc' => $_POST["description"],
+                            'normal_price' => $_POST["price"],
+                            'total_qty' => $_POST["quantity"]
                         );
-                        $_SESSION["shopping_cart"][0] = $item_array;
+                        $_SESSION["products"][0] = $item_array;
                     }
                 }
                 if (isset($_GET["action"])) {
                     if ($_GET["action"] == "delete") {
-                        foreach ($_SESSION["shopping_cart"] as $keys => $values) {
+                        foreach ($_SESSION["products"] as $keys => $values) {
                             if ($values["item_id"] == $_GET["id"]) {
-                                unset($_SESSION["shopping_cart"][$keys]);
+                                unset($_SESSION["products"][$keys]);
                                 echo '<script>alert("Item Removed")</script>';
                                 echo '<script>window.location="addtocart.php"</script>';
                             }
@@ -73,11 +74,13 @@ include_once '../../Model/StoreDBConnection.php';
                 <p>
                     <img src="../image/Picture1.png" width="500" height="300" alt="Picture1"/> 
 
-                <h1><b>Item Name</b><br/></h1>
-                <h2><b>Normal Price <br/>
-                        <a style="color: red">Member Price</a></b></h2>
+                <h1 name="itemName"><b>Item Name</b><br/></h1>
+                <h2 name="price"><b>Normal Price <br/>
+                        <a style="color: red" name="memberPrice">Member Price</a></b></h2>
 
-                <p class="description"><b>Description:</b> 
+                <span>Qty: </span>
+                <span style="display: inline" name="quantity">Qty</span>
+                <p class="description" name="desciption"><b>Description:</b> 
                     details here...
                 </p>
                 </p>
