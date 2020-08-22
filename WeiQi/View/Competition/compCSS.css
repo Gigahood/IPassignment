@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16 Aug 2020, 4:40:56 pm
+    Author     : Jane Chew
+*/
+/*TO PUSH*/
+/*Competition Homepage*/
+.btnStyle {
+    font-size: 20px;
+    font-family: Century;
+    width: 25%;
+    height: 50px;
+}
+
+/*New Competition Page*/
+#registerFormStyle {
+    border-style: solid; 
+    border-color: black; 
+    border-width: 1px; 
+    width: 60%; 
+    background-color: #F2EDED;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.createStyle {
+    font-size: 25px;
+    font-family: Century;
+    color: white;
+    width: 25%;
+    height: 50px;
+}
+
+.lblRightStyle {
+    width: 30%;
+    text-align: right;
+    display: inline-block;
+}
+
+.readOnlyStyle {
+    background: transparent;
+}
