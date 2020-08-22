@@ -13,7 +13,7 @@
  */
 class Authentication {
     //put your code here
-    private static $instance = null;
+    /*private static $instance = null;
     private $db;
     
     private function __construct() {
@@ -67,7 +67,7 @@ class Authentication {
       
     }*/
     
-    public function retrieveUser($useremail, $userpw){
+    /*public function retrieveUser($useremail, $userpw){
         $query = "SELECT * FROM user WHERE user_email = ? AND user_pw = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(1, $useremail, PDO::PARAM_STR);
@@ -86,5 +86,5 @@ class Authentication {
     
     public function closeConnection(){
         $this->db = null;
-    }
+    }*/
 }

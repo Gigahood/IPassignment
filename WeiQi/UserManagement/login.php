@@ -62,6 +62,7 @@ and open the template in the editor.
                 //print_r($result);
                 //print("\n");
                 echo "<p>Login successful!</p>";
+                print_r($result);
             }
                 
             $db->closeConnection();
