@@ -15,7 +15,7 @@ include('../MasterPage.html');
     </head>
     <body>
         <div class="container">
-            <h3>Edit Match</h3>
+            <h3>Add Match</h3>
 
             <div class="formContainer">
                 <form class="formStyle" action="CreateHistoryAdmin.php" method="POST">

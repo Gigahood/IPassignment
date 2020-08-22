@@ -19,6 +19,7 @@ session_start();
     <body>
         <div class="container">
             <?php
+            $_SESSION["id"] = 1;
             $compID = $_SESSION["id"];
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);

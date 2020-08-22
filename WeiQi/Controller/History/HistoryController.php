@@ -10,14 +10,17 @@ function getHistoryDetail($compID, $dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
     $result2 = $db->getComp($compID);
     $result = $db->getHistoryDetail($compID);
+    
+    echo $compID;
 
-    $history = new History($result["history_ID"],
-            $result["history_Start_Date"],
-            $result["history_End_Date"],
-            $result2["competition_ID"],
-            $result2["competition_name"],
-            $result["remark"]);
-
+    if (!empty($result)) {
+        $history = new History($result["history_ID"],
+                $result["history_Start_Date"],
+                $result["history_End_Date"],
+                $result2["competition_ID"],
+                $result2["competition_name"],
+                $result["remark"]);
+    }
 //    $remark = $db->getRemark($result["history_ID"]);
 //
 //    foreach ($remark as $value) {
@@ -25,8 +28,11 @@ function getHistoryDetail($compID, $dSession) {
 //    }
 
     $matches = $db->getMatch($result["history_ID"]);
-    foreach ($matches as $value) {
-        $history->setMatches($value);
+
+    if (!empty($matches)) {
+        foreach ($matches as $value) {
+            $history->setMatches($value);
+        }
     }
 
     return $history;
@@ -34,19 +40,19 @@ function getHistoryDetail($compID, $dSession) {
 
 function viewHistoryScore($historyID, $dSession) {
     $participants = array();
-    
+
     $db = HistoryDBConnection :: getInstance($dSession);
     $result = $db->getParticipantList($historyID);
-    
-    foreach($result as $value) {
+
+    foreach ($result as $value) {
         $participant = new ParticipantList($value["participant_List_ID"],
-            $value["history_ID"],
-            $value["user_ID"],
-            $value["score"]);
-        
+                $value["history_ID"],
+                $value["user_ID"],
+                $value["score"]);
+
         array_push($participants, $participant);
-    } 
-    
+    }
+
     return $participants;
 }
 
@@ -87,26 +93,25 @@ function calculateHistoryScore($matches) {
 //    }
 }
 
-function getMatch($matchID,$dSession) {
+function getMatch($matchID, $dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
 
     $result = $db->getMatchDetail($matchID);
-    
+
     return $result;
 }
 
 function update($black, $white, $wScore, $bScore, $remark, $sTime,
-                    $eTime, $board, $dSession, $matchID) {
+        $eTime, $board, $dSession, $matchID) {
     $db = HistoryDBConnection :: getInstance($dSession);
-       
+
     $db->updateHistory($black, $white, $wScore, $bScore, $remark, $sTime,
-                    $eTime, $board,$matchID);
-    
+            $eTime, $board, $matchID);
 }
 
 function updateHistory($startDate, $endDate, $remark, $dSession, $id) {
     $db = HistoryDBConnection :: getInstance($dSession);
-    
+
     $db->updateHistoryDetail($startDate, $endDate, $remark, $id);
 }
 
@@ -115,7 +120,3 @@ function closeCon($dSession) {
 
     $db->closeConnection();
 }
-
-
-
-

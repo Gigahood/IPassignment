@@ -24,12 +24,11 @@ session_start();
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
 
-            echo "<h3>Edit " . $compHistory->getName() . " Competition History</h3>";
+            echo "<h3>Create " . $compHistory->getName() . " Competition History</h3>";
             ?>
-
-
+            a
             <div class="formContainer">
-                <form class="formStyle" method="POST" action="EditHistory.php">
+                <form class="formStyle" method="POST" action="HistoryView.php">
                     <label for="startDate">Start Date : </label>
                     <input type="Date" name="startDate" value="" />
                     <?php
