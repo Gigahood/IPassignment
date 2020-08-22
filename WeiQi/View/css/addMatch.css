@@ -1,0 +1,26 @@
+/* 
+    Author     : Kuek Yong Boon
+*/
+
+.formContainer{
+    display : flex;
+}
+
+.container > h3 {
+    text-align: center;
+}
+
+.formStyle {
+    display : table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.labelStyle{
+    font-weight: bold;
+}
+
+.multilineStyle *{
+    vertical-align: middle;
+}
+
