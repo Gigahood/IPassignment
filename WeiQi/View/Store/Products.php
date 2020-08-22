@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <?php
-include('../MasterPage.html');
+session_start();
+include '../MasterPage.html';
+include_once '../../Model/StoreDBConnection.php';
 ?>
+
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="CSS/store.css">
-
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="CSS/store.css">  
     </head>
     <body>
         <div id="productContainer">
@@ -22,59 +25,108 @@ include('../MasterPage.html');
 
             <hr />
 
+            <?php
+            $_SESSION["role"] = "admin";
+
+            $db = StoreDBConnection::getInstance($_SESSION["role"]);
+            
+            if (!isset($_POST['category'][0]) || $_POST['category'][0] == "All" ) {
+                $result = $db->retrieveStoreData("null");
+            } else {
+                $result = $db->retrieveStoreData($_POST["category"][0]);
+            }
+
+
+            $isUnique = $db->isUniqueCat();
+            ?>
+
+            <br/>
             <div class="header">
-                <form action="/Store.php" style="display: inline;">
-                    <label for="category">Category: </label>
-                    <select id="category" name="category" style="width: 300px;">
-                        <option value="sets">Chess Sets</option>
-                        <option value="chessboard">Chessboard</option>
-                        <option value="pieces">Chess Pieces</option>
-                        <option value="jars">Chess Jars</option>
+                <label for="category">Category: </label>
+
+                <form action="#" method="post" style="display: inline;">
+                    <select id="category" name="category[]" style="width: 300px;">
+                        <option value="ctgTitle" disabled>-- Category --</option>
+                        <option value="all">ALL</option>
+
+                        <?php
+                        foreach ($isUnique as $value) {
+                            echo "<option value='" . $value['pro_category'] . "'>" . $value['pro_category'] . "</option>";
+                        }
+                        ?>
                     </select>
+                    <input type="submit" name="submit" value="Submit" />
                 </form>
-                
+
+                <?php
+                if (isset($_POST['submit'])) {
+                    
+                    foreach ($_POST['category'] as $select) {
+                        echo 'Your selection is: ' . $select;
+                    }
+                }
+                ?>
+
                 <form method="get" action="../Store/addNewItem.php" style="display: inline">
                     <input type="submit" id="btnAddNew" value="Add New Item" name="btnAddNew"/>
                 </form>
             </div>
-            
-            <div class="productsContainer">
 
-                <form name="product" method="GET" action="../Store/ProductDetails.php">
+            <br/><br/>
 
-                    <div class="itemRow">
+            <div class="product">
+                <form method="POST" name="productItem" action="">
+                 
+                    <?php
+                    foreach ($result as $value) {
+                        
+                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
 
-                        <div class="column">
-                            <input name="imageButton" type="image" src="../image/Picture1.png" alt="pro1" height="190" style="width:100%">
-                            <p class="itemDetails">
-                                <b><a target="_self" href="../Store/ProductDetails.php" style="color: black">Item name 1</a></b> 
-                                <br/> price <br/>
-                                <a style="color: red ">member price</a>
-                            </p>
-                        </div>
+                        echo '<div class="column">';
 
-                        <div class="column">
-                            <input name="imageButton" type="image" src="../image/Picture1.png" alt="pro2" height="190" style="width:100%">
-                            <p class="itemDetails">
-                                <b><a target="_self" href="../Store/ProductDetails.php" style="color: black">Item name 1</a></b> 
-                                <br/> price <br/>
-                                <a style="color: red ">member price</a>
-                            </p>
-                        </div>
+                        //-- Display Image-- //
+                        echo '<input name= "imageButton" id="product_img" type= "image" '
+                                . 'src="data:image;base64,' . base64_encode($value['pro_image'])
+                                . '" alt="Product Img" style="height:190px; width:100%;">';
 
-                        <div class="column">
-                            <input name="imageButton" type="image" src="../image/Picture1.png" alt="pro3" height="190" style="width:100%">
-                            <p class="itemDetails">
-                                <b><a target="_self" href="../Store/ProductDetails.php" style="color: black">Item name 1</a></b> 
-                                <br/> price <br/>
-                                <a style="color: red ">member price</a>
-                            </p>
-                        </div>
-                    </div>
-
+                        echo '<p>';
+                        echo "<b><a target='_self' href='../Store/ProductDetails.php' style='color: black'>" 
+                                . $value['pro_name'] . " </a></b>";
+                        echo "<br/>RM " . number_format($value['normal_price'], 2) . " <br/>";
+                        echo "<span style='color: red'>RM " . number_format($memPrice, 2) . "</span>";
+                        echo '</p></div>';
+                        
+                        
+                    }?>
+                    <input type="hidden" name="hidden_name" value="
+                        <?php echo $result["pro_name"]; ?> " />
+                    
+                    
+                    
+                        <?php
+                        echo $_POST["hidden_name"];
+//                    print_r($_POST["hidden_name"]);
+//                    // print_r($result) ;
+//                    if (isset($_POST["imageButton"])) {
+//                        if (isset($_SESSION["products"])) {
+//                            print_r($_SESSION["products"]);
+//                        } else {
+//                            $item_array = array (
+//                                'product_id' => $POST['hidden_name'] );
+//                        }
+//                        
+//                        $_SESSION['products'][0] = $item_array;
+//                        print_r($_SESSION['products']);
+//                    }
+//                    $db->closeConnection();
+//                    ?>
                 </form>
+               
             </div>
 
         </div>
+
+
+
     </body>
 </html>
