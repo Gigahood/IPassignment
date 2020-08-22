@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2020 at 09:46 AM
+-- Generation Time: Aug 22, 2020 at 04:12 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -64,22 +64,23 @@ CREATE TABLE `history` (
   `history_ID` int(10) UNSIGNED NOT NULL,
   `competition_ID` int(11) NOT NULL,
   `history_Start_Date` datetime NOT NULL,
-  `history_End_Date` datetime NOT NULL
+  `history_End_Date` datetime NOT NULL,
+  `remark` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `history`
 --
 
-INSERT INTO `history` (`history_ID`, `competition_ID`, `history_Start_Date`, `history_End_Date`) VALUES
-(1, 1, '2016-07-03 09:00:00', '2016-07-06 18:00:00'),
-(2, 2, '2017-08-05 09:00:00', '2017-08-08 18:00:00'),
-(3, 3, '2017-11-07 09:00:00', '2017-11-10 18:00:00'),
-(4, 4, '2018-12-12 09:00:00', '2018-12-16 18:00:00'),
-(5, 5, '2019-03-03 09:00:00', '2019-03-05 18:00:00'),
-(6, 6, '2019-05-05 09:00:00', '2019-05-09 18:00:00'),
-(7, 7, '2019-08-02 09:00:00', '2019-08-05 18:00:00'),
-(8, 8, '2020-05-04 09:00:00', '2020-05-09 18:00:00');
+INSERT INTO `history` (`history_ID`, `competition_ID`, `history_Start_Date`, `history_End_Date`, `remark`) VALUES
+(1, 1, '2016-07-03 00:00:00', '2016-07-03 00:00:00', 'Something happen222222222'),
+(2, 2, '2017-08-05 09:00:00', '2017-08-08 18:00:00', 'Something happen'),
+(3, 3, '2017-11-07 09:00:00', '2017-11-10 18:00:00', 'Something happen'),
+(4, 4, '2018-12-12 09:00:00', '2018-12-16 18:00:00', 'Something happen'),
+(5, 5, '2019-03-03 09:00:00', '2019-03-05 18:00:00', 'Something happen'),
+(6, 6, '2019-05-05 09:00:00', '2019-05-09 18:00:00', 'Something happen'),
+(7, 7, '2019-08-02 09:00:00', '2019-08-05 18:00:00', 'Something happen'),
+(8, 8, '2020-05-04 09:00:00', '2020-05-09 18:00:00', 'Something happen');
 
 -- --------------------------------------------------------
 
@@ -88,7 +89,7 @@ INSERT INTO `history` (`history_ID`, `competition_ID`, `history_Start_Date`, `hi
 --
 
 CREATE TABLE `historymatch` (
-  `match_ID` varchar(20) NOT NULL,
+  `match_ID` int(11) NOT NULL,
   `history_ID` int(10) UNSIGNED NOT NULL,
   `match_Detail` text NOT NULL,
   `start_Time` time NOT NULL,
@@ -105,26 +106,8 @@ CREATE TABLE `historymatch` (
 --
 
 INSERT INTO `historymatch` (`match_ID`, `history_ID`, `match_Detail`, `start_Time`, `end_Time`, `black_User`, `white_User`, `board_Size`, `black_Score`, `white_Score`) VALUES
-('M1', 1, 'Something happened but I dunno what happen but there is something happened', '09:30:00', '11:30:00', 1, 2, 13, 50, 60);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `historyremarklist`
---
-
-CREATE TABLE `historyremarklist` (
-  `hremark_ID` int(10) UNSIGNED NOT NULL,
-  `history_ID` int(10) UNSIGNED NOT NULL,
-  `remark` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `historyremarklist`
---
-
-INSERT INTO `historyremarklist` (`hremark_ID`, `history_ID`, `remark`) VALUES
-(1, 1, 'Something happened but I dunno what happen but there is something happened');
+(1, 1, '123 something happen', '14:38:00', '11:30:00', 4, 2, 16, 500, 60),
+(2, 1, '0', '09:30:00', '11:30:00', 3, 2, 16, 50, 60);
 
 -- --------------------------------------------------------
 
@@ -164,21 +147,24 @@ INSERT INTO `participant` (`participant_ID`, `list_of_participation`, `total_sco
 CREATE TABLE `participantlist` (
   `participant_List_ID` int(10) UNSIGNED NOT NULL,
   `history_ID` int(10) UNSIGNED NOT NULL,
-  `user_ID` int(11) NOT NULL
+  `user_ID` int(11) NOT NULL,
+  `score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `participantlist`
 --
 
-INSERT INTO `participantlist` (`participant_List_ID`, `history_ID`, `user_ID`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 4),
-(5, 1, 5),
-(6, 2, 1),
-(7, 2, 1);
+INSERT INTO `participantlist` (`participant_List_ID`, `history_ID`, `user_ID`, `score`) VALUES
+(1, 1, 1, 0),
+(2, 1, 2, 0),
+(3, 1, 3, 0),
+(4, 1, 4, 0),
+(5, 1, 5, 0),
+(6, 2, 1, 0),
+(7, 2, 1, 0),
+(9, 1, 9, 12),
+(12, 1, 11, 12);
 
 -- --------------------------------------------------------
 
@@ -360,12 +346,6 @@ ALTER TABLE `historymatch`
   ADD PRIMARY KEY (`match_ID`);
 
 --
--- Indexes for table `historyremarklist`
---
-ALTER TABLE `historyremarklist`
-  ADD PRIMARY KEY (`hremark_ID`);
-
---
 -- Indexes for table `participant`
 --
 ALTER TABLE `participant`
@@ -428,16 +408,10 @@ ALTER TABLE `history`
   MODIFY `history_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `historyremarklist`
---
-ALTER TABLE `historyremarklist`
-  MODIFY `hremark_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `participantlist`
 --
 ALTER TABLE `participantlist`
-  MODIFY `participant_List_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `participant_List_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `participation`
