@@ -2,14 +2,14 @@
 <?php
 include('../MasterPage.html');
 include_once '../../Model/StoreDBConnection.php';
-require_once 'Produts.php';
+include_once 'Store.php';
 ?>
 
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="CSS/store.css">
+        <link rel="stylesheet" type="text/css" href="store.css">
 
     </head>
     <body>
@@ -24,68 +24,109 @@ require_once 'Produts.php';
             </div>
             <hr />
 
-            <div class="proDetailContainer">
+            <div class="detailContainer">
                 <?php
                 session_start();
-                if (isset($_POST["imageButton"])) {
-                    if (isset($_SESSION["products"])) {
-                        $item_array_id = array_column($_SESSION["products"], "pro_ID");
-                        if (!in_array($_GET["id"], $item_array_id)) {
-                            $count = count($_SESSION["products"]);
-                            $item_array = array(
-                                'pro_name' => $_GET["itemName"],
-                                'pro_desc' => $_POST["description"],
-                                'normal_price' => $_POST["price"],
-                                'total_qty' => $_POST["quantity"]
-                            );
-                            $_SESSION["products"][$count] = $item_array;
-                        } else {
-                            echo '<script>alert("Item Already Added")</script>';
-                            echo '<script>window.location="addtocart.php"</script>';
-                        }
-                    } else {
-                        $item_array = array(
-                            'pro_name' => $_GET["itemName"],
-                            'pro_desc' => $_POST["description"],
-                            'normal_price' => $_POST["price"],
-                            'total_qty' => $_POST["quantity"]
-                        );
-                        $_SESSION["products"][0] = $item_array;
-                    }
+                $_SESSION["role"] = "admin";
+
+                $db = StoreDBConnection::getInstance($_SESSION["role"]);
+                
+//                print_r($_GET["id"]);
+
+                if (isset($_GET["id"])) {
+                    $result = $db->retrieveProDetails($_GET["id"]);
+                } else {
+                    
                 }
-                if (isset($_GET["action"])) {
-                    if ($_GET["action"] == "delete") {
-                        foreach ($_SESSION["products"] as $keys => $values) {
-                            if ($values["item_id"] == $_GET["id"]) {
-                                unset($_SESSION["products"][$keys]);
-                                echo '<script>alert("Item Removed")</script>';
-                                echo '<script>window.location="addtocart.php"</script>';
-                            }
-                        }
-                    }
+
+
+                foreach ($result as $value) {
+                    $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
+
+                    echo '<p style="font-size: 20px">Category: ';
+                    echo "<span style='color: blue'><b>" . $value['pro_category'] . "</b></span></p>";
+                    echo '<p class="itemDivider">';
+                    echo '<img src = "data:image;base64,' . base64_encode($value['pro_image']) 
+                           . '" width = "500" height = "300" alt = "Picture1"/>';
+                    echo '<h1 name = "itemName"><b>' . $value['pro_name'] . '</b><br/></h1>';
+                    echo '<span style="display: inline; float:right; margin-right:20px;">Qty: ';
+                    echo $value['total_qty'] . '</span>';
+                    echo '<h2 name = "price"><b>Normal Price: RM ' . number_format($value['normal_price'], 2) . '<br/>';
+                    echo '<a style = "color: red" name = "memberPrice">Member Price: RM ' . number_format($memPrice, 2) . '</a></b></h2>';
+
+                    echo '<p class = "description" name = "desciption"><b>Description:</b></p><br/>';
+                    echo '<p>' . $value['pro_desc'];
+                    echo '</p></p><br/><br/>';
                 }
-                //echo '<p style="font-size: 20px">Category: ';
-                //echo '<span style="color: red"><b>'.$result['pro_category'].'</b></span></p>';
 
                 $db->closeConnection();
                 ?>
-                <p style="font-size: 20px">Category: <span style="color: red"><b>category</b></span></p>
 
-                <p>
-                    <img src="../image/Picture1.png" width="500" height="300" alt="Picture1"/> 
 
-                <h1 name="itemName"><b>Item Name</b><br/></h1>
-                <h2 name="price"><b>Normal Price <br/>
-                        <a style="color: red" name="memberPrice">Member Price</a></b></h2>
 
-                <span>Qty: </span>
-                <span style="display: inline" name="quantity">Qty</span>
-                <p class="description" name="desciption"><b>Description:</b> 
-                    details here...
-                </p>
-                </p>
+                <!-- * delete dialog *-->  
+
+                <div>  
+                    <dialog id="deleteDialog" style="width:50%;background-color:#F4FFEF;border:1px dotted black;">  
+                        <p> Do you want to delete this item <br/>  
+                            - <cite><?php print_r($_GET["id"]); ?> ? </cite></p> 
+
+                        <button id="yes" style="background-color: #4959EA; color:white; height: 30px; width: 100px; float: right;">Yes</button> 
+
+                        <button id="no" style="background-color: red; color:white; height: 30px; width: 100px; float: right; margin-right: 20px">No</button>  
+
+                    </dialog>  
+
+                    <form id="btnDelete" method="get" action="" class="button" style="background-color: red; ">
+                        <img src="../Store/image/delete.png" width="20px" height="20px" class="btnicon"/>
+                        Delete
+                    </form>
+
+                    <?php
+                    echo " <form id=\"btnEdit\" method=\"get\" data-href='EditProduct.php' data-id='" . $_GET['id'] . "'
+                          class=\"button\" style=\"background-color: #F2BA08; margin-right: 20px;\">";
+                    ?>
+                        <img src="../Store/image/edit.png" width="20px" height="20px" class="btnicon"/>
+                        Edit
+                    </form>
+
+                </div>  
+
+                <!-- JavaScript to provide the "Show/Close" functionality -->  
+                <script type="text/JavaScript">  
+                    (function() {    
+                        var dialog = document.getElementById('deleteDialog');    
+                        document.getElementById('btnDelete').onclick = function() {    
+                        dialog.show();    
+                    };    
+                    document.getElementById('no').onclick = function() {    
+                        dialog.close();    
+                    }; 
+                    
+                    
+                    document.getElementById('btnEdit').addEventListener("click", function(e){
+                        window.location.href = this.getAttribute('data-href') + "?id="
+                            + this.getAttribute('data-id') + "";
+                    })
+                    
+                    })();   
+                </script>  
+                </body>
+
+                <!--                <div>
+                                    <form action="DelereItem.php" method="post">
+                                        <div>
+                                            <input type="hidden" name="" id="">
+                
+                                            <h3>Do you want to delete this item?</h3>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <button type="submit" name="updateData" class="btn btn-secondary">Yes</button>
+                                        </div>
+                                    </form>
+                                </div>-->
             </div>
-        </div>
 
     </body>
 </html>
