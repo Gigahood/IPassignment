@@ -1,6 +1,7 @@
 <?php
 include('../MasterPage.html');
 require '../../Controller/History/HistoryController.php';
+require '../../Controller/History/historyAjaxRequest.php';
 
 session_start();
 ?>
@@ -27,7 +28,7 @@ session_start();
             echo "<h3>Create " . $compHistory->getName() . " Competition History</h3>";
             ?>
             <div class="formContainer">
-                <form class="formStyle" method="POST" action="HistoryView.php">
+                <form class="formStyle" method="POST" action="">
                     <label for="startDate">Start Date : </label>
                     <input type="Date" name="startDate" value="" />
                     <?php
@@ -47,42 +48,13 @@ session_start();
                   
                     <br/>
                     <br/>
-                    <input id="addMatchButton" class="addMatchButton" type="button" value="Add New Match" name="addMatch" />
+<!--                    <input id="addMatchButton" class="addMatchButton" type="button" value="Add New Match" name="addMatch" />
                     <br/>
-                    <br/>
+                    <br/>-->
                     <input type="submit" value="OK" name="submit" />
                 </form>
-            </div>
-            <div >
-                <table width="100%" class="tableStyle" style='text-align:center;' border="1" >
-                    <thead>
-                    <th>Matches</th>
-                    <th>Black</th>
-                    <th>White</th>
-                    <th>View Final Board</th>
-                    </thead>
-                    <?php
-                    foreach ($compHistory->getMatches() as $value) {
-                        echo "<tr>";
-                        echo "<td style='text-align:center;'>" . $value["black_User"] . " vs " . $value["white_User"] . "</td>";
-                        echo "<td>" . $value["black_User"] . "</td>";
-                        echo "<td>" . $value["white_User"] . "</td>";
-
-                        if ($_SESSION["role"] == "admin") {
-                            echo "<td data-id='" . $value["match_ID"] . "'>"
-                            . "<a style='margin-left: 5px; class='link' href='' data-href='HistoryDetail.php' >Board</a>"
-                            . "<a style='margin-left: 5px;' class='link' href='EditMatch.php' data-href='EditMatch.php'>Edit</a>"
-                            . "<a style='margin-left: 5px; class='link' href='HistoryDetail.php' data-href='HistoryDetail.php'>Delete</a>"
-                            . "</td>";
-                            echo "</tr>";
-                        } else {
-                            echo "<td data-id='" . $value["match_ID"] . "'>"
-                            . "<a style='margin-left: 5px; class='link' href='' data-href='HistoryDetail.php' >Board</a>";
-                        }
-                    }
-                    ?>
-
-                    <?php
+                
+                 <?php
 //                    do validation here
                     if (isset($_POST["submit"])) {
                         $error;
@@ -93,14 +65,26 @@ session_start();
                         $id = $compID;
                         createHistory($id, $startDate, $endDate, $remark, $role);
                         
-//                        if (empty($error)) {
-//                            header("Location: HistoryView.php");
-//                        }
+                        if (empty($error)) {
+                            header("Location: HistoryView.php");
+                        }
                         
                     }
                     ?>
-                </table>
             </div>
+<!--            <div >
+                <table width="100%" class="tableStyle" style='text-align:center;' border="1" >
+                    <thead>
+                    <th>Matches</th>
+                    <th>Black</th>
+                    <th>White</th>
+                    <th>View Final Board</th>
+                    </thead>
+
+
+                   
+                </table>
+            </div>-->
         </div>
 
         <script type="text/javascript">

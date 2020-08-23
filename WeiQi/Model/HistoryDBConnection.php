@@ -41,6 +41,7 @@ class HistoryDBConnection extends AbstractDatabaseConnection {
         $stmt->execute();
 
         $totalrows = $stmt->rowCount();
+        
 
         if ($totalrows == 0) {
             return null;

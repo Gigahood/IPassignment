@@ -30,7 +30,7 @@ session_start();
 
 
                 echo "<h1> " . $compHistory->getName() . " Competition History</h1>";
-                echo "<h3>". $compHistory->getHstart() . " - " . $compHistory->getHend() ."</h3>"
+                echo "<h3> Date : " . date('d/m/Y', strtotime($compHistory->getHstart())) . " - " . date('d/m/Y', strtotime($compHistory->getHend())) . "</h3>"
                 ?>
 
                 <?php
@@ -40,7 +40,8 @@ session_start();
                 ?>
                 <div>
                     <?php
-                    echo "<div style='text-align:center;'>" . $compHistory->getRemark() . "</div>";
+                    echo "<div style='text-align:center;'> Description : " . $compHistory->getRemark() . "</div>";
+                    echo "<br/>";
                     ?>
                 </div>
                 <div >
@@ -61,9 +62,9 @@ session_start();
 
                             if ($_SESSION["role"] == "admin") {
                                 echo "<td data-id='" . $value["match_ID"] . "'>"
-                                . "<a style='margin-left: 5px; class='link' href='' data-href='HistoryDetail.php' >Board</a>"
+                                . "<a style='margin-left: 5px;' class='detailLink' href='' data-link='". $value["match_ID"] ."' data-href='ViewMatch.php' >Board</a>"
                                 . "<a style='margin-left: 5px;' class='link' href='EditMatch.php' data-href='EditMatch.php'>Edit</a>"
-                                . "<a style='margin-left: 5px; class='link' href='HistoryDetail.php' data-href='HistoryDetail.php'>Delete</a>"
+                                . "<a style='margin-left: 5px;' class='link' href='HistoryDetail.php' data-href='ViewMatch.php'>Delete</a>"
                                 . "</td>";
                                 echo "</tr>";
                             } else {
@@ -84,11 +85,11 @@ session_start();
                     <th>Score</th>
                     </thead>
                     <?php
-                     $listOfMatches = calculateHistoryScore($compHistory->getMatches());
+                    $listOfMatches = calculateHistoryScore($compHistory->getMatches());
                     $index = 1;
 
                     foreach ($listOfMatches as $match) {
-                  
+
                         echo "<tr>";
                         echo "<td style='text-align:center;'>" . $index . "</td>";
                         echo "<td style='text-align:center;'>" . $match["Name"] . "</td>";
@@ -103,13 +104,25 @@ session_start();
         <script type="text/javascript">
             var a = document.getElementsByClassName("link");
 
-            for (var i = 0; i < a.length; i++) {
+            for (let i = 0; i < a.length; i++) {
                 a[i].addEventListener('click', function (e) {
                     e.preventDefault();
                     console.log(this.parentNode.getAttribute('data-id'));
-                    console.log(this.getAttribute('data-href'))
+                    console.log(this.getAttribute('data-href'));
                     window.location.href = this.getAttribute('data-href') + "?id="
                             + this.parentNode.getAttribute('data-id') + "";
+                });
+            }
+            
+            var b = document.getElementsByClassName("detailLink");
+
+            for (let i = 0; i < b.length; i++) {
+                b[i].addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log(this.getAttribute('data-link'));
+                    console.log(this.getAttribute('data-href'));
+                    window.location.href = this.getAttribute('data-href') + "?id="
+                            + this.getAttribute('data-link') + "";
                 });
             }
         </script>

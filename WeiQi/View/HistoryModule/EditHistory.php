@@ -19,10 +19,11 @@ session_start();
     <body>
         <div class="container">
             <?php
-            $_SESSION["id"] = 1;
-            $compID = $_SESSION["id"];
+            $compID = $_SESSION["compID"];
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
+            
+
 
             echo "<h3>Edit " . $compHistory->getName() . " Competition History</h3>";
             ?>

@@ -22,12 +22,12 @@ require '../../Controller/History/HistoryController.php';
             <?php
             session_start();
             $_SESSION["role"] = "admin";
-            $_SESSION["id"] = $_GET["id"];
+            $_SESSION["id"] = $_SESSION["compID"];
 
-            if (!isset($_GET["id"])) {
+            if (!isset($_SESSION["compID"])) {
                 header("Location: HistoryView.php");
             } else {
-                $match = getMatch($_GET["id"], $_SESSION["role"]);   
+                $match = getMatch($_GET["id"], $_SESSION["role"]);
             }
             ?>
 
@@ -108,7 +108,7 @@ require '../../Controller/History/HistoryController.php';
         <?php
         if (isset($_POST["submit"])) {
             // header("Location: HistoryView.php");
-
+            $error;
             $black = $_POST["black"];
             $white = $_POST["white"];
             $wScore = $_POST["whiteScore"];
@@ -118,11 +118,15 @@ require '../../Controller/History/HistoryController.php';
             $board = $_POST["boardSize"];
             $remark = $_POST["remark"];
             $matchID = $_POST["matchID"];
-            
-            echo $_POST["remark"];
 
-            update($black, $white, $wScore, $bScore, $remark, $sTime,
-                    $eTime, $board, $_SESSION["role"], $matchID);
+            // validation complete
+
+            if (empty($error)) {
+                update($black, $white, $wScore, $bScore, $remark, $sTime,
+                        $eTime, $board, $_SESSION["role"], $matchID);
+                
+                header("Location: HistoryView.php");
+            }
         }
         ?>
 
