@@ -42,13 +42,14 @@ and open the template in the editor.
             <input type="submit" value="Login" name="btnLogin" class="loginStyle"/>
             <br/>
 
-            <input type="submit" value="&#8592;  Don't have an account? Click here to register." name="btnRegister" class="registerStyle"/>
+            <a href="registration.php" style="text-decoration: none;"><span class="registerStyle">&#8592;  Don't have an account? Click here to register. &emsp;&emsp;</span></a>
+            <!--<input type="submit" value="&#8592;  Don't have an account? Click here to register." name="btnRegister" class="registerStyle"/>-->
         </div>
         </form>
         
         <?php
         session_start();
-        $_SESSION["role"] = "admin";
+        $_SESSION["role"] = "participant";
         
             // put your code here
         if(isset($_POST['email']) && isset($_POST['PW'])){
@@ -73,6 +74,7 @@ and open the template in the editor.
                 //print_r($result);
                 //print("\n");
                 echo "<p>Login successful!</p>";
+                $_SESSION["role"] = $result["user_role"];
             }
                 
             $db->closeConnection();
