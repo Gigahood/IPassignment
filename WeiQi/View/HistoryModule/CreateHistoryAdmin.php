@@ -19,14 +19,13 @@ session_start();
     <body>
         <div class="container">
             <?php
-            $_SESSION["compID"] = 1;
+            $_SESSION["compID"] = 6;
             $compID = $_SESSION["compID"];
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
 
             echo "<h3>Create " . $compHistory->getName() . " Competition History</h3>";
             ?>
-            a
             <div class="formContainer">
                 <form class="formStyle" method="POST" action="HistoryView.php">
                     <label for="startDate">Start Date : </label>
@@ -91,12 +90,12 @@ session_start();
                         $endDate = $_POST["endDate"];
                         $remark = $_POST["remark"];
                         $role = $_SESSION["role"];
-                        $id = $_POST["history_ID"];
-                        updateHistory($startDate, $endDate, $remark, $role, $id);
+                        $id = $compID;
+                        createHistory($id, $startDate, $endDate, $remark, $role);
                         
-                        if (empty($error)) {
-                            header("Location: HistoryView.php");
-                        }
+//                        if (empty($error)) {
+//                            header("Location: HistoryView.php");
+//                        }
                         
                     }
                     ?>
@@ -109,7 +108,7 @@ session_start();
             let historyID = document.getElementById("hiddenButton").value;
 
             addMatchButton.addEventListener("click", function (e) {
-                window.location.href = "addMatch.php?type=edit&id=" + historyID;
+                window.location.href = "addMatch.php?type=add&id=" + historyID;
             });
 
         </script>

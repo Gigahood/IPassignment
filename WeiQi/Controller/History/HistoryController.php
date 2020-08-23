@@ -10,8 +10,7 @@ function getHistoryDetail($compID, $dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
     $result2 = $db->getComp($compID);
     $result = $db->getHistoryDetail($compID);
-    
-    echo $compID;
+
 
     if (!empty($result)) {
         $history = new History($result["history_ID"],
@@ -20,6 +19,21 @@ function getHistoryDetail($compID, $dSession) {
                 $result2["competition_ID"],
                 $result2["competition_name"],
                 $result["remark"]);
+
+        $matches = $db->getMatch($result["history_ID"]);
+
+        if (!empty($matches)) {
+            foreach ($matches as $value) {
+                $history->setMatches($value);
+            }
+        }
+    } else {
+        $history = new History("",
+                "",
+                "",
+                $result2["competition_ID"],
+                $result2["competition_name"],
+                "");
     }
 //    $remark = $db->getRemark($result["history_ID"]);
 //
@@ -27,13 +41,7 @@ function getHistoryDetail($compID, $dSession) {
 //        $history->setRemark($value["remark"]);
 //    }
 
-    $matches = $db->getMatch($result["history_ID"]);
 
-    if (!empty($matches)) {
-        foreach ($matches as $value) {
-            $history->setMatches($value);
-        }
-    }
 
     return $history;
 }
@@ -113,6 +121,26 @@ function updateHistory($startDate, $endDate, $remark, $dSession, $id) {
     $db = HistoryDBConnection :: getInstance($dSession);
 
     $db->updateHistoryDetail($startDate, $endDate, $remark, $id);
+}
+
+function createHistory($competition_ID, $history_Start_Date, $history_End_Date, $remark, $dSession) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+
+    $db->createHistory($history_Start_Date, $history_End_Date, $remark, $competition_ID);
+}
+
+function createHistoryMatch($black, $white, $wScore, $bScore, $remark, $sTime,
+        $eTime, $board, $role, $historyID) {
+    $db = HistoryDBConnection :: getInstance($role);
+
+    try {
+
+        $db->createHistoryMatch($black, $white, $wScore, $bScore, $remark, $sTime,
+                $eTime, $board, $historyID);
+    } catch (Exception $ex) {
+
+        echo $ex->getMessage();
+    }
 }
 
 function closeCon($dSession) {

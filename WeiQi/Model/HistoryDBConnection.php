@@ -153,6 +153,50 @@ WHERE historymatch.match_ID  = ? and participantList.user_ID = ?";
         $stmt->execute();
     }
 
+    public function createHistoryMatch($black, $white, $wScore, $bScore, $remark, $sTime, $eTime,
+            $board, $historyID) {
+
+        $query = "INSERT INTO historymatch(history_ID, match_Detail,start_Time,"
+                . "end_Time, black_User, white_User, board_Size, black_Score,"
+                . "white_Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            $stmt = parent::$db->prepare($query);
+
+            $stmt->bindParam(1, $historyID, PDO::PARAM_INT);
+            $stmt->bindParam(2, $remark, PDO::PARAM_STR);
+            $stmt->bindParam(3, $sTime, PDO::PARAM_STR);
+            $stmt->bindParam(4, $eTime, PDO::PARAM_STR);
+            $stmt->bindParam(5, $black, PDO::PARAM_INT);
+            $stmt->bindParam(6, $white, PDO::PARAM_INT);
+            $stmt->bindParam(7, $board, PDO::PARAM_INT);
+            $stmt->bindParam(8, $bScore, PDO::PARAM_INT);
+            $stmt->bindParam(9, $wScore, PDO::PARAM_INT);
+
+            $stmt->execute();
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+    }
+
+    public function createHistory($history_Start_Date, $history_End_Date, $remark, $competition_ID) {
+        $query = "INSERT INTO history(competition_ID, history_Start_Date,history_End_Date,"
+                . "remark) VALUES (?, ?, ?, ?)";
+
+        try {
+            $stmt = parent::$db->prepare($query);
+            $stmt->bindParam(1, $competition_ID, PDO::PARAM_INT);
+            $stmt->bindParam(2, $history_Start_Date, PDO::PARAM_STR);
+            $stmt->bindParam(3, $history_End_Date, PDO::PARAM_STR);
+            $stmt->bindParam(4, $remark, PDO::PARAM_STR);
+
+
+            $stmt->execute();
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+    }
+
     public function updateHistory($black, $white, $wScore, $bScore, $remark, $sTime, $eTime,
             $board, $matchID) {
         $query = "Update historymatch Set black_User=?, white_User=?, "

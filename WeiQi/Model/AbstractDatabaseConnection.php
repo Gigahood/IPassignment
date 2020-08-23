@@ -39,6 +39,7 @@ abstract class AbstractDatabaseConnection {
                 $password = $ini['db_guest_password'];
             }
             static::$db = new PDO($dsn, $user, $password);
+            static::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
         } catch (PDOException $ex) {
             echo "<p>ERROR: " . $ex->getMessage() . "</p>";

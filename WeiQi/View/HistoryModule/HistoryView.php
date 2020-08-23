@@ -21,7 +21,7 @@ session_start();
         <div class="container">
             <div class="detailContainer">
                 <?php
-                $_SESSION["compID"] = 1;
+//                $_SESSION["compID"] = 1;
                 $_SESSION["role"] = "admin";
                 $compID = $_SESSION["compID"];
                 $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
