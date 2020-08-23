@@ -12,7 +12,7 @@
  * @author Lim Yi En
  */
 class Store {
-    private $product_id;
+    private $pro_ID;
     private $pro_name;
     private $pro_desc;
     private $total_qty;
@@ -22,8 +22,8 @@ class Store {
     private $pro_image;
     private $admin_ID;
 
-    function __construct($product_id, $pro_name, $pro_desc, $total_qty, $pro_category, $normal_price, $discount_rate, $pro_image, $admin_ID) {
-        $this->product_id = $product_id;
+    function __construct($pro_ID, $pro_name, $pro_desc, $total_qty, $pro_category, $normal_price, $discount_rate, $pro_image, $admin_ID) {
+        $this->pro_ID = $pro_ID;
         $this->pro_name = $pro_name;
         $this->pro_desc = $pro_desc;
         $this->total_qty = $total_qty;
@@ -34,8 +34,8 @@ class Store {
         $this->admin_ID = $admin_ID;
     }
     
-    function getProduct_id() {
-        return $this->product_id;
+    function getPro_ID() {
+        return $this->prod_ID;
     }
 
     function getPro_name() {
@@ -70,8 +70,8 @@ class Store {
         return $this->admin_ID;
     }
 
-    function setProduct_id($product_id): void {
-        $this->product_id = $product_id;
+    function setPro_ID($pro_ID): void {
+        $this->product_id = $pro_ID;
     }
 
     function setPro_name($pro_name): void {
@@ -106,4 +106,8 @@ class Store {
         $this->admin_ID = $admin_ID;
     }
 
+    public function calMemberPrice($normal_price, $discount_rate) {
+        $memPrice = $normal_price - ($normal_price * $discount_rate);
+        return $memPrice;
+    }
 }
