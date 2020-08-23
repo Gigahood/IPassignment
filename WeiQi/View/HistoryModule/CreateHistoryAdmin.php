@@ -1,5 +1,9 @@
 <?php
 include('../MasterPage.html');
+require '../../Controller/History/HistoryController.php';
+require '../../Controller/History/historyAjaxRequest.php';
+
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -15,24 +19,82 @@ include('../MasterPage.html');
     </head>
     <body>
         <div class="container">
-            <h3>Create xxx Competition History</h3>
-            
+            <?php
+            $_SESSION["compID"] = 6;
+            $compID = $_SESSION["compID"];
+
+            $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
+
+            echo "<h3>Create " . $compHistory->getName() . " Competition History</h3>";
+            ?>
             <div class="formContainer">
-                <form class="formStyle" method="POST">
-                <label for="startTime">Start Time : </label>
-                <input type="text" name="startTime" value="" />
-                <br/>
-                <br/>
-                <label for="startTime">End Time : </label>
-                <input type="text" name="endTime" value="" />
-                <br/>
-                <br/>
-                <input class="addMatchButton" type="button" value="Add New Match" name="addMatch" />
-                <p>history data area</p>
-                <input type="submit" value="OK" name="submit" />
-            </form>
+                <form class="formStyle" method="POST" action="">
+                    <label for="startDate">Start Date : </label>
+                    <input type="Date" name="startDate" value="" />
+                    <?php
+                   
+                     echo "<input id='hiddenButton' type=\"hidden\" name=\"history_ID\" value=\"" .  $compHistory->getHistory_ID() . "\" />";
+                    
+                    ?>
+                    <br/>
+                    <br/>
+                    <label for="endDate">End Date : </label>
+                    <input type="Date" name="endDate" value="" />
+                  
+                    <br/>
+                    <br/>
+                    <label for="remark">Remark : </label>
+                    <input type="text" name="remark" value="" />
+                  
+                    <br/>
+                    <br/>
+<!--                    <input id="addMatchButton" class="addMatchButton" type="button" value="Add New Match" name="addMatch" />
+                    <br/>
+                    <br/>-->
+                    <input type="submit" value="OK" name="submit" />
+                </form>
+                
+                 <?php
+//                    do validation here
+                    if (isset($_POST["submit"])) {
+                        $error;
+                        $startDate = $_POST["startDate"];
+                        $endDate = $_POST["endDate"];
+                        $remark = $_POST["remark"];
+                        $role = $_SESSION["role"];
+                        $id = $compID;
+                        createHistory($id, $startDate, $endDate, $remark, $role);
+                        
+                        if (empty($error)) {
+                            header("Location: HistoryView.php");
+                        }
+                        
+                    }
+                    ?>
             </div>
-            
+<!--            <div >
+                <table width="100%" class="tableStyle" style='text-align:center;' border="1" >
+                    <thead>
+                    <th>Matches</th>
+                    <th>Black</th>
+                    <th>White</th>
+                    <th>View Final Board</th>
+                    </thead>
+
+
+                   
+                </table>
+            </div>-->
         </div>
+
+        <script type="text/javascript">
+            let addMatchButton = document.getElementById("addMatchButton");
+            let historyID = document.getElementById("hiddenButton").value;
+
+            addMatchButton.addEventListener("click", function (e) {
+                window.location.href = "addMatch.php?type=add&id=" + historyID;
+            });
+
+        </script>
     </body>
 </html>

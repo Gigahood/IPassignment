@@ -1,7 +1,9 @@
 <?php
 include('../MasterPage.html');
-?>
+require '../../Controller/History/HistoryController.php';
 
+session_start();
+?>
 <!DOCTYPE html>
 
 <!-- 
@@ -18,18 +20,59 @@ include('../MasterPage.html');
     <body>
         <div class="container">
             <div class="detailContainer">
-                <h3>xxx Competition History</h3>
+                <?php
+//                $_SESSION["compID"] = 1;
+                $_SESSION["role"] = "admin";
+                $compID = $_SESSION["compID"];
+                $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
+                $listOfMatches = viewHistoryScore($compHistory->getHistory_ID(), $_SESSION["role"]);
+                closeCon($_SESSION["role"]);
+
+
+                echo "<h1> " . $compHistory->getName() . " Competition History</h1>";
+                echo "<h3> Date : " . date('d/m/Y', strtotime($compHistory->getHstart())) . " - " . date('d/m/Y', strtotime($compHistory->getHend())) . "</h3>"
+                ?>
+
+                <?php
+                if ($_SESSION["role"] == "admin") {
+                    echo "<button onCLick=\"window.location='EditHistory.php?id=" . $_SESSION["compID"] . "'\">" . "Edit History</button>";
+                }
+                ?>
                 <div>
-                    detail info
+                    <?php
+                    echo "<div style='text-align:center;'> Description : " . $compHistory->getRemark() . "</div>";
+                    echo "<br/>";
+                    ?>
                 </div>
                 <div >
-                    <table class="tableStyle">
+                    <table class="tableStyle" style='text-align:center;' border="1" >
                         <thead>
                         <th>Matches</th>
                         <th>Black</th>
                         <th>White</th>
                         <th>View Final Board</th>
                         </thead>
+
+                        <?php
+                        foreach ($compHistory->getMatches() as $value) {
+                            echo "<tr>";
+                            echo "<td style='text-align:center;'>" . $value["black_User"] . " vs " . $value["white_User"] . "</td>";
+                            echo "<td>" . $value["black_User"] . "</td>";
+                            echo "<td>" . $value["white_User"] . "</td>";
+
+                            if ($_SESSION["role"] == "admin") {
+                                echo "<td data-id='" . $value["match_ID"] . "'>"
+                                . "<a style='margin-left: 5px;' class='detailLink' href='' data-link='". $value["match_ID"] ."' data-href='ViewMatch.php' >Board</a>"
+                                . "<a style='margin-left: 5px;' class='link' href='EditMatch.php' data-href='EditMatch.php'>Edit</a>"
+                                . "<a style='margin-left: 5px;' class='link' href='HistoryDetail.php' data-href='ViewMatch.php'>Delete</a>"
+                                . "</td>";
+                                echo "</tr>";
+                            } else {
+                                echo "<td data-id='" . $value["match_ID"] . "'>"
+                                . "<a style='margin-left: 5px; class='link' href='' data-href='HistoryDetail.php' >Board</a>";
+                            }
+                        }
+                        ?>
                     </table>
                 </div>
             </div>
@@ -41,8 +84,48 @@ include('../MasterPage.html');
                     <th>Name</th>
                     <th>Score</th>
                     </thead>
+                    <?php
+                    $listOfMatches = calculateHistoryScore($compHistory->getMatches());
+                    $index = 1;
+
+                    foreach ($listOfMatches as $match) {
+
+                        echo "<tr>";
+                        echo "<td style='text-align:center;'>" . $index . "</td>";
+                        echo "<td style='text-align:center;'>" . $match["Name"] . "</td>";
+                        echo "<td style='text-align:center;'>" . $match["Score"] . "</td>";
+                        $index += 1;
+                    }
+                    ?>
                 </table>
             </div>
         </div>
+
+        <script type="text/javascript">
+            var a = document.getElementsByClassName("link");
+
+            for (let i = 0; i < a.length; i++) {
+                a[i].addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log(this.parentNode.getAttribute('data-id'));
+                    console.log(this.getAttribute('data-href'));
+                    window.location.href = this.getAttribute('data-href') + "?id="
+                            + this.parentNode.getAttribute('data-id') + "";
+                });
+            }
+            
+            var b = document.getElementsByClassName("detailLink");
+
+            for (let i = 0; i < b.length; i++) {
+                b[i].addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log(this.getAttribute('data-link'));
+                    console.log(this.getAttribute('data-href'));
+                    window.location.href = this.getAttribute('data-href') + "?id="
+                            + this.getAttribute('data-link') + "";
+                });
+            }
+        </script>
+
     </body>
 </html>
