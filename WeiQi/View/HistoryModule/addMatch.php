@@ -1,5 +1,6 @@
 <?php
 include('../MasterPage.html');
+require '../../Controller/History/HistoryController.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,25 +16,33 @@ include('../MasterPage.html');
     </head>
     <body>
         <div class="container">
-            <h3>Edit Match</h3>
+            <h3>Add Match</h3>
 
             <div class="formContainer">
-                <form class="formStyle" action="CreateHistoryAdmin.php" method="POST">
+                
+                <?php
+                echo "<form class=\"formStyle\" action=\"addMatch.php?type=". $_GET["type"]. "&id=". $_GET["id"] ."\" method=\"POST\">"
+                
+                ?>
                     <label class="labelStyle" for="black">Black : </label>
                     <input type="text" name="black" value="" />
-                    <input type="radio" name="winner" id="blackWinner" value="blackWinner" />
-                    <label for="blackWinner">Winner</label>
+                    <br/>
+                    <br/>
+                    <label class="labelStyle" for="blackScore">Black Score : </label>
+                    <input type="text" name="blackScore" value="" />
                     <br/>
                     <br/>
                     <label class="labelStyle" for="white">White : </label>
                     <input type="text" name="white" value="" />
-                    <input type="radio" name="winner" id="whiteWinner" value="whiteWinner" />
-                    <label for="whiteWinner">Winner</label>
+                    <br/>
+                    <br/>
+                    <label class="labelStyle" for="whiteScore">White Score : </label>
+                    <input type="text" name="whiteScore" value="" />
                     <br/>
                     <br/>
                     <div class="multilineStyle">
                         <label class="labelStyle" for="remark">Remark :  </label>
-                        <textarea name="remark" rows="4" cols="20">
+                        <textarea name="remark" rows="4" cols="50">
                         </textarea>
                     </div>
                     <br/>
@@ -53,11 +62,46 @@ include('../MasterPage.html');
                     </select>
                     <br/>
                     <br/>
-                    <p>Insert Moves</p>
                     <input type="reset" value="Reset" />
-                    <input type="submit" value="Confirm" />
+                    <input type="submit" name="submit" value="Confirm" />
                 </form>
             </div>
+
+            <?php
+            session_start();
+            $_SESSION["role"] = "admin";
+            $role = $_SESSION["role"];
+            $historyId = $_GET["id"];
+
+            if (isset($_POST["submit"])) {
+
+                // if validation return true;
+                $black = $_POST["black"];
+                $white = $_POST["white"];
+                $wScore = $_POST["whiteScore"];
+                $bScore = $_POST["blackScore"];
+                $sTime = $_POST["startTime"];
+                $eTime = $_POST["endTime"];
+                $board = $_POST["boardSize"];
+                $remark = $_POST["remark"];
+
+                
+                try{
+                    createHistoryMatch($black, $white, $wScore, $bScore, $remark, $sTime,
+                        $eTime, $board, $role, $historyId);
+                } catch (Exception $ex) {
+                       echo "error occur";
+                }
+                // if success
+
+                if ($_GET["type"] == "edit") {
+                    header("Location: EditHistory.php");
+                } else {
+                    header("Location: CreateHistoryAdmin.php");
+                }
+            }
+            ?>
+
         </div>
     </body>
 </html>
