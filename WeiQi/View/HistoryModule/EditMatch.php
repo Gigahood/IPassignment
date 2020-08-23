@@ -128,6 +128,7 @@ require '../../Controller/History/HistoryController.php';
                 header("Location: HistoryView.php");
             }
         }
+        closeCon($_SESSION["role"]);
         ?>
 
     </body>

@@ -22,21 +22,39 @@ session_start();
             $compID = $_SESSION["compID"];
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
-            
-
 
             echo "<h3>Edit " . $compHistory->getName() . " Competition History</h3>";
             ?>
 
+            <?php
+//                    do validation here
+            if (isset($_POST["submit"])) {
+
+                $startDate = $_POST["startDate"];
+                $endDate = $_POST["endDate"];
+                $remark = $_POST["remark"];
+                $role = $_SESSION["role"];
+                $id = $_POST["history_ID"];
+                updateHistory($startDate, $endDate, $remark, $role, $id);
+
+                if (empty($error)) {
+                    header("Location: HistoryView.php");
+                } else {
+                    echo "<h1>$error</h1>";
+                }
+            }
+            
+            closeCon($_SESSION["role"]);
+            ?>
+
 
             <div class="formContainer">
-                <form class="formStyle" method="POST" action="EditHistory.php">
+                <form class="formStyle" method="POST" action="">
                     <label for="startDate">Start Date : </label>
                     <?php
                     echo "<input type=\"Date\" name=\"startDate\" value=\"" . date('Y-m-d', strtotime($compHistory->getHstart())) . "\" />";
 //                    echo "<input id='hiddenButton' name'history_ID' type='hidden' value='" . $compHistory->getHistory_ID() . "'/>";
-                     echo "<input id='hiddenButton' type=\"hidden\" name=\"history_ID\" value=\"" .  $compHistory->getHistory_ID() . "\" />";
-                    
+                    echo "<input id='hiddenButton' type=\"hidden\" name=\"history_ID\" value=\"" . $compHistory->getHistory_ID() . "\" />";
                     ?>
                     <br/>
                     <br/>
@@ -47,7 +65,7 @@ session_start();
                     <br/>
                     <br/>
                     <label for="remark">Remark : </label>
-                     <label for="remark2">Remark : </label>
+                    <label for="remark2">Remark : </label>
                     <?php
                     echo "<input type='text' name='remark' value='" . $compHistory->getRemark() . "' />";
                     ?>
@@ -84,25 +102,9 @@ session_start();
                         } else {
                             echo "<td data-id='" . $value["match_ID"] . "'>"
                             . "<a style='margin-left: 5px; class='link' href='' data-href='HistoryDetail.php' >Board</a>";
-                        }
-                    }
-                    ?>
 
-                    <?php
-//                    do validation here
-                    if (isset($_POST["submit"])) {
-                        $error;
-                        $startDate = $_POST["startDate"];
-                        $endDate = $_POST["endDate"];
-                        $remark = $_POST["remark"];
-                        $role = $_SESSION["role"];
-                        $id = $_POST["history_ID"];
-                        updateHistory($startDate, $endDate, $remark, $role, $id);
-                        
-                        if (empty($error)) {
-                            header("Location: HistoryView.php");
+                            echo "</tr>";
                         }
-                        
                     }
                     ?>
                 </table>

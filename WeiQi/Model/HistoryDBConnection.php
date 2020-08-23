@@ -5,7 +5,7 @@ include_once 'AbstractDatabaseConnection.php';
 class HistoryDBConnection extends AbstractDatabaseConnection {
 
     public function getHistoryDetail($compID) {
-        $query = "SELECT * FROM history WHERE competition_ID = ?";
+        $query = "SELECT * FROM history inner join competition on history.competition_ID = competition.competition_ID WHERE history.competition_ID = ?";
         $stmt = parent::$db->prepare($query);
         $stmt->bindParam(1, $compID, PDO::PARAM_INT);
         $stmt->execute();
@@ -98,7 +98,7 @@ class HistoryDBConnection extends AbstractDatabaseConnection {
     }
 
     public function getParticipant($matchID, $userID) {
-        $query = "SELECT * FROM participantList INNER join historymatch
+        $query = "SELECT * FROM participant INNER join historymatch
 	on participantList.history_ID = historymatch.history_ID
 WHERE historymatch.match_ID  = ? and participantList.user_ID = ?";
 
@@ -123,7 +123,7 @@ WHERE historymatch.match_ID  = ? and participantList.user_ID = ?";
 //    }
 
     public function getParticipantList($historyID) {
-        $query = "SELECT * FROM participantList WHERE history_ID  = ? order by score desc";
+        $query = "SELECT * FROM participantList WHERE history_ID  = ?";
         $stmt = parent::$db->prepare($query);
         $stmt->bindParam(1, $historyID, PDO::PARAM_INT);
         $stmt->execute();
