@@ -11,10 +11,10 @@
  *
  * @author Jane Chew
  */
-interface user {
+interface UserADT {
     //put your code here
     
-    public function createAccount();
+    public function createAccount($userID, $username, $useremail, $userdob, $useraddress, $usercontact, $userpw, $userpic, $userIC, $userrole);
     /*
     Description     : to add a new account to weiqi system
     Precondition    : user details is not null 

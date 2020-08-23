@@ -19,11 +19,27 @@ and open the template in the editor.
         <title>Account Registration</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="authCSS.css" />
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+
+        <script type="text/javascript">
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#proImg').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+        </script>
     </head>
     <body>
-        <?php
-        if ((!isset($_POST['email'])) || !isset($_POST['PW'])) {
-          ?>
+
         <div id="registerFormStyle">
             <div>
                 <img src="auth_image/nworldLogo.png" alt="N-World logo" style="width: 30%; margin-left: auto; margin-right: auto; display: block;"/>
@@ -76,15 +92,15 @@ and open the template in the editor.
                     </textarea>
                     <br /><br />
                     
-                    <span class="lblRightStyle"><span style="color: red;">* </span>Profile Picture : </span>
-                    <img src="<?php echo $_GET['filename']; ?>" width="150" height="180" alt="profile picture" style="border-style: solid; border-width: 1px; border-color: black;"/>
-                    &nbsp;
-                    <input type="file" name="profileUpload" id="profileUpload"/>
-                    <br /><br />
+                    <span class="lblRightStyle">Profile Picture : </span>
+                    
+                    <form action="" method="post" runat="server">
+                    <input type="file" name="profileUpload" id="profileUpload" onchange="readURL(this);"/>
                     <div style="text-align: center">
-                        <input type="submit" value="Preview" name="action" />
+                        <img src="#" width="150" height="180" alt="profile picture" style="border-style: solid; border-width: 1px; border-color: black;"/>
                     </div>
                     <br /><br />
+                    </form>
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Email : </span>
                     <input type="text" name="email" id="email" value="" size="30" />
@@ -104,25 +120,85 @@ and open the template in the editor.
                 </div>
             </form>
         </div>
-        
-        <!--NOT WORK -->
-        <?php
-        // put your code here
-        /*if($_POST['action'] == 'Preview')
-        { 
-            $filepath = "images/" . $_FILES["file"]["name"];
 
-            if(move_uploaded_file($_FILES["file"]["tmp_name"], $filepath)) 
-            {
-                //echo "<img src=".$filepath." height=200 width=300 />";
-                $filename = ".$filepath.";
-            } 
-            else 
-            {
-                echo "Error !!";
+        <?php
+            //Validation & Error Handling//
+            $errorMessage = "";
+            $errorMesOpenStyle = "<p style='color:red'>*";
+            $errorMesCloseStyle = "*</p>";
+            $failedRegister = "Failed to register due to";
+            
+            $validationNum = '/^([0-9]*)$/';
+            if (!isset($_POST['userName']))  {
+                $errorMessage .= $errorMesOpenStyle . "User name is a required field." . $errorMesCloseStyle;
+                error_log($failedRegister . " empty user name.");
             }
-        }*/ 
-        
+            
+            /*$day = test_input($_POST['day']);
+            $month = test_input($_POST['month']);
+            $year = test_input($_POST['year']);*/
+            if (!isset($_POST['day']) || !isset($_POST['month']) || !isset($_POST['year'])) {
+                $errorMessage .= $errorMesOpenStyle . "User date of birth is a required field." . $errorMesCloseStyle;
+                error_log($failedRegister . " empty user date of birth.");
+            }
+            else if (!preg_match($validationNum, $_POST['day']) || !preg_match($validationNum, $_POST['month']) || !preg_match($validationNum, $_POST['year'])) {
+                $errorMessage .= $errorMesOpenStyle . "User date of birth only accepts numeric value." . $errorMesCloseStyle;
+                error_log($failedRegister . " invalid format of" . " user date of birth.");
+            }
+            
+            //$contact = test_input($_POST['contactNo']);
+            if (!isset($_POST['contactNo'])) {
+                $errorMessage .= $errorMesOpenStyle . "Contact number is a required field." . $errorMesCloseStyle;
+                error_log($failedRegister . " empty user contact number.");
+            }
+            else if (!preg_match($validationNum, $_POST['contactNo'])) {
+                $errorMessage .= $errorMesOpenStyle . "User contact number only accepts numeric value." . $errorMesCloseStyle;
+                error_log($failedRegister . " invalid format of user contact number.");
+            }
+            
+            /*$icPre = test_input($_POST['icPre']);
+            $icMid = test_input($_POST['icMid']);
+            $icPost = test_input($_POST['icPost']);*/
+            if (!isset($_POST['icPre']) || !isset($_POST['icMid']) || !isset($_POST['icPost'])) {
+                $errorMessage .= $errorMesOpenStyle . "IC number is a required field." . $errorMesCloseStyle;
+                error_log($failedRegister . " empty IC number.");
+            }
+            else if (!preg_match($validationNum, $_POST['icPre']) || !preg_match($validationNum, $_POST['icMid']) || !preg_match($validationNum, $_POST['icPost'])) {
+                $errorMessage .= $errorMesOpenStyle . "IC number only accepts numeric value." . $errorMesCloseStyle;
+                error_log($failedRegister . " invalid format of user contact number.");
+            }
+            
+            if (!isset($_POST['address'])) {
+                $errorMessage .= $errorMesOpenStyle . "Address is a required field." . $errorMesCloseStyle;
+                error_log($failedRegister . " empty address.");
+            }
+            
+            //$email = test_input($_POST['email']);
+            if (!isset($_POST['email'])) {
+                $errorMessage .= $errorMesOpenStyle . "Email address is a required field." . $errorMesCloseStyle;
+                error_log($failedRegister . " empty email address.");
+            }
+            else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                $errorMessage .= $errorMesOpenStyle . "Invalid email address." . $errorMesCloseStyle;
+                error_log($failedRegister . " invalid format of user email address.");
+            }
+            
+            /*$pw1 = test_input($_POST['PW']);
+            $pw2 = test_input($_POST['rePW']);*/
+            if (!isset($_POST['PW']) || !isset($_POST['rePW'])) {
+                $errorMessage .= $errorMesOpenStyle . "Password is a required field." . $errorMesCloseStyle;
+                error_log($failedRegister . " empty password.");
+            }
+            else if (strlen($_POST['PW']) < 6 ) {
+                $errorMessage .= $errorMesOpenStyle . "Password must be at least 6 characters." . $errorMesCloseStyle;
+                error_log($failedRegister . " password entered is less than 6 characters.");
+            }
+            else if ($_POST['rePW'] != $_POST['PW']){
+                $errorMessage .= $errorMesOpenStyle . "Password entered must be match." . $errorMesCloseStyle;
+                error_log($failedRegister . " password entered is not match.");
+            }
+            if ((!isset($_POST['userName']))) {
+            
         } else {
           $user_ID = '';
           $user_name = trim($_POST['userName']);

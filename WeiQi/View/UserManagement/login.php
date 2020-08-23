@@ -57,8 +57,9 @@ and open the template in the editor.
             $userpw = trim($_POST['PW']);
             
             if((!$useremail) && (!$userpw)){
-                echo '<p>You have not entered your login details<br/>'
-            . 'Please go back and try again.</p>';
+                echo '<p>Failed to log in' . '. You have not entered your login details.</p>';
+                error_log("Failed to log in" . " due to empty user details.");
+                //Find error log file in C:\xampp\apache\logs\error.txt
             exit;
             }
 
@@ -67,7 +68,9 @@ and open the template in the editor.
             $result = $db->retrieveUser($useremail, $userpw);
         
             if($result == null){
-                echo "Login Fail $useremail and $userpw<br/>";
+                //echo "Login Fail $useremail and $userpw<br/>";
+                echo "Login Fail<br />";
+                error_log("Failed to log in" . " due to email and password entered are not found in database.");
                 exit;
             }
             else {
