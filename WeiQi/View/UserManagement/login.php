@@ -49,7 +49,7 @@ and open the template in the editor.
         
         <?php
         session_start();
-        $_SESSION["role"] = "participant";
+        $_SESSION["role"] = "admin";
         
             // put your code here
         if(isset($_POST['email']) && isset($_POST['PW'])){

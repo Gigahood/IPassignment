@@ -40,6 +40,95 @@ and open the template in the editor.
     </head>
     <body>
 
+        <?php
+            session_start();
+            $_SESSION["role"] = "participant";
+            
+            
+            $errorMessage = "";
+            $errorMesOpenStyle = "<p style='color:red'>*";
+            $errorMesCloseStyle = "*</p>";
+            $failedRegister = "Failed to register due to";
+                
+            if($_SERVER["REQUEST_METHOD"] == "POST") {
+                //Validation & Error Handling//
+
+                $validationNum = '/^([0-9]*)$/';
+                if (empty($_POST['userName']))  {
+                    $errorMessage .= $errorMesOpenStyle . "User name is a required field." . $errorMesCloseStyle;
+                    error_log($failedRegister . " empty user name.");
+                }
+
+                /*$day = test_input($_POST['day']);
+                $month = test_input($_POST['month']);
+                $year = test_input($_POST['year']);*/
+                if (empty($_POST['day']) || empty($_POST['month']) || empty($_POST['year'])) {
+                    $errorMessage .= $errorMesOpenStyle . "User date of birth is a required field." . $errorMesCloseStyle;
+                    error_log($failedRegister . " empty user date of birth.");
+                }
+                else if (!preg_match($validationNum, $_POST['day']) || !preg_match($validationNum, $_POST['month']) || !preg_match($validationNum, $_POST['year'])) {
+                    $errorMessage .= $errorMesOpenStyle . "User date of birth only accepts numeric value." . $errorMesCloseStyle;
+                    error_log($failedRegister . " invalid format of" . " user date of birth.");
+                }
+
+                //$contact = test_input($_POST['contactNo']);
+                if (empty($_POST['contactNo'])) {
+                    $errorMessage .= $errorMesOpenStyle . "Contact number is a required field." . $errorMesCloseStyle;
+                    error_log($failedRegister . " empty user contact number.");
+                }
+                else if (!preg_match($validationNum, $_POST['contactNo'])) {
+                    $errorMessage .= $errorMesOpenStyle . "User contact number only accepts numeric value." . $errorMesCloseStyle;
+                    error_log($failedRegister . " invalid format of user contact number.");
+                }
+
+                /*$icPre = test_input($_POST['icPre']);
+                $icMid = test_input($_POST['icMid']);
+                $icPost = test_input($_POST['icPost']);*/
+                if (empty($_POST['icPre']) || empty($_POST['icMid']) || empty($_POST['icPost'])) {
+                    $errorMessage .= $errorMesOpenStyle . "IC number is a required field." . $errorMesCloseStyle;
+                    error_log($failedRegister . " empty IC number.");
+                }
+                else if (!preg_match($validationNum, $_POST['icPre']) || !preg_match($validationNum, $_POST['icMid']) || !preg_match($validationNum, $_POST['icPost'])) {
+                    $errorMessage .= $errorMesOpenStyle . "IC number only accepts numeric value." . $errorMesCloseStyle;
+                    error_log($failedRegister . " invalid format of user contact number.");
+                }
+
+                if (empty($_POST['address'])) {
+                    $errorMessage .= $errorMesOpenStyle . "Address is a required field." . $errorMesCloseStyle;
+                    error_log($failedRegister . " empty address.");
+                }
+
+                //$email = test_input($_POST['email']);
+                if (empty($_POST['email'])) {
+                    $errorMessage .= $errorMesOpenStyle . "Email address is a required field." . $errorMesCloseStyle;
+                    error_log($failedRegister . " empty email address.");
+                }
+                else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                    $errorMessage .= $errorMesOpenStyle . "Invalid email address." . $errorMesCloseStyle;
+                    error_log($failedRegister . " invalid format of user email address.");
+                }
+
+                /*$pw1 = test_input($_POST['PW']);
+                $pw2 = test_input($_POST['rePW']);*/
+                if (empty($_POST['PW']) || empty($_POST['rePW'])) {
+                    $errorMessage .= $errorMesOpenStyle . "Password is a required field." . $errorMesCloseStyle;
+                    error_log($failedRegister . " empty password.");
+                }
+                else if (strlen($_POST['PW']) < 6 ) {
+                    $errorMessage .= $errorMesOpenStyle . "Password must be at least 6 characters." . $errorMesCloseStyle;
+                    error_log($failedRegister . " password entered is less than 6 characters.");
+                }
+                else if ($_POST['rePW'] != $_POST['PW']){
+                    $errorMessage .= $errorMesOpenStyle . "Password entered must be match." . $errorMesCloseStyle;
+                    error_log($failedRegister . " password entered is not match.");
+                }
+
+
+                if (strcmp($errorMessage, "") != 0){
+                    echo $errorMessage; 
+                }
+            }
+        ?>
         <div id="registerFormStyle">
             <div>
                 <img src="auth_image/nworldLogo.png" alt="N-World logo" style="width: 30%; margin-left: auto; margin-right: auto; display: block;"/>
@@ -56,21 +145,21 @@ and open the template in the editor.
             <form id="registerForm" method="post" action="registration.php">
                 <div style="font-size: 20px; font-family: Arial;">
                     <span class="lblRightStyle"><span style="color: red;">* </span>Full Name : </span>
-                    <input type="text" name="userName" id="userName" value="" size="80" />
+                    <input type="text" name="userName" id="userName" value="<?php echo isset($_POST['userName']) ? $_POST['userName'] : '' ?>" size="80" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Date of Birth : </span>
-                    <input type="text" name="day" id="day" value="" size="2" placeholder="00" />
+                    <input type="text" name="day" id="day" value="<?php echo isset($_POST['day']) ? $_POST['day'] : '' ?>" size="2" placeholder="00" />
                     &nbsp;/&nbsp;
-                    <input type="text" name="month" id="month" value="" size="2" placeholder="00" />
+                    <input type="text" name="month" id="month" value="<?php echo isset($_POST['month']) ? $_POST['month'] : '' ?>" size="2" placeholder="00" />
                     &nbsp;/&nbsp;
-                    <input type="text" name="year" id="year" value="" size="20" placeholder="yyyy" />
+                    <input type="text" name="year" id="year" value="<?php echo isset($_POST['year']) ? $_POST['year'] : '' ?>" size="20" placeholder="yyyy" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Contact No. : </span>
                     <input type="text" name="contactPre" value="+60" size="3" />
                     &nbsp;-&nbsp;
-                    <input type="text" name="contactNo" id="contactNo" value="" size="20" />
+                    <input type="text" name="contactNo" id="contactNo" value="<?php echo isset($_POST['contactNo']) ? $_POST['contactNo'] : '' ?>" size="20" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Gender : </span>
@@ -80,15 +169,15 @@ and open the template in the editor.
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>IC No. : </span>
-                    <input type="text" name="icPre" id="icPre" value="" size="8" />
+                    <input type="text" name="icPre" id="icPre" value="<?php echo isset($_POST['icPre']) ? $_POST['icPre'] : '' ?>" size="8" />
                     &nbsp;-&nbsp;
-                    <input type="text" name="icMid" id="icMid" value="" size="3" />
+                    <input type="text" name="icMid" id="icMid" value="<?php echo isset($_POST['icMid']) ? $_POST['icMid'] : '' ?>" size="3" />
                     &nbsp;-&nbsp;
-                    <input type="text" name="icPost" id="icPost" value="" size="5" />
+                    <input type="text" name="icPost" id="icPost" value="<?php echo isset($_POST['icPost']) ? $_POST['icPost'] : '' ?>" size="5" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Address : </span>
-                    <textarea name="address" id="address" rows="6" cols="60">
+                    <textarea name="address" id="address" rows="6" cols="60"  >
                     </textarea>
                     <br /><br />
                     
@@ -97,13 +186,13 @@ and open the template in the editor.
                     <form action="" method="post" runat="server">
                     <input type="file" name="profileUpload" id="profileUpload" onchange="readURL(this);"/>
                     <div style="text-align: center">
-                        <img src="#" width="150" height="180" alt="profile picture" style="border-style: solid; border-width: 1px; border-color: black;"/>
+                        <img id="proImg" src="#" width="150" height="180" alt="profile picture" style="border-style: solid; border-width: 1px; border-color: black;"/>
                     </div>
                     <br /><br />
                     </form>
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Email : </span>
-                    <input type="text" name="email" id="email" value="" size="30" />
+                    <input type="text" name="email" id="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>" size="30" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Password : </span>
@@ -122,102 +211,35 @@ and open the template in the editor.
         </div>
 
         <?php
-            //Validation & Error Handling//
-            $errorMessage = "";
-            $errorMesOpenStyle = "<p style='color:red'>*";
-            $errorMesCloseStyle = "*</p>";
-            $failedRegister = "Failed to register due to";
+        
+                if ($_SERVER["REQUEST_METHOD"] == "POST" && strcmp($errorMessage, "") == 0) {
             
-            $validationNum = '/^([0-9]*)$/';
-            if (!isset($_POST['userName']))  {
-                $errorMessage .= $errorMesOpenStyle . "User name is a required field." . $errorMesCloseStyle;
-                error_log($failedRegister . " empty user name.");
-            }
+                  $user_ID = '';
+                  $user_name = trim($_POST['userName']);
+                  $user_email = trim($_POST['email']);
+                  $user_dob = trim($_POST['day'] . "/" . $_POST['month'] . "/" . $_POST['year']);
+                  $user_address = trim($_POST['address']);
+                  $user_contact = trim("0" . $_POST['contactNo']);
+                  $user_pw = trim($_POST['rePW']);
+                  //$user_pic = "NULL";
+                  $user_pic = file_get_contents($_POST['profileUpload']);
+                  $user_IC = trim($_POST['icPre'] . "-" . $_POST['icMid'] . "-" . $_POST['icPost']);
+                  $user_role = "participant";
+
+
+                  $db = UserDBConnection::getInstance($_SESSION["role"]);
+                  $db->createAccount($user_ID, $user_name, $user_email, $user_dob, $user_address, $user_contact, $user_pw, $user_pic, $user_IC, $user_role);
+                  echo "<p>Registration successful!</p>";
+                  $db->closeConnection();
+
+
+                }
+        
+                
             
-            /*$day = test_input($_POST['day']);
-            $month = test_input($_POST['month']);
-            $year = test_input($_POST['year']);*/
-            if (!isset($_POST['day']) || !isset($_POST['month']) || !isset($_POST['year'])) {
-                $errorMessage .= $errorMesOpenStyle . "User date of birth is a required field." . $errorMesCloseStyle;
-                error_log($failedRegister . " empty user date of birth.");
-            }
-            else if (!preg_match($validationNum, $_POST['day']) || !preg_match($validationNum, $_POST['month']) || !preg_match($validationNum, $_POST['year'])) {
-                $errorMessage .= $errorMesOpenStyle . "User date of birth only accepts numeric value." . $errorMesCloseStyle;
-                error_log($failedRegister . " invalid format of" . " user date of birth.");
-            }
             
-            //$contact = test_input($_POST['contactNo']);
-            if (!isset($_POST['contactNo'])) {
-                $errorMessage .= $errorMesOpenStyle . "Contact number is a required field." . $errorMesCloseStyle;
-                error_log($failedRegister . " empty user contact number.");
-            }
-            else if (!preg_match($validationNum, $_POST['contactNo'])) {
-                $errorMessage .= $errorMesOpenStyle . "User contact number only accepts numeric value." . $errorMesCloseStyle;
-                error_log($failedRegister . " invalid format of user contact number.");
-            }
-            
-            /*$icPre = test_input($_POST['icPre']);
-            $icMid = test_input($_POST['icMid']);
-            $icPost = test_input($_POST['icPost']);*/
-            if (!isset($_POST['icPre']) || !isset($_POST['icMid']) || !isset($_POST['icPost'])) {
-                $errorMessage .= $errorMesOpenStyle . "IC number is a required field." . $errorMesCloseStyle;
-                error_log($failedRegister . " empty IC number.");
-            }
-            else if (!preg_match($validationNum, $_POST['icPre']) || !preg_match($validationNum, $_POST['icMid']) || !preg_match($validationNum, $_POST['icPost'])) {
-                $errorMessage .= $errorMesOpenStyle . "IC number only accepts numeric value." . $errorMesCloseStyle;
-                error_log($failedRegister . " invalid format of user contact number.");
-            }
-            
-            if (!isset($_POST['address'])) {
-                $errorMessage .= $errorMesOpenStyle . "Address is a required field." . $errorMesCloseStyle;
-                error_log($failedRegister . " empty address.");
-            }
-            
-            //$email = test_input($_POST['email']);
-            if (!isset($_POST['email'])) {
-                $errorMessage .= $errorMesOpenStyle . "Email address is a required field." . $errorMesCloseStyle;
-                error_log($failedRegister . " empty email address.");
-            }
-            else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                $errorMessage .= $errorMesOpenStyle . "Invalid email address." . $errorMesCloseStyle;
-                error_log($failedRegister . " invalid format of user email address.");
-            }
-            
-            /*$pw1 = test_input($_POST['PW']);
-            $pw2 = test_input($_POST['rePW']);*/
-            if (!isset($_POST['PW']) || !isset($_POST['rePW'])) {
-                $errorMessage .= $errorMesOpenStyle . "Password is a required field." . $errorMesCloseStyle;
-                error_log($failedRegister . " empty password.");
-            }
-            else if (strlen($_POST['PW']) < 6 ) {
-                $errorMessage .= $errorMesOpenStyle . "Password must be at least 6 characters." . $errorMesCloseStyle;
-                error_log($failedRegister . " password entered is less than 6 characters.");
-            }
-            else if ($_POST['rePW'] != $_POST['PW']){
-                $errorMessage .= $errorMesOpenStyle . "Password entered must be match." . $errorMesCloseStyle;
-                error_log($failedRegister . " password entered is not match.");
-            }
-            if ((!isset($_POST['userName']))) {
-            
-        } else {
-          $user_ID = '';
-          $user_name = trim($_POST['userName']);
-          $user_email = trim($_POST['email']);
-          $user_dob = trim($_POST['day'] . "/" . $_POST['month'] . "/" . $_POST['year']);
-          $user_address = trim($_POST['address']);
-          $user_contact = trim("0" . $_POST['contactNo']);
-          $user_pw = trim($_POST['rePW']);
-          $user_pic = "NULL";
-          //$user_pic = trim($_POST['profileUpload'];
-          $user_IC = trim($_POST['icPre'] . "-" . $_POST['icMid'] . "-" . $_POST['icPost']);
-          $user_role = "participant";
-          
-          
-          $db = UserDBConnection::getInstance("participant");
-          $db->createAccount($user_ID, $user_name, $user_email, $user_dob, $user_address, $user_contact, $user_pw, $user_pic, $user_IC, $user_role);
-          echo "<p>Registration successful!</p>";
-          $db->closeConnection();
-        }
+        session_destroy();
+        
       ?>
         
     </body>
