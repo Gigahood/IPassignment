@@ -41,27 +41,37 @@ and open the template in the editor.
             }
 
         </script>
-        <!-- Update profile to another branch-->
     </head>
     <body>
         <?php 
             session_start();
             $_SESSION["role"] = "student";
                         
-            $db = UserDBConnection::getInstance($_SESSION["role"]);
-            $result = $db->viewProfile();
+            if ($_SERVER["REQUEST_METHOD"] != "POST") {
+                $db = UserDBConnection::getInstance($_SESSION["role"]);
+                $result = $db->viewProfile();
 
-            if($result == null){
-                echo 'Error. Please log in to your account first. <br />';
-                echo "<a href='login.php'>Click to go to login page</a>";
+                if($result == null){
+                    echo 'Error. Please log in to your account first. <br />';
+                    echo "<a href='login.php'>Click to go to login page</a>";
+
+                    $nameGet = null;
+                    $contactGet = null;
+                    $addressGet = null;
+                    $picGet = null;
+                    $emailGet = null;
+                }
+                else {
+                    $nameGet = $result['user_name'];
+                    $contactGet = $result['user_contact'];
+                    $addressGet = $result['user_address'];
+                    $picGet = '<img src="data:image/jpeg;base64,'.base64_encode( $result['user_pic'] ).'" alt="profilePicture" height="120"/>';
+                    $emailGet = $result['user_email'];
+                }
+                
+                $db->closeConnection();
             }
-            else {
-                $nameGet = $result['user_name'];
-                $contactGet = $result['user_contact'];
-                $addressGet = $result['user_address'];
-                $picGet = '<img src="data:image/jpeg;base64,'.base64_encode( $result['user_pic'] ).'" alt="profilePicture" height="120"/>';
-                $emailGet = $result['user_email'];
-            }
+            
         ?>
         <div id="registerFormStyle">
             <div>
@@ -76,21 +86,21 @@ and open the template in the editor.
                 <hr width="95%"/>
             </div>
             
-            <form id="registerForm">
+            <form id="registerForm" action="updateProfile.php" method="post">
                 <div style="font-size: 20px; font-family: Arial;">
                     <span class="lblRightStyle"><span style="color: red;">* </span>Full Name : </span>
-                    <input type="text" name="userName" value="<?php echo $nameGet; ?>" size="80" readonly="readonly" />
+                    <input type="text" name="userName" value="<?php if ($_SERVER["REQUEST_METHOD"] != "POST") {echo $nameGet;} else { echo isset($_POST['userName']) ? $_POST['userName'] : ''; } ?>" size="80" readonly="readonly" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Contact No. : </span>
                     <input type="text" name="contactPre" value="+60" size="3" />
                     &nbsp;-&nbsp;
-                    <input type="text" name="contactNo" value="<?php echo $contactGet; ?>" size="20" />
+                    <input type="text" name="contactNo" value="<?php if ($_SERVER["REQUEST_METHOD"] != "POST") {echo $contactGet;} else {echo isset($_POST['contactNo']) ? $_POST['contactNo'] : '';} ?>" size="20" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Address : </span>
                     <textarea name="address" rows="6" cols="60">
-                        <?php echo $addressGet; ?>
+                        <?php if ($_SERVER["REQUEST_METHOD"] != "POST") {echo $addressGet;} else { echo isset($_POST['address']) ? $_POST['address'] : ''; } ?>
                     </textarea>
                     <br /><br />
                     
@@ -98,7 +108,7 @@ and open the template in the editor.
                     <input type="file" name="profileUpload" id="profileUpload" onchange="readURL(this);"/>
                     <br /><br />
                     <div style="text-align: center">
-                        <?php echo $picGet; ?>
+                        <?php if ($_SERVER["REQUEST_METHOD"] != "POST") {echo $picGet;}  ?>
                         
                         &emsp; --> &emsp;
                         <img id="proImg" src="#" width="150" height="180" alt="profile picture" style="border-style: solid; border-width: 1px; border-color: black;"/>
@@ -107,7 +117,7 @@ and open the template in the editor.
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Email : </span>
-                    <input type="text" name="email" value="<?php echo $emailGet; ?>" size="30" />
+                    <input type="text" name="email" value="<?php if ($_SERVER["REQUEST_METHOD"] != "POST") {echo $emailGet;} else { echo isset($_POST['email']) ? $_POST['email'] : ''; } ?>" size="30" />
                     <br /><br /><br />
                     
                     <input type="submit" value="Update" name="action" class="loginStyle"/>
@@ -115,28 +125,43 @@ and open the template in the editor.
                 </div>
             </form>
         </div>
-        
+        <br /><br /><br /><br /><br />
         <?php
         // put your code here
-        session_start();
-            $_SESSION["role"] = "student";
             
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+        //if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(isset($_POST['email']) && isset($_POST['adress']) && isset($_POST['contactNo'])){
               $user_email = trim($_POST['email']);
               $user_address = trim($_POST['address']);
               $user_contact = trim($_POST['contactNo']);
               $user_pic = file_get_contents($_POST['profileUpload']);
 
               $db = UserDBConnection::getInstance($_SESSION["role"]);
-              $db->createAccount($user_email, $user_address, $user_contact, $user_pic);
-              echo "<p>Updated successful!</p>";
-               echo "<a href='../Competition/CompetitionHomepage.php'>Click to Competition Homepage.</a>";
-              $db->closeConnection();
-
+              $db->updateProfile($user_email, $user_address, $user_contact, $user_pic);
+              
+              if($result == null){
+                //echo "Login Fail $useremail and $userpw<br/>";
+                echo "Update Fail<br />";
+                //error_log("Failed to log in" . " due to email and password entered are not found in database.");
+                //echo $encrypt_pw;
+                exit;
             }
+            else {
+                
+                echo "<p>Updated successful!</p>";
+                echo "<a href='../Competition/CompetitionHomepage.php'>Click to Homepage.</a>";
+                //$_SESSION["role"] = $result["user_role"];
+                //$_SESSION["userID"] = $result["user_ID"];
+                //$_SESSION["userNameSS"] = $result["user_name"];
+            }
+            
+            
+              
+              $db->closeConnection();
+        }
+            //}
 
-        session_destroy();
+            //unset($_SESSION["role"]);
         ?>
     </body>
 </html>
