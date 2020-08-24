@@ -45,6 +45,7 @@ include_once '../../Model/StoreDBConnection.php';
                 $result = $db->retrieveStoreData("null");
             } else {
                 $result = $db->retrieveStoreData($_POST["category"][0]);
+                $product2 = new PriceDecorator();
             }
 
 

@@ -1,5 +1,5 @@
 <?php
-require_once 'DecoratorClass/ProductInterface.php';
+require_once 'ProductInterface.php';
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -111,6 +111,16 @@ class Products implements ProductInterface {
         $memPrice = $normal_price - ($normal_price * $discount_rate);
         return number_format($memPrice, 2);
     }
-    
+
+    public function getDiscountn() {
+        return $this->discount_rate;
+    }
+
+    public function getNormalPrice() {
+         return $this->normal_price;
+    }
+
+  
+
 }
 
