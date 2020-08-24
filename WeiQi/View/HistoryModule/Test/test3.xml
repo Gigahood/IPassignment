@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<competitions>
+    <competition>
+        <competitionID>1</competitionID>
+        <competitionName>WeiQi May Competition PJ</competitionName>
+        <history>
+            <historyStartDate>123</historyStartDate>
+        </history>
+    </competition>
+</competitions>
