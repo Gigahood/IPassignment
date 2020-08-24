@@ -46,27 +46,3 @@ class Cryptor {
     }
 
 }
-//
-//$token = "123456";
-//
-//$encryption_key = 'CKXH2U9RPY3EFD70TLS1ZG4N8WQBOVI6AMJ5';
-//$cryptor = new Cryptor($encryption_key);
-//$crypted_token = $cryptor->encrypt($token);
-//
-//
-//echo $crypted_token;
-//
-//$cryptor1 = new Cryptor($encryption_key);
-//echo "<br/>";
-//$token2 = $cryptor1->decrypt($crypted_token);
-//
-//echo $token2;
-//
-//$encrytIni = parse_ini_file('encrypt.ini');
-//$ini = parse_ini_file('config.ini');
-//echo "<br/>";
-//echo "<br/>";
-//echo $encrytIni['db_encrypt_key'];
-//echo "<br/>";
-//echo "<br/>";
-//echo $ini['db_student_user'];

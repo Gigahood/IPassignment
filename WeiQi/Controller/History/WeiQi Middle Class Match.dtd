@@ -19,34 +19,34 @@
     </competitions>
 -->
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT competitions (competition)*>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT competition (competitionID|competitionName|history)*>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT competitionID (#PCDATA)>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT competitionName (#PCDATA)>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT history (historyStartDate|historyEndDate|matches)*>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT historyStartDate (#PCDATA)>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT historyEndDate (#PCDATA)>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT matches (match)*>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT match (matchDetail|startTime|endTime|blackUser|whiteUser|blackScore|whiteScore|boardSize)*>
 
-<!--- Put your DTDDoc comment here. -->
+
 <!ELEMENT matchDetail (#PCDATA)>
 
 <!--- Put your DTDDoc comment here. -->
