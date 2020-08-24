@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <competitions>
     <competition>
-        <competitionID>7</competitionID>
-        <competitionName>WeiQi Student Grade 3 Exam</competitionName>
+        <competitionID>3</competitionID>
+        <competitionName>WeiQi Open Category Competition</competitionName>
         <history>
-            <historyStartDate>2020-08-10 00:00:00</historyStartDate>
-            <historyEndDate>2020-08-28 00:00:00</historyEndDate>
-            <remark>Someth</remark>
+            <historyStartDate>2020-08-03 00:00:00</historyStartDate>
+            <historyEndDate>2020-08-12 00:00:00</historyEndDate>
+            <remark>12312312312312</remark>
             <matches>
                 <match>
-                    <matchDetail>new hsitory</matchDetail>
-                    <startTime>08:08:00</startTime>
-                    <endTime>20:08:00</endTime>
+                    <matchDetail>12312312312</matchDetail>
+                    <startTime>09:02:00</startTime>
+                    <endTime>18:00:00</endTime>
                     <blackUser>Student</blackUser>
-                    <whiteUser>nonStud</whiteUser>
+                    <whiteUser>Student_2</whiteUser>
                     <blackScore>123</blackScore>
-                    <whiteScore>123</whiteScore>
+                    <whiteScore>1231313</whiteScore>
                     <boardSize>13</boardSize>
                 </match>
             </matches>

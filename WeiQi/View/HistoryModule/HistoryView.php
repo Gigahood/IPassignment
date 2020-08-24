@@ -3,7 +3,7 @@ include('../MasterPage.php');
 require '../../Controller/History/HistoryController.php';
 require '../../Controller/History/HistoryXMLController.php';
 
-session_start();
+//session_start();
 ?>
 <!DOCTYPE html>
 
@@ -116,7 +116,7 @@ session_start();
 
             for (let i = 0; i < a.length; i++) {
                 a[i].addEventListener('click', function (e) {
-                    e.preventDefault();
+                    e.preventDefault();     
                     console.log(this.parentNode.getAttribute('data-id'));
                     console.log(this.getAttribute('data-href'));
                     window.location.href = this.getAttribute('data-href') + "?id="

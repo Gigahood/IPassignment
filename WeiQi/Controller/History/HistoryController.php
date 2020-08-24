@@ -68,6 +68,8 @@ function calculateHistoryScore($matches) {
 
 function getMatch($matchID, $dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
+    
+   
 
     $result = $db->getMatchDetail($matchID);
 

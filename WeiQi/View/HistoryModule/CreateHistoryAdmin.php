@@ -2,7 +2,7 @@
 include('../MasterPage.php');
 require '../../Controller/History/HistoryController.php';
 
-session_start();
+//session_start();
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +62,7 @@ session_start();
                 <?php
 //                    do validation here
                 if (isset($_POST["submit"])) {
-                    $error = 1;
+                    $error ;
 
                     if (!empty($_POST["file"])) {
                         insertWithXML($_POST["file"]);

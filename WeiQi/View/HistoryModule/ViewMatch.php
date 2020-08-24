@@ -20,7 +20,7 @@ require '../../Controller/History/HistoryController.php';
             <h3>View Match</h3>
 
             <?php
-            session_start();
+//            session_start();
             $_SESSION["role"] = "admin";
             $_SESSION["id"] = $_SESSION["compID"];
 

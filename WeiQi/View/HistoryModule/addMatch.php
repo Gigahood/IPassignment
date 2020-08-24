@@ -67,7 +67,7 @@ require '../../Controller/History/HistoryController.php';
             </div>
 
             <?php
-            session_start();
+//            session_start();
             $_SESSION["role"] = "admin";
 
 //            if ($role != "admin") {

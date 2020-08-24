@@ -2,7 +2,7 @@
 include('../MasterPage.php');
 require '../../Controller/History/HistoryController.php';
 
-session_start();
+//session_start();
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +20,7 @@ session_start();
         <div class="container">
             <?php
             $compID = $_SESSION["compID"];
+            $_SESSION["role"] = "admin";
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
 
