@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-session_start();
+//session_start();
 include '../MasterPage.php';
 include_once '../../Model/StoreDBConnection.php';
 ?>
@@ -45,7 +45,7 @@ include_once '../../Model/StoreDBConnection.php';
                 $result = $db->retrieveStoreData("null");
             } else {
                 $result = $db->retrieveStoreData($_POST["category"][0]);
-                $product2 = new PriceDecorator();
+                $memPrice = new PriceDecorator();
             }
 
 
@@ -93,7 +93,7 @@ include_once '../../Model/StoreDBConnection.php';
                   
                     foreach ($result as $value) {
                         
-                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
+//                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
 
                         echo '<div class="column" onclick="printID(this.id);" >';
                         
@@ -110,7 +110,7 @@ include_once '../../Model/StoreDBConnection.php';
                         echo '<p id="'. $value["pro_ID"] .'" >';
                         echo "<b>". $value['pro_name'] . " </b><br/>";
                         echo "Normal Price: RM " . number_format($value['normal_price'], 2) . " <br/>";
-                        echo "<span id='". $value["pro_ID"] ." ' style='color: red'> member price </span>";
+                       // echo "<span id='". $value["pro_ID"] . "'>" . $memPrice->getDescription() ."</span>";
                         echo '</p></a></div>';
                         
                     }

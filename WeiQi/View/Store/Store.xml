@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<products>
+    <product id="1">
+        <name>Chinese Old Board Game Weiqi Checkers Go Game Set</name>
+        <desc>Chinese Old Board Game Weiqi Checkers Go Game Set Family Games For Children Friends Educational Entertainment Board Game.
+
+            Packing List:
+            1 set of black and white chess pieces
+            1*chess board
+            1*black chess box</desc>
+        <quantity>10</quantity>
+        <category>Chess Sets</category>
+        <price>73.29</price>
+        <discountRate>0.15</discountRate>
+    </product>
+    <product id="2">
+        <name>Medium Magnetic Go Game Chess</name>
+        <desc>Chinese Old Board Game Weiqi Checkers Go Game Set Family Games For Children Friends Educational Entertainment Board Game.
+
+            Packing List:
+            1 set of black and white chess pieces
+            1*chess board
+            1*black chess box</desc>
+        <quantity>10</quantity>
+        <category>Chess Sets</category>
+        <price>100.29</price>
+        <discountRate>0.15</discountRate>
+    </product>
+    <product id="3">
+        <name>Yunzi Go Stones, Go Bowls Set</name>
+        <desc>Yunzi is the national standard for professional tournaments in China. 
+            Yunzi has a long history dating back to the Tang Dynasty (618 A.D. – 907 A.D.) . 
+            The stone has a property which absorbs moisture from one's fingertips without 
+            picking up dirt, and a resonant quality that gives it a pleasing sound as it 
+            lands on the board. Yunzi has a nice heft to it and is heavier than shell and 
+            slate stones of equal size. 
+
+            Choice of Chinese Style stones or Japanese Style stones. Please indicate your 
+            preference. (Stones and bowls only. Go Board for illustration purposes only. )</desc>
+        <quantity>10</quantity>
+        <category>Chessboard</category>
+        <price>57.00</price>
+        <discountRate>0.15</discountRate>
+    </product>
+</products>
