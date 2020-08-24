@@ -8,11 +8,9 @@
 function __autoload($class_name) {
     include $class_name . '.php';
 }
-<<<<<<< Updated upstream
-include_once '../Store/class/Products.php';
-=======
-include_once '../Products.php';
->>>>>>> Stashed changes
+
+include_once '../class/Products.php';
+
 
 class PriceDecorator {
 

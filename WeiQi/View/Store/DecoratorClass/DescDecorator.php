@@ -30,7 +30,7 @@ class DescDecorator extends AbstractDecorator {
     }
 
     public function decorate() {
-        return $this->description . $this->product->calMemberPrice($this->getNormal_price(), $this->getDiscount_rate());
+        return $this->description . $this->products->calMemberPrice($this->getNormal_price(), $this->getDiscount_rate());
     }
 
     public function calMemberPrice($normal_price, $discount_rate) {
