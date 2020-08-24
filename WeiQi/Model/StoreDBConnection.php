@@ -143,13 +143,15 @@ class StoreDBConnection extends AbstractDatabaseConnection {
     }
 
     public function retrieveProInfo($pro_name) {
-        $query = "SELECT * FROM products WHERE pro_name = ?";
+        $query = "SELECT pro_name, pro_desc, normal_price, discount_rate FROM products WHERE pro_name = ?";
         $stmt = parent::$db->prepare($query);
         $stmt->bindParam(1, $pro_name, PDO::PARAM_STR);
         $stmt->execute();
 
         $totalrows = $stmt->rowCount();
         if ($totalrows == 0) {
+            
+            print_r($totalrows);
             return null;
         } else {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
