@@ -1,132 +1,115 @@
-<!DOCTYPE html>
 <?php
-session_start();
-include '../MasterPage.php';
-include_once '../../Model/StoreDBConnection.php';
-?>
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
-        <link rel="stylesheet" type="text/css" href="CSS/store.css">  
-    </head>
-    <body>
-        <div id="productContainer">
-            <hr />
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-            <div class="hearderNote">
-                <p>Note To Customer : Products below are for displayed purpose. We do not accept online payment. 
-                    If you are interested in any of the products, please contact us via email (
-                    <a target="_self" href="" style="color: blue">weiqi@gmail.com</a>
-                    ) or phone number ( 03-8888 8888 ). Thank you.</p>
-            </div>
+/**
+ * Description of Store
+ *
+ * @author Lim Yi En
+ */
+class Products {
+    private $pro_ID;
+    private $pro_name;
+    private $pro_desc;
+    private $total_qty;
+    private $pro_category;
+    private $normal_price;
+    private $discount_rate;
+    private $pro_image;
+    private $admin_ID;
 
-            <hr />
+    function __construct($pro_ID, $pro_name, $pro_desc, $total_qty, $pro_category, $normal_price, $discount_rate, $pro_image, $admin_ID) {
+        $this->pro_ID = $pro_ID;
+        $this->pro_name = $pro_name;
+        $this->pro_desc = $pro_desc;
+        $this->total_qty = $total_qty;
+        $this->pro_category = $pro_category;
+        $this->normal_price = $normal_price;
+        $this->discount_rate = $discount_rate;
+        $this->pro_image = $pro_image;
+        $this->admin_ID = $admin_ID;
+    }
+    
+    function getPro_ID() {
+        return $this->prod_ID;
+    }
 
-            <?php
-            $_SESSION["role"] = "admin";
+    function getPro_name() {
+        return $this->pro_name;
+    }
 
-            $db = StoreDBConnection::getInstance($_SESSION["role"]);
-            
-            if (!isset($_POST['category'][0]) || $_POST['category'][0] == "All" ) {
-                $result = $db->retrieveStoreData("null");
-            } else {
-                $result = $db->retrieveStoreData($_POST["category"][0]);
-            }
+    function getPro_desc() {
+        return $this->pro_desc;
+    }
 
+    function getTotal_qty() {
+        return $this->total_qty;
+    }
 
-            $isUnique = $db->isUniqueCat();
-            ?>
+    function getPro_category() {
+        return $this->pro_category;
+    }
 
-            <br/>
-            <div class="header">
-                <label for="category">Category: </label>
+    function getNormal_price() {
+        return $this->normal_price;
+    }
 
-                <form action="#" method="post" style="display: inline;">
-                    <select id="category" name="category[]" style="width: 300px;">
-                        <option value="ctgTitle" disabled>-- Category --</option>
-                        <option value="all">ALL</option>
+    function getDiscount_rate() {
+        return $this->discount_rate;
+    }
 
-                        <?php
-                        foreach ($isUnique as $value) {
-                            echo "<option value='" . $value['pro_category'] . "'>" . $value['pro_category'] . "</option>";
-                        }
-                        ?>
-                    </select>
-                    <input type="submit" name="submit" value="Submit" />
-                </form>
+    function getPro_image() {
+        return $this->pro_image;
+    }
 
-                <?php
-                if (isset($_POST['submit'])) {
-                    
-                    foreach ($_POST['category'] as $select) {
-                        echo 'Your selection is: ' . $select;
-                    }
-                }
-                ?>
+    function getAdmin_ID() {
+        return $this->admin_ID;
+    }
 
-                <form method="get" action="../Store/addNewItem.php" style="display: inline">
-                    <input type="submit" id="btnAddNew" value="Add New Item" name="btnAddNew"/>
-                </form>
-            </div>
+    function setPro_ID($pro_ID): void {
+        $this->product_id = $pro_ID;
+    }
 
-            <br/><br/>
+    function setPro_name($pro_name): void {
+        $this->pro_name = $pro_name;
+    }
 
-            <div class="product">
-                <form method="POST" name="productItem" action="">
-                 
-                    <?php
-                    foreach ($result as $value) {
-                        
-                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
+    function setPro_desc($pro_desc): void {
+        $this->pro_desc = $pro_desc;
+    }
 
-                        echo '<div class="column">';
+    function setTotal_qty($total_qty): void {
+        $this->total_qty = $total_qty;
+    }
 
-                        //-- Display Image-- //
-                        echo '<input name= "imageButton" id="product_img" type= "image" '
-                                . 'src="data:image;base64,' . base64_encode($value['pro_image'])
-                                . '" alt="Product Img" style="height:190px; width:100%;">';
+    function setPro_category($pro_category): void {
+        $this->pro_category = $pro_category;
+    }
 
-                        echo '<p>';
-                        echo "<b><a target='_self' href='../Store/ProductDetails.php' style='color: black'>" 
-                                . $value['pro_name'] . " </a></b>";
-                        echo "<br/>RM " . number_format($value['normal_price'], 2) . " <br/>";
-                        echo "<span style='color: red'>RM " . number_format($memPrice, 2) . "</span>";
-                        echo '</p></div>';
-                        
-                        
-                    }?>
-                    <input type="hidden" name="hidden_name" value="
-                        <?php echo $result["pro_name"]; ?> " />
-                    
-                    
-                    
-                        <?php
-                        echo $_POST["hidden_name"];
-//                    print_r($_POST["hidden_name"]);
-//                    // print_r($result) ;
-//                    if (isset($_POST["imageButton"])) {
-//                        if (isset($_SESSION["products"])) {
-//                            print_r($_SESSION["products"]);
-//                        } else {
-//                            $item_array = array (
-//                                'product_id' => $POST['hidden_name'] );
-//                        }
-//                        
-//                        $_SESSION['products'][0] = $item_array;
-//                        print_r($_SESSION['products']);
-//                    }
-//                    $db->closeConnection();
-//                    ?>
-                </form>
-               
-            </div>
+    function setNormal_price($normal_price): void {
+        $this->normal_price = $normal_price;
+    }
 
-        </div>
+    function setDiscount_rate($discount_rate): void {
+        $this->discount_rate = $discount_rate;
+    }
 
+    function setPro_image($pro_image): void {
+        $this->pro_image = $pro_image;
+    }
 
+    function setAdmin_ID($admin_ID): void {
+        $this->admin_ID = $admin_ID;
+    }
 
-    </body>
-</html>
+    public function calMemberPrice($normal_price, $discount_rate) {
+        $memPrice = $normal_price - ($normal_price * $discount_rate);
+        return number_format($memPrice, 2);
+    }
+    
+}
+
