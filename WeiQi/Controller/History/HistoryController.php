@@ -220,15 +220,11 @@ function checkTime($sTime, $eTime) {
 
 function insertWithXML($path) {
     $error = validatePath($path);
-    
-
     return $error;
 }
 
 function validatePath($path) {
-   
     try {
-       
         $doc = new SAXParser($path);
 
         $id = getID($doc->getHistory()->getName());
