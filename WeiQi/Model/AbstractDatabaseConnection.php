@@ -1,5 +1,5 @@
 <?php
-
+include_once '../../Ultilities/TwoWayEncryption.php';
 /**
  * Description of AbstractDatabaseConnection
  *
@@ -15,6 +15,8 @@ abstract class AbstractDatabaseConnection {
     private function __construct($dSession) {
 
         $ini = parse_ini_file('../../Ultilities/config.ini');
+        $encrytIni = parse_ini_file('../../Ultilities/encrypt.ini');
+        $cryptor1 = new Cryptor($encrytIni['db_encrypt_key']);
 
 
         $host = $ini['db_host'];
@@ -27,16 +29,20 @@ abstract class AbstractDatabaseConnection {
         try {
             if ($dSession == "student") {
                 $user = $ini['db_student_user'];
-                $password = $ini['db_student_password'];
+//                $password = $ini['db_student_password'];
+                $password = $cryptor1->decrypt($ini['db_student_password']);
             } else if ($dSession == "staff") {
                 $user = $ini['db_staff_user'];
-                $password = $ini['db_student_password'];
+//                $password = $ini['db_student_password'];
+                $password = $cryptor1->decrypt($ini['db_staff_password']);
             } else if ($dSession == "admin") {
                 $user = $ini['db_admin_user'];
-                $password = $ini['db_admin_password'];
+//                $password = $ini['db_admin_password'];
+                $password = $cryptor1->decrypt($ini['db_admin_password']);
             } else {
                 $user = $ini['db_guest_user'];
-                $password = $ini['db_guest_password'];
+//                $password = $ini['db_guest_password'];
+                $password = $cryptor1->decrypt($ini['db_guest_password']);
             }
             static::$db = new PDO($dsn, $user, $password);
             static::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

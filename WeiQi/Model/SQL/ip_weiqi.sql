@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2020 at 04:12 PM
+-- Generation Time: Aug 24, 2020 at 02:46 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -73,14 +73,15 @@ CREATE TABLE `history` (
 --
 
 INSERT INTO `history` (`history_ID`, `competition_ID`, `history_Start_Date`, `history_End_Date`, `remark`) VALUES
-(1, 1, '2016-07-03 00:00:00', '2016-07-03 00:00:00', 'Something happen222222222'),
+(1, 1, '2016-07-11 00:00:00', '2016-07-28 00:00:00', 'Something'),
 (2, 2, '2017-08-05 09:00:00', '2017-08-08 18:00:00', 'Something happen'),
 (3, 3, '2017-11-07 09:00:00', '2017-11-10 18:00:00', 'Something happen'),
 (4, 4, '2018-12-12 09:00:00', '2018-12-16 18:00:00', 'Something happen'),
 (5, 5, '2019-03-03 09:00:00', '2019-03-05 18:00:00', 'Something happen'),
-(6, 6, '2019-05-05 09:00:00', '2019-05-09 18:00:00', 'Something happen'),
 (7, 7, '2019-08-02 09:00:00', '2019-08-05 18:00:00', 'Something happen'),
-(8, 8, '2020-05-04 09:00:00', '2020-05-09 18:00:00', 'Something happen');
+(8, 8, '2020-05-04 09:00:00', '2020-05-09 18:00:00', 'Something happen'),
+(19, 11, '2020-08-12 00:00:00', '2020-08-12 00:00:00', 'new competition history'),
+(20, 6, '2020-08-02 00:00:00', '2020-08-04 00:00:00', '123');
 
 -- --------------------------------------------------------
 
@@ -106,8 +107,10 @@ CREATE TABLE `historymatch` (
 --
 
 INSERT INTO `historymatch` (`match_ID`, `history_ID`, `match_Detail`, `start_Time`, `end_Time`, `black_User`, `white_User`, `board_Size`, `black_Score`, `white_Score`) VALUES
-(1, 1, '123 something happen', '14:38:00', '11:30:00', 4, 2, 16, 500, 60),
-(2, 1, '0', '09:30:00', '11:30:00', 3, 2, 16, 50, 60);
+(1, 1, '123 something happen', '04:38:00', '11:30:00', 1, 8, 16, 500, 60),
+(2, 8, '0', '09:30:00', '11:30:00', 3, 2, 16, 50, 60),
+(22, 19, '     someone win the price                   ', '20:16:00', '15:19:00', 6, 12, 13, 123, 122),
+(23, 19, '     someone win the price                   ', '20:17:00', '15:20:00', 12, 8, 13, 123, 123);
 
 -- --------------------------------------------------------
 
@@ -147,24 +150,23 @@ INSERT INTO `participant` (`participant_ID`, `list_of_participation`, `total_sco
 CREATE TABLE `participantlist` (
   `participant_List_ID` int(10) UNSIGNED NOT NULL,
   `history_ID` int(10) UNSIGNED NOT NULL,
-  `user_ID` int(11) NOT NULL,
-  `score` int(11) NOT NULL
+  `user_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `participantlist`
 --
 
-INSERT INTO `participantlist` (`participant_List_ID`, `history_ID`, `user_ID`, `score`) VALUES
-(1, 1, 1, 0),
-(2, 1, 2, 0),
-(3, 1, 3, 0),
-(4, 1, 4, 0),
-(5, 1, 5, 0),
-(6, 2, 1, 0),
-(7, 2, 1, 0),
-(9, 1, 9, 12),
-(12, 1, 11, 12);
+INSERT INTO `participantlist` (`participant_List_ID`, `history_ID`, `user_ID`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 2, 1),
+(7, 2, 1),
+(9, 1, 9),
+(12, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -405,7 +407,13 @@ ALTER TABLE `competition`
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `history_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `history_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `historymatch`
+--
+ALTER TABLE `historymatch`
+  MODIFY `match_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `participantlist`
