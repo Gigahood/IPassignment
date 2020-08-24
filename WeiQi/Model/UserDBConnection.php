@@ -8,7 +8,6 @@ include_once '../../View/UserManagement/user_classes/UserADT.php';
  */
 class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
     
-    
     public function retrieveUser($useremail, $userpw){
         $getEmail = $useremail;
         $query = "SELECT * FROM user WHERE user_email = '$getEmail' ";
