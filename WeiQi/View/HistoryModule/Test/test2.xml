@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<competitions>
+    <competition>
+        <competitionName >WeiQi May Competition PJ</competitionName>
+        <history>
+            <historyStartDate></historyStartDate>
+            <historyEndDate></historyEndDate>
+            <matches>
+                <match>
+                    <matchDetail></matchDetail>
+                    <startTime></startTime>
+                    <endTime></endTime>
+                    <blackPlayer></blackPlayer>
+                    <whitePlayer></whitePlayer>
+                    <blackScore></blackScore>
+                    <whiteScore></whiteScore>
+                    <boardSize></boardSize>
+                </match>
+            </matches>
+        </history>
+    </competition>
+</competitions>
