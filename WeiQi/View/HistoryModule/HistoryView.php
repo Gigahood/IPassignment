@@ -1,5 +1,5 @@
 <?php
-include('../MasterPage.html');
+include('../MasterPage.php');
 require '../../Controller/History/HistoryController.php';
 
 session_start();

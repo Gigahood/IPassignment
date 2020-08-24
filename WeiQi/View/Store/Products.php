@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-include '../MasterPage.html';
+include '../MasterPage.php';
 include_once '../../Model/StoreDBConnection.php';
 ?>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-include('../MasterPage.html');
+include('../MasterPage.php');
 include_once '../../Model/StoreDBConnection.php';
 require_once 'Produts.php';
 ?>
