@@ -254,7 +254,15 @@ and open the template in the editor.
                   $user_pw = trim($_POST['rePW']);
                   $encrypt_pw = EncryptionRegister::oneWayHash($user_pw);
                   //$user_pic = "NULL";
-                  $user_pic = file_get_contents($_POST['profileUpload']);
+                  
+                  if(empty(file_get_contents($_POST['profileUpload']))){
+                      $user_pic = 'NULL';
+                  }
+                  else 
+                  {
+                      $user_pic = file_get_contents($_POST['profileUpload']);
+                  }
+                 
                   $user_IC = trim($_POST['icPre'] . "-" . $_POST['icMid'] . "-" . $_POST['icPost']);
                   $user_role = "participant";
 
