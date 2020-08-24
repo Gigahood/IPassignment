@@ -51,7 +51,7 @@ and open the template in the editor.
         session_start();
         $_SESSION["role"] = "student";
         
-        class EncryptionTest {
+        /*class EncryptionTest {
             public static function oneWayHash($value){
                 $hashedValue = password_hash($value, PASSWORD_DEFAULT);
 
@@ -71,7 +71,7 @@ and open the template in the editor.
 
                 return $hash === $hashValue;
             }
-        }
+        }*/
         
             // put your code here
         if(isset($_POST['email']) && isset($_POST['PW'])){
@@ -94,14 +94,14 @@ and open the template in the editor.
                 //echo "Login Fail $useremail and $userpw<br/>";
                 echo "Login Fail<br />";
                 error_log("Failed to log in" . " due to email and password entered are not found in database.");
-                echo $encrypt_pw;
+                //echo $encrypt_pw;
                 exit;
             }
             else {
                 
                 echo "<br /><p>Login successful!</p>";
-                echo $encrypt_pw;
-                //echo "<br /><script type='text/javascript'>location.href = '../Competition/CompetitionHomepage.php';</script>";
+                //echo $encrypt_pw;
+                echo "<br /><script type='text/javascript'>location.href = '../Competition/CompetitionHomepage.php';</script>";
                 
                 $_SESSION["role"] = $result["user_role"];
                 $_SESSION["userID"] = $result["user_ID"];
