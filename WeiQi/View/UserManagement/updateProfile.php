@@ -118,8 +118,8 @@ and open the template in the editor.
         
         <?php
         // put your code here
-        session_start();
-            $_SESSION["role"] = "student";
+        //session_start();
+            //$_SESSION["role"] = "student";
             
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
