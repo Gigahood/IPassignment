@@ -1,11 +1,12 @@
 <?php
 include_once 'AbstractDatabaseConnection.php';
+include_once '../../View/UserManagement/user_classes/UserADT.php';
 /**
  * Description of UserDBConnection
  *
  * @author Chew Jane
  */
-class UserDBConnection extends AbstractDatabaseConnection {
+class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
     
     public function retrieveUser($useremail, $userpw){
         $query = "SELECT * FROM user WHERE user_email = ? AND user_pw = ?";
@@ -41,5 +42,13 @@ class UserDBConnection extends AbstractDatabaseConnection {
           
           $stmt->execute();
     }
-    
+
+    public function updateProfile() {
+        
+    }
+
+    public function viewProfile() {
+        
+    }
+
 }
