@@ -7,7 +7,7 @@ and open the template in the editor.
 <?php
 include('../MasterPage.html');
 include_once '../../Model/StoreDBConnection.php';
-?>
+
 <html>
     <head>
         <meta charset="UTF-8">

@@ -42,7 +42,7 @@ and open the template in the editor.
 
         <?php
             session_start();
-            $_SESSION["role"] = "participant";
+            $_SESSION["role"] = "student";
             
             
             $errorMessage = "";
@@ -65,6 +65,10 @@ and open the template in the editor.
                 if (empty($_POST['day']) || empty($_POST['month']) || empty($_POST['year'])) {
                     $errorMessage .= $errorMesOpenStyle . "User date of birth is a required field." . $errorMesCloseStyle;
                     error_log($failedRegister . " empty user date of birth.");
+                }
+                else if ($_POST['day'] > 31 || $_POST['month'] > 12 || $_POST['year'] >= 2020){
+                    $errorMessage .= $errorMesOpenStyle . "User date of birth value entered is invalid." . $errorMesCloseStyle;
+                    error_log($failedRegister . " value out of range of" . " user date of birth.");
                 }
                 else if (!preg_match($validationNum, $_POST['day']) || !preg_match($validationNum, $_POST['month']) || !preg_match($validationNum, $_POST['year'])) {
                     $errorMessage .= $errorMesOpenStyle . "User date of birth only accepts numeric value." . $errorMesCloseStyle;
@@ -117,6 +121,10 @@ and open the template in the editor.
                 else if (strlen($_POST['PW']) < 6 ) {
                     $errorMessage .= $errorMesOpenStyle . "Password must be at least 6 characters." . $errorMesCloseStyle;
                     error_log($failedRegister . " password entered is less than 6 characters.");
+                }
+                else if (!preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $_POST['PW'])){
+                    $errorMessage .= $errorMesOpenStyle . "Password must contain both numbers and letters." . $errorMesCloseStyle;
+                    error_log($failedRegister . " password entered is not secure enough.");
                 }
                 else if ($_POST['rePW'] != $_POST['PW']){
                     $errorMessage .= $errorMesOpenStyle . "Password entered must be match." . $errorMesCloseStyle;
@@ -197,7 +205,7 @@ and open the template in the editor.
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Password : </span>
                     <input type="password" name="PW" id="PW" value="" size="20" />
-                    <span style="font-size: 12px;">Password must have at least 6 characters long.</span>
+                    <span style="font-size: 12px;">Password must have at least 6 characters long and contain numbers & letters.</span>
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Re-enter Password : </span>
@@ -212,6 +220,28 @@ and open the template in the editor.
 
         <?php
         
+            class Encryption {
+                public static function oneWayHash($value){
+                    $hashedValue = password_hash($value, PASSWORD_DEFAULT);
+                    
+                    return $hashedValue;
+                }
+                
+                public static function verify($value, $hashValue){
+                    $hash = crypt($value, $hashValue);
+                    
+                    if ($hash === $hashValue) {
+                        echo "correct";
+                    }
+                    else {
+                        echo "wrong";
+                    }
+                        
+                    
+                    return $hash === $hashValue;
+                }
+            }
+        
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && strcmp($errorMessage, "") == 0) {
             
                   $user_ID = '';
@@ -219,8 +249,10 @@ and open the template in the editor.
                   $user_email = trim($_POST['email']);
                   $user_dob = trim($_POST['day'] . "/" . $_POST['month'] . "/" . $_POST['year']);
                   $user_address = trim($_POST['address']);
-                  $user_contact = trim("0" . $_POST['contactNo']);
+                  //Verify password & echo the value//
+                  $user_contact = trim($_POST['contactNo']);
                   $user_pw = trim($_POST['rePW']);
+                  $encrypt_pw = Encryption::oneWayHash($user_pw);
                   //$user_pic = "NULL";
                   $user_pic = file_get_contents($_POST['profileUpload']);
                   $user_IC = trim($_POST['icPre'] . "-" . $_POST['icMid'] . "-" . $_POST['icPost']);
@@ -228,16 +260,14 @@ and open the template in the editor.
 
 
                   $db = UserDBConnection::getInstance($_SESSION["role"]);
-                  $db->createAccount($user_ID, $user_name, $user_email, $user_dob, $user_address, $user_contact, $user_pw, $user_pic, $user_IC, $user_role);
+                  $db->createAccount($user_ID, $user_name, $user_email, $user_dob, $user_address, $user_contact, $encrypt_pw, $user_pic, $user_IC, $user_role);
                   echo "<p>Registration successful!</p>";
+                  echo "<a href='login.php'>Click to login page.</a>";
                   $db->closeConnection();
 
 
                 }
         
-                
-            
-            
         session_destroy();
         
       ?>
