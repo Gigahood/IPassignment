@@ -75,24 +75,24 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
 }
 
 class Encryption {
-                public static function oneWayHash($value){
-                    $hashedValue = password_hash($value, PASSWORD_DEFAULT);
-                    
-                    return $hashedValue;
-                }
-                
-                public static function verify($value, $hashValue){
-                    $hash = crypt($value, $hashValue);
-                    
-                    if ($hash === $hashValue) {
-                        echo "correct";
-                    }
-                    else {
-                        echo "wrong";
-                    }
-                        
-                    
-                    return $hash === $hashValue;
-                }
-            }
+    public static function oneWayHash($value){
+        $hashedValue = password_hash($value, PASSWORD_DEFAULT);
+
+        return $hashedValue;
+    }
+
+    public static function verify($value, $hashValue){
+        $hash = crypt($value, $hashValue);
+
+        if ($hash === $hashValue) {
+            echo "correct";
+        }
+        else {
+            echo "wrong";
+        }
+
+
+        return $hash === $hashValue;
+    }
+}
 
