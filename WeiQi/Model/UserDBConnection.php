@@ -1,13 +1,17 @@
 <?php
 include_once 'AbstractDatabaseConnection.php';
 include_once '../../View/UserManagement/user_classes/UserADT.php';
+include_once '../../View/UserManagement/user_classes/Admin.php';
+include_once '../../View/UserManagement/user_classes/Participant.php';
+include_once '../../View/UserManagement/user_classes/Staff.php';
+
 /**
  * Description of UserDBConnection
  *
  * @author Chew Jane
  */
 class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
-
+    
     public function retrieveUser($useremail, $userpw){
         $getEmail = $useremail;
         $query = "SELECT * FROM user WHERE user_email = '$getEmail' ";
@@ -79,6 +83,25 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
         }
     }
 
+    public function displayPrivilege(){
+        $userRole = $_SESSION["role"];
+   
+        if ($userRole == "participant") {
+          return new Participant();
+        }
+        else if ($userRole == "staff") {
+          return new Staff();
+        }
+        else if ($userRole == "admin"){
+          return new Admin();
+        }
+        else {
+          return "Privileges for Guest" . " <br />" . 
+                "- Create an user account <br /> " .  
+                "- View store items <br />";
+        }
+        
+    }
 
 
 }
