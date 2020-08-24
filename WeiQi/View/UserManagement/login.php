@@ -51,28 +51,6 @@ and open the template in the editor.
         session_start();
         $_SESSION["role"] = "student";
         
-       /* class EncryptionTest {
-                public static function oneWayHash($value){
-                    $hashedValue = password_hash($value, PASSWORD_DEFAULT);
-                    
-                    return $hashedValue;
-                }
-                
-                public static function verify($value, $hashValue){
-                    $hash = crypt($value, $hashValue);
-                    
-                    if ($hash === $hashValue) {
-                        echo "correct";
-                    }
-                    else {
-                        echo "wrong";
-                    }
-                        
-                    
-                    return $hash === $hashValue;
-                }
-            }*/
-        
             // put your code here
         if(isset($_POST['email']) && isset($_POST['PW'])){
             $useremail = trim($_POST['email']);
