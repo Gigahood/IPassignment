@@ -1,7 +1,6 @@
 <?php
 include('../MasterPage.html');
 require '../../Controller/History/HistoryController.php';
-require '../../Controller/History/historyAjaxRequest.php';
 
 session_start();
 ?>
@@ -22,9 +21,10 @@ session_start();
             <?php
             $_SESSION["compID"] = 6;
             $compID = $_SESSION["compID"];
+            $_SESSION["role"] = "admin";
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
-
+            
             echo "<h3>Create " . $compHistory->getName() . " Competition History</h3>";
             ?>
             <div class="formContainer">
@@ -70,6 +70,8 @@ session_start();
                         }
                         
                     }
+                    
+                    closeCon($_SESSION["role"]);
                     ?>
             </div>
 <!--            <div >

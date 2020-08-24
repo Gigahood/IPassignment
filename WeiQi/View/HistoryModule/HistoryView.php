@@ -21,12 +21,11 @@ session_start();
         <div class="container">
             <div class="detailContainer">
                 <?php
-//                $_SESSION["compID"] = 1;
+                $_SESSION["compID"] = 1;
                 $_SESSION["role"] = "admin";
                 $compID = $_SESSION["compID"];
                 $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
-                $listOfMatches = viewHistoryScore($compHistory->getHistory_ID(), $_SESSION["role"]);
-                closeCon($_SESSION["role"]);
+                
 
 
                 echo "<h1> " . $compHistory->getName() . " Competition History</h1>";
@@ -56,9 +55,9 @@ session_start();
                         <?php
                         foreach ($compHistory->getMatches() as $value) {
                             echo "<tr>";
-                            echo "<td style='text-align:center;'>" . $value["black_User"] . " vs " . $value["white_User"] . "</td>";
-                            echo "<td>" . $value["black_User"] . "</td>";
-                            echo "<td>" . $value["white_User"] . "</td>";
+                            echo "<td style='text-align:center;'>" . getName($value["black_User"],$_SESSION["role"]) . " vs " . getName($value["white_User"],$_SESSION["role"]) . "</td>";
+                            echo "<td>" . getName($value["black_User"],$_SESSION["role"]). "</td>";
+                            echo "<td>" . getName($value["white_User"],$_SESSION["role"]) . "</td>";
 
                             if ($_SESSION["role"] == "admin") {
                                 echo "<td data-id='" . $value["match_ID"] . "'>"
@@ -89,13 +88,14 @@ session_start();
                     $index = 1;
 
                     foreach ($listOfMatches as $match) {
-
                         echo "<tr>";
                         echo "<td style='text-align:center;'>" . $index . "</td>";
-                        echo "<td style='text-align:center;'>" . $match["Name"] . "</td>";
+                        echo "<td style='text-align:center;'>" . getName($match["Name"],$_SESSION["role"]) . "</td>";
                         echo "<td style='text-align:center;'>" . $match["Score"] . "</td>";
                         $index += 1;
                     }
+                    
+                    closeCon($_SESSION["role"]);
                     ?>
                 </table>
             </div>

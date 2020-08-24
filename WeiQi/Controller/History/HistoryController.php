@@ -3,36 +3,34 @@
 include_once '../../Model/HistoryDBConnection.php';
 include_once '../../View/HistoryModule/Class/HistoryMatch.php';
 include_once '../../View/HistoryModule/Class/history.php';
-include_once '../../View/HistoryModule/Class/ranking.php';
-include_once '../../View/HistoryModule/Class/participantList.php';
+include_once '../../View/HistoryModule/Class/participant.php';
 
 function getHistoryDetail($compID, $dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
-    $result2 = $db->getComp($compID);
     $result = $db->getHistoryDetail($compID);
 
     if (!empty($result)) {
         $history = new History($result["history_ID"],
                 $result["history_Start_Date"],
                 $result["history_End_Date"],
-                $result2["competition_ID"],
-                $result2["competition_name"],
+                $result["competition_ID"],
+                $result["competition_name"],
                 $result["remark"]);
 
         $matches = $db->getMatch($result["history_ID"]);
-        
-        
+
         if (!empty($matches)) {
             foreach ($matches as $value) {
                 $history->setMatches($value);
             }
         }
     } else {
+        $result = $db->getComp($compID);
         $history = new History("",
                 "",
                 "",
-                $result2["competition_ID"],
-                $result2["competition_name"],
+                $result["competition_ID"],
+                $result["competition_name"],
                 "");
     }
 //    $remark = $db->getRemark($result["history_ID"]);
@@ -46,24 +44,24 @@ function getHistoryDetail($compID, $dSession) {
     return $history;
 }
 
-function viewHistoryScore($historyID, $dSession) {
-    $participants = array();
-
-    $db = HistoryDBConnection :: getInstance($dSession);
-    $result = $db->getParticipantList($historyID);
-
-    if (!empty($result)) {
-        foreach ($result as $value) {
-            $participant = new ParticipantList($value["participant_List_ID"],
-                    $value["history_ID"],
-                    $value["user_ID"],
-                    $value["score"]);
-
-            array_push($participants, $participant);
-        }
-    }
-    return $participants;
-}
+//function viewHistoryScore($historyID, $dSession) {
+//    $participants = array();
+//
+//    $db = HistoryDBConnection :: getInstance($dSession);
+//    $result = $db->getParticipant($historyID);
+//
+//    if (!empty($result)) {
+//        foreach ($result as $value) {
+//            $participant = new Participant($value["participant_List_ID"],
+//                    $value["history_ID"],
+//                    $value["user_ID"]);
+//                    
+//
+//            array_push($participants, $participant);
+//        }
+//    }
+//    return $participants;
+//}
 
 function calculateHistoryScore($matches) {
     $participants = array();
@@ -92,14 +90,6 @@ function calculateHistoryScore($matches) {
     array_multisort($keys, SORT_DESC, $participants);
 
     return $participants;
-
-//    foreach ($participants as $value) {
-//        print_r($value);
-//        echo "<br/>";
-//        echo "<br/>";
-//        echo "<br/>";
-//        echo "<br/>";
-//    }
 }
 
 function getMatch($matchID, $dSession) {
@@ -144,8 +134,112 @@ function createHistoryMatch($black, $white, $wScore, $bScore, $remark, $sTime,
     }
 }
 
+function getName($userID, $dSession) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+
+    $dbresult = $db->getUser($userID);
+
+    if (empty($dbresult)) {
+        $result = NULL;
+    } else {
+        $result = $dbresult["user_name"];
+    }
+
+    return $result;
+}
+
+function verifyUser($username, $dSession) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+    $result = $db->verifyUser($username);
+
+    return $result;
+}
+
+function getUserID($username,$dSession) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+    $result = $db->getUserID($username);
+
+    return $result;
+}
+
 function closeCon($dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
 
     $db->closeConnection();
+}
+
+function validateEditHistoryInput($startDate, $endDate, $remark) {
+    $error = "";
+
+    if (!checkValidDate($startDate, $endDate)) {
+        $error .= "Start Date Must BE Earlier Than End Date <br/>";
+    }
+
+    return $error;
+}
+
+function validateEditInput($black, $white, $wScore, $bScore, $sTime, $eTime, $board, $remark, $matchID, $dSession) {
+    $error = "";
+
+    if (empty($black)) {
+        $error .= "Black Player Require Value <br/>";
+    }
+    
+    if (empty($white)) {
+        $error .= "White Player Require Value <br/>";
+    }
+    
+    if (empty($wScore)) {
+        $error .= "White Score Require Value <br/>";
+    }
+    
+    if (empty($bScore)) {
+        $error .= "White Player Require Value <br/>";
+    }
+    
+    if ((verifyUser($black, $dSession)) == null) {
+        $error .= "Invalid Black Player Name <br/>";
+    }
+
+    if (empty(verifyUser($white, $dSession))) {
+        $error .= "Invalid White Player Name <br/>";
+    }
+
+    if (!checkScore($bScore)) {
+        $error .= "Invalid Black Score <br/>";
+    }
+
+    if (!checkScore($wScore)) {
+        $error .= "Invalid White Score <br/>";
+    }
+
+
+    if (!checkTime($sTime, $eTime)) {
+        $error .= "Start Time Must BE Earlier Than End Time <br/>";
+    }
+
+    return $error;
+}
+
+function checkScore($Score) {
+    if ($Score < 0) {
+        return false;
+    }
+    return true;
+}
+
+function checkValidDate($sdate, $edate) {
+    if (strtotime($sdate) >= strtotime($edate)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function checkTime($sTime, $eTime) {
+    if (strtotime($sTime) > strtotime($eTime)) {
+        return false;
+    }
+
+    return true;
 }

@@ -5,7 +5,7 @@ include_once 'AbstractDatabaseConnection.php';
 class HistoryDBConnection extends AbstractDatabaseConnection {
 
     public function getHistoryDetail($compID) {
-        $query = "SELECT * FROM history WHERE competition_ID = ?";
+        $query = "SELECT * FROM history inner join competition on history.competition_ID = competition.competition_ID WHERE history.competition_ID = ?";
         $stmt = parent::$db->prepare($query);
         $stmt->bindParam(1, $compID, PDO::PARAM_INT);
         $stmt->execute();
@@ -41,7 +41,7 @@ class HistoryDBConnection extends AbstractDatabaseConnection {
         $stmt->execute();
 
         $totalrows = $stmt->rowCount();
-        
+
 
         if ($totalrows == 0) {
             return null;
@@ -58,6 +58,42 @@ class HistoryDBConnection extends AbstractDatabaseConnection {
         $stmt->execute();
 
         $totalrows = $stmt->rowCount();
+
+        if ($totalrows == 0) {
+            return null;
+        } else {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        }
+    }
+
+    public function getUser($userID) {
+        $query = "SELECT * FROM user WHERE user_ID  = ?";
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $userID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
+
+        if ($totalrows == 0) {
+            return null;
+        } else {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        }
+    }
+
+    public function verifyUser($username) {
+        $query = "SELECT * FROM user WHERE user_name = ?";
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $username, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
+
+
 
         if ($totalrows == 0) {
             return null;
@@ -98,7 +134,7 @@ class HistoryDBConnection extends AbstractDatabaseConnection {
     }
 
     public function getParticipant($matchID, $userID) {
-        $query = "SELECT * FROM participantList INNER join historymatch
+        $query = "SELECT * FROM participant INNER join historymatch
 	on participantList.history_ID = historymatch.history_ID
 WHERE historymatch.match_ID  = ? and participantList.user_ID = ?";
 
@@ -123,7 +159,7 @@ WHERE historymatch.match_ID  = ? and participantList.user_ID = ?";
 //    }
 
     public function getParticipantList($historyID) {
-        $query = "SELECT * FROM participantList WHERE history_ID  = ? order by score desc";
+        $query = "SELECT * FROM participantList WHERE history_ID  = ?";
         $stmt = parent::$db->prepare($query);
         $stmt->bindParam(1, $historyID, PDO::PARAM_INT);
         $stmt->execute();
@@ -195,6 +231,22 @@ WHERE historymatch.match_ID  = ? and participantList.user_ID = ?";
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
+        }
+    }
+
+    public function getUserID($username) {
+        $query = "SELECT user_ID FROM user where user_name = ?";
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $username, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
+
+        if ($totalrows == 0) {
+            return null;
+        } else {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
         }
     }
 
