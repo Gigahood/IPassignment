@@ -51,11 +51,33 @@ and open the template in the editor.
         session_start();
         $_SESSION["role"] = "student";
         
+        class EncryptionTest {
+            public static function oneWayHash($value){
+                $hashedValue = password_hash($value, PASSWORD_DEFAULT);
+
+                return $hashedValue;
+            }
+
+            public static function verify($value, $hashValue){
+                $hash = crypt($value, $hashValue);
+
+                if ($hash === $hashValue) {
+                    echo "correct";
+                }
+                else {
+                    echo "wrong";
+                }
+
+
+                return $hash === $hashValue;
+            }
+        }
+        
             // put your code here
         if(isset($_POST['email']) && isset($_POST['PW'])){
             $useremail = trim($_POST['email']);
             $userpw = trim($_POST['PW']);
-            //$encrypt_pw = EncryptionTest::oneWayHash(trim($_POST['PW']));
+            $encrypt_pw = EncryptionTest::oneWayHash(trim($_POST['PW']));
             
             if((!$useremail) && (!$userpw)){
                 echo '<p>Failed to log in' . '. You have not entered your login details.</p>';
@@ -72,13 +94,14 @@ and open the template in the editor.
                 //echo "Login Fail $useremail and $userpw<br/>";
                 echo "Login Fail<br />";
                 error_log("Failed to log in" . " due to email and password entered are not found in database.");
-                //echo $encrypt_pw;
+                echo $encrypt_pw;
                 exit;
             }
             else {
                 
                 echo "<br /><p>Login successful!</p>";
-                echo "<br /><script type='text/javascript'>location.href = '../Competition/CompetitionHomepage.php';</script>";
+                echo $encrypt_pw;
+                //echo "<br /><script type='text/javascript'>location.href = '../Competition/CompetitionHomepage.php';</script>";
                 
                 $_SESSION["role"] = $result["user_role"];
                 $_SESSION["userID"] = $result["user_ID"];
