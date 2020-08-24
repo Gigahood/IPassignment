@@ -15,15 +15,25 @@ class ColorDecorator extends AbstractDecorator {
 
     //put your code here
     public function __construct($products) {
+       
         parent::__construct($products);
     }
 
     public function decorate() {
-        return "<span style='color: red'>" . $this->product->calMemberPrice($normal_price, $discount_rate) . "</span>";
+
+        return "<span style='color: red'>" . $this->products->calMemberPrice($this->getNormal_price(), $this->getDiscount_rate() ). "</span>";
     }
 
     public function calMemberPrice($normal_price, $discount_rate) {
         return $this->decorate();
+    }
+
+    public function getDiscount_rate() {
+       return $this->products->getDiscount_rate();
+    }
+
+    public function getNormal_price() {
+        return $this->products->getNormal_Price();
     }
 
 }

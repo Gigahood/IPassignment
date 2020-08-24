@@ -1,12 +1,5 @@
 <?php
-
 include_once 'AbstractDatabaseConnection.php';
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of StoreDBConnection
  *
@@ -66,13 +59,10 @@ class StoreDBConnection extends AbstractDatabaseConnection {
         }
     }
 
-    public function calMemberPrice($normal_price, $discount_rate) {
-        $memPrice = $normal_price - ($normal_price * $discount_rate);
-        return $memPrice;
-    }
-
-    public function addNewItem($pro_name, $pro_desc, $total_qty, $pro_category, $normal_price, $discount_rate, $pro_image, $admin_ID) {
-        $query = "INSERT INTO products(pro_name, pro_desc, total_qty, pro_category, normal_price, discount_rate, pro_image, admin_id)"
+    public function addNewItem($pro_name, $pro_desc, $total_qty, $pro_category, 
+            $normal_price, $discount_rate, $pro_image, $admin_ID) {
+        $query = "INSERT INTO products(pro_name, pro_desc, total_qty, pro_"
+                . "category, normal_price, discount_rate, pro_image, admin_id)"
                 . " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
@@ -86,15 +76,13 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
 
-            print_r($stmt);
-
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
         }
     }
 
-    public function updateItem($pro_name, $pro_desc, $total_qty, $pro_category, 
+    public function updateItem($pro_name, $pro_desc, $total_qty, $pro_category,
             $normal_price, $discount_rate, $pro_image, $admin_ID, $pro_ID) {
         $query = "UPDATE products "
                 . "SET pro_name=?, "
@@ -118,9 +106,7 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
             $stmt->bindParam(9, $pro_ID, PDO::PARAM_STR);
-
-            print_r($stmt);
-
+            
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
@@ -133,12 +119,35 @@ class StoreDBConnection extends AbstractDatabaseConnection {
         try {
             $stmt = parent::$db->prepare($query);
             $stmt->bindParam(1, $pro_ID, PDO::PARAM_INT);
-            
+
             print_r($stmt);
 
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
+        }
+    }
+    
+    public function calMemberPrice($normal_price, $discount_rate) {
+        $memPrice = $normal_price - ($normal_price * $discount_rate);
+        return number_format($memPrice, 2);
+    }
+    
+
+    public function retrieveProInfo($pro_name) {
+        $query = "SELECT pro_name, pro_desc, normal_price, discount_rate FROM products WHERE pro_name = ?";
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $pro_name, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
+        if ($totalrows == 0) {
+            
+            print_r($totalrows);
+            return null;
+        } else {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
         }
     }
 
