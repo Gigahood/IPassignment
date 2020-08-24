@@ -7,18 +7,16 @@
  */
 
 /**
- * Description of UserServiceConnection
+ * Description of CompetitionServiceConnection
  *
- * @author Jane Chew
+ * @author Cheng Qing Xiang
  */
 include_once 'AbstractDatabaseConnection.php';
 
-class UserServiceConnection extends AbstractDatabaseConnection  {
+class CompetitionServiceConnection extends AbstractDatabaseConnection {
     //put your code here
-    
-    public function getParticipantCompDet($name){
-        $query = "SELECT * FROM user INNER JOIN participant ON "
-                . "user.user_ID = participant.participant_ID WHERE user.user_name = ?";
+    public function getCompDet($name){
+        $query = "SELECT * FROM competition WHERE competition_name = ?";
         $stmt = parent::$db->prepare($query);
         $stmt->bindParam(1, $name, PDO::PARAM_STR);
         $stmt->execute();
