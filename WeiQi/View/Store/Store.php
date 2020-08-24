@@ -11,7 +11,7 @@
  *
  * @author Lim Yi En
  */
-class Products {
+class Store {
     private $pro_ID;
     private $pro_name;
     private $pro_desc;
@@ -108,7 +108,6 @@ class Products {
 
     public function calMemberPrice($normal_price, $discount_rate) {
         $memPrice = $normal_price - ($normal_price * $discount_rate);
-        return number_format($memPrice, 2);
+        return $memPrice;
     }
-    
 }

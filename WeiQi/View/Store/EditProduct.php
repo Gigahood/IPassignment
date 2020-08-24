@@ -164,7 +164,6 @@ include_once '../../Model/StoreDBConnection.php';
         <?php
         // put your code here
         $_SESSION['userID'] = 4;
-        //echo $_POST["proImg"];
 
         if (isset($_POST["update"])) {
 

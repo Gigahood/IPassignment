@@ -94,7 +94,7 @@ class StoreDBConnection extends AbstractDatabaseConnection {
         }
     }
 
-    public function updateItem($pro_name, $pro_desc, $total_qty, $pro_category,
+    public function updateItem($pro_name, $pro_desc, $total_qty, $pro_category, 
             $normal_price, $discount_rate, $pro_image, $admin_ID, $pro_ID) {
         $query = "UPDATE products "
                 . "SET pro_name=?, "
@@ -119,7 +119,6 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
             $stmt->bindParam(9, $pro_ID, PDO::PARAM_STR);
 
-
             print_r($stmt);
 
             $stmt->execute();
@@ -142,4 +141,5 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             echo $ex->getMessage();
         }
     }
+
 }

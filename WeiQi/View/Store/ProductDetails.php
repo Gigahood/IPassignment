@@ -29,7 +29,6 @@ include_once '../../Model/StoreDBConnection.php';
                 $_SESSION["role"] = "admin";
 
                 $db = StoreDBConnection::getInstance($_SESSION["role"]);
-
 //                print_r($_GET["id"]);
 
                 if (isset($_GET["id"])) {
@@ -45,8 +44,8 @@ include_once '../../Model/StoreDBConnection.php';
                     echo '<p style="font-size: 20px">Category: ';
                     echo "<span style='color: blue'><b>" . $value['pro_category'] . "</b></span></p>";
                     echo '<p class="itemDivider">';
-                    echo '<img src = "data:image;base64,' . base64_encode($value['pro_image'])
-                    . '" width = "500" height = "300" alt = "Picture1"/>';
+                    echo '<img src = "data:image;base64,' . base64_encode($value['pro_image']) 
+                           . '" width = "500" height = "300" alt = "Picture1"/>';
                     echo '<h1 name = "itemName"><b>' . $value['pro_name'] . '</b><br/></h1>';
                     echo '<span style="display: inline; float:right; margin-right:20px;">Qty: ';
                     echo $value['total_qty'] . '</span>';
