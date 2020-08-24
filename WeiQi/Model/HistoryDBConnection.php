@@ -270,4 +270,20 @@ WHERE historymatch.match_ID  = ? and participantList.user_ID = ?";
         $stmt->execute();
     }
 
+    public function getCompetitionID($name) {
+        $query = "SELECT competition_ID  FROM competition where competition_name = ?";
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $name, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
+
+        if ($totalrows == 0) {
+            return null;
+        } else {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    }
+
 }

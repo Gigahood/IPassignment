@@ -38,6 +38,7 @@ function printXML($compHistory) {
 
     $history->appendChild($domtree->createElement("historyStartDate", $compHistory->getHstart()));
     $history->appendChild($domtree->createElement("historyEndDate", $compHistory->getHend()));
+    $history->appendChild($domtree->createElement("remark", $compHistory->getRemark()));
 
     $matches = $domtree->createElement("matches");
     $matches = $history->appendChild($matches);

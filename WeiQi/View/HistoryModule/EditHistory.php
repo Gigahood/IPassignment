@@ -45,8 +45,7 @@ session_start();
                     echo "<h1>$error</h1>";
                 }
             }
-            
-            
+
             ?>
 
 
@@ -67,7 +66,6 @@ session_start();
                     <br/>
                     <br/>
                     <label for="remark">Remark : </label>
-                    <label for="remark2">Remark : </label>
                     <?php
                     echo "<input type='text' name='remark' value='" . $compHistory->getRemark() . "' />";
                     ?>

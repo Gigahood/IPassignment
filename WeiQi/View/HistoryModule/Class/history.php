@@ -11,7 +11,7 @@ class History extends Competition {
     private $participantList;
     private $matches;
 
-    function __construct($history_ID, $hstart, $hend, $compID, $name, $remark) {
+    function __construct($history_ID="", $hstart="", $hend="", $compID="", $name="", $remark="") {
         parent::__construct($compID, $name);
         $this->history_ID = $history_ID;
         $this->hstart = $hstart;
