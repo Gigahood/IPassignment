@@ -42,7 +42,8 @@ and open the template in the editor.
             <input type="submit" value="Login" name="btnLogin" class="loginStyle"/>
             <br/>
 
-            <input type="submit" value="&#8592;  Don't have an account? Click here to register." name="btnRegister" class="registerStyle"/>
+            <a href="registration.php" style="text-decoration: none;"><span class="registerStyle">&#8592;  Don't have an account? Click here to register. &emsp;&emsp;</span></a>
+            <!--<input type="submit" value="&#8592;  Don't have an account? Click here to register." name="btnRegister" class="registerStyle"/>-->
         </div>
         </form>
         
@@ -56,8 +57,9 @@ and open the template in the editor.
             $userpw = trim($_POST['PW']);
             
             if((!$useremail) && (!$userpw)){
-                echo '<p>You have not entered your login details<br/>'
-            . 'Please go back and try again.</p>';
+                echo '<p>Failed to log in' . '. You have not entered your login details.</p>';
+                error_log("Failed to log in" . " due to empty user details.");
+                //Find error log file in C:\xampp\apache\logs\error.txt
             exit;
             }
 
@@ -66,13 +68,17 @@ and open the template in the editor.
             $result = $db->retrieveUser($useremail, $userpw);
         
             if($result == null){
-                echo "Login Fail $useremail and $userpw<br/>";
+                //echo "Login Fail $useremail and $userpw<br/>";
+                echo "Login Fail<br />";
+                error_log("Failed to log in" . " due to email and password entered are not found in database.");
                 exit;
             }
             else {
                 //print_r($result);
                 //print("\n");
                 echo "<p>Login successful!</p>";
+                $_SESSION["role"] = $result["user_role"];
+                $_SESSION["userID"] = $result["user_ID"];
             }
                 
             $db->closeConnection();
