@@ -45,7 +45,7 @@ include_once '../../Model/StoreDBConnection.php';
                 $result = $db->retrieveStoreData("null");
             } else {
                 $result = $db->retrieveStoreData($_POST["category"][0]);
-                $product2 = new PriceDecorator();
+                $memPrice = new PriceDecorator();
             }
 
 
@@ -110,7 +110,7 @@ include_once '../../Model/StoreDBConnection.php';
                         echo '<p id="'. $value["pro_ID"] .'" >';
                         echo "<b>". $value['pro_name'] . " </b><br/>";
                         echo "Normal Price: RM " . number_format($value['normal_price'], 2) . " <br/>";
-                        echo "<span id='". $value["pro_ID"] ." ' style='color: red'> member price </span>";
+                       // echo "<span id='". $value["pro_ID"] . "'>" . $memPrice->getDescription() ."</span>";
                         echo '</p></a></div>';
                         
                     }

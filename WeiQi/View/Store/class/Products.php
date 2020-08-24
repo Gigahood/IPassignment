@@ -23,7 +23,8 @@ class Products implements ProductInterface {
     private $pro_image;
     private $admin_ID;
 
-    function __construct($pro_ID, $pro_name, $pro_desc, $total_qty, $pro_category, $normal_price, $discount_rate, $pro_image, $admin_ID) {
+    function __construct($pro_ID, $pro_name, $pro_desc, $total_qty, $pro_category, 
+            $normal_price, $discount_rate, $pro_image, $admin_ID) {
         $this->pro_ID = $pro_ID;
         $this->pro_name = $pro_name;
         $this->pro_desc = $pro_desc;

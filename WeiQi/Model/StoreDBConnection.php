@@ -1,12 +1,5 @@
 <?php
-
 include_once 'AbstractDatabaseConnection.php';
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of StoreDBConnection
  *
@@ -66,13 +59,10 @@ class StoreDBConnection extends AbstractDatabaseConnection {
         }
     }
 
-    public function calMemberPrice($normal_price, $discount_rate) {
-        $memPrice = $normal_price - ($normal_price * $discount_rate);
-        return $memPrice;
-    }
-
-    public function addNewItem($pro_name, $pro_desc, $total_qty, $pro_category, $normal_price, $discount_rate, $pro_image, $admin_ID) {
-        $query = "INSERT INTO products(pro_name, pro_desc, total_qty, pro_category, normal_price, discount_rate, pro_image, admin_id)"
+    public function addNewItem($pro_name, $pro_desc, $total_qty, $pro_category, 
+            $normal_price, $discount_rate, $pro_image, $admin_ID) {
+        $query = "INSERT INTO products(pro_name, pro_desc, total_qty, pro_"
+                . "category, normal_price, discount_rate, pro_image, admin_id)"
                 . " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
@@ -85,8 +75,6 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(6, $discount_rate, PDO::PARAM_STR);
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
-
-    
 
             $stmt->execute();
         } catch (Exception $ex) {
@@ -118,9 +106,7 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
             $stmt->bindParam(9, $pro_ID, PDO::PARAM_STR);
-
             
-
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
