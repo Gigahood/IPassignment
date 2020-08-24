@@ -76,13 +76,15 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
 
+
+
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
         }
     }
 
-    public function updateItem($pro_name, $pro_desc, $total_qty, $pro_category, 
+    public function updateItem($pro_name, $pro_desc, $total_qty, $pro_category,
             $normal_price, $discount_rate, $pro_image, $admin_ID, $pro_ID) {
         $query = "UPDATE products "
                 . "SET pro_name=?, "
@@ -106,7 +108,9 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
             $stmt->bindParam(9, $pro_ID, PDO::PARAM_STR);
-            
+
+
+
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
@@ -119,7 +123,7 @@ class StoreDBConnection extends AbstractDatabaseConnection {
         try {
             $stmt = parent::$db->prepare($query);
             $stmt->bindParam(1, $pro_ID, PDO::PARAM_INT);
-            
+
             print_r($stmt);
 
             $stmt->execute();
@@ -133,5 +137,20 @@ class StoreDBConnection extends AbstractDatabaseConnection {
         return number_format($memPrice, 2);
     }
     
+
+    public function retrieveProInfo($pro_name) {
+        $query = "SELECT * FROM products WHERE pro_name = ?";
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $pro_name, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
+        if ($totalrows == 0) {
+            return null;
+        } else {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    }
 
 }
