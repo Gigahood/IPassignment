@@ -78,6 +78,7 @@ and open the template in the editor.
                 //print("\n");
                 echo "<p>Login successful!</p>";
                 $_SESSION["role"] = $result["user_role"];
+                $_SESSION["userID"] = $result["user_ID"];
             }
                 
             $db->closeConnection();
