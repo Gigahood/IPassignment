@@ -7,22 +7,16 @@
  */
 
 /**
- * Description of Participant
+ * Description of Admin
  *
  * @author Jane Chew
  */
-
 require_once 'User.php';
 
-class Participant extends User {
+class Admin extends User{
     //put your code here
-    private $list_of_participation;
-    private $total_score;
-    private $role;
-            
     public function __construct($user_name, $user_email, $user_dob, $user_address, 
-            $user_contact, $user_pw, $user_pic, $user_IC, $user_role, 
-            $list_of_participation, $total_score, $role) {
+            $user_contact, $user_pw, $user_pic, $user_IC, $user_role) {
         
         parent::__construct($user_name);
         parent::__construct($user_email);
@@ -33,9 +27,6 @@ class Participant extends User {
         parent::__construct($user_pic);
         parent::__construct($user_IC);
         parent::__construct($user_role);
-        $this->list_of_participation = $list_of_participation;
-        $this->total_score = $total_score;
-        $this->role = $role;
         
     }
     
@@ -64,8 +55,15 @@ class Participant extends User {
         return parent::userPrivilege() . $this->getUserRole() . " <br />" . 
                 "- Create an user account <br /> " . 
                 "- View & Update user account <br />" . 
-                "- Participate in a competition <br />" . 
+                "- Create a competition event <br />" . 
+                "- Delete own or others user account <br />" .
+                "- View and Update a competition event <br />" . 
+                "- Delete a competition event <br />" .
                 "- View competition details and history <br />" . 
-                "- View store items <br />";
+                "- View store items <br />" . 
+                "- Add a new store item <br />" . 
+                "- Update & Delete a new store item <br />";
+        
     }
+    
 }
