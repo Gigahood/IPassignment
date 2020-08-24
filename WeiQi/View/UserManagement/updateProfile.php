@@ -114,7 +114,7 @@ and open the template in the editor.
                     <?php 
                         $dbPri = UserDBConnection::getInstance($_SESSION["role"]);
                         $resultPri = $dbPri->displayPrivilege(); 
-                        echo $resultPri;
+                        echo $resultPri->privilege();
                         $db->closeConnection();
                     ?>
                     <br /><br /><br />

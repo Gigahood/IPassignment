@@ -53,19 +53,19 @@ class Staff extends User {
         }
     }
     
-    public function getUserRole(){
+    /*public function getUserRole(){
         return parent::getUserRole();
     }
     
     public function userPrivilege(){
-        return parent::userPrivilege() . $this->getUserRole() . " <br />" . 
-                "- Create an user account <br /> " . 
-                "- View & Update user account <br />" . 
-                "- Create a competition event <br />" . 
-                "- Register as committee or others position in a competition <br />" .
-                "- View and Update a competition event <br />" . 
-                "- View competition details and history <br />" . 
-                "- View store items <br />";
-    }
+        return $this->getUserRole() . " <br />" . 
+                "&emsp;- Create an user account <br /> " . 
+                "&emsp;- View & Update user account <br />" . 
+                "&emsp;- Create a competition event <br />" . 
+                "&emsp;- Register as committee or others position in a competition <br />" .
+                "&emsp;- View and Update a competition event <br />" . 
+                "&emsp;- View competition details and history <br />" . 
+                "&emsp;- View store items <br />";
+    }*/
     
 }

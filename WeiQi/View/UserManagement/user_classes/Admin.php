@@ -47,23 +47,23 @@ class Admin extends User{
         }
     }
     
-    public function getUserRole(){
+    /*public function getUserRole(){
         return parent::getUserRole();
     }
     
     public function userPrivilege(){
-        return parent::userPrivilege() . $this->getUserRole() . " <br />" . 
-                "- Create an user account <br /> " . 
-                "- View & Update user account <br />" . 
-                "- Create a competition event <br />" . 
-                "- Delete own or others user account <br />" .
-                "- View and Update a competition event <br />" . 
-                "- Delete a competition event <br />" .
-                "- View competition details and history <br />" . 
-                "- View store items <br />" . 
-                "- Add a new store item <br />" . 
-                "- Update & Delete a new store item <br />";
+        return $this->getUserRole() . " <br />" . 
+                "&emsp;- Create an user account <br /> " . 
+                "&emsp;- View & Update user account <br />" . 
+                "&emsp;- Create a competition event <br />" . 
+                "&emsp;- Delete own or others user account <br />" .
+                "&emsp;- View and Update a competition event <br />" . 
+                "&emsp;- Delete a competition event <br />" .
+                "&emsp;- View competition details and history <br />" . 
+                "&emsp;- View store items <br />" . 
+                "&emsp;- Add a new store item <br />" . 
+                "&emsp;- Update & Delete a new store item <br />";
         
-    }
+    }*/
     
 }

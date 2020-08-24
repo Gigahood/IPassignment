@@ -1,9 +1,9 @@
 <?php
 include_once 'AbstractDatabaseConnection.php';
 include_once '../../View/UserManagement/user_classes/UserADT.php';
-include_once '../../View/UserManagement/user_classes/Admin.php';
-include_once '../../View/UserManagement/user_classes/Participant.php';
-include_once '../../View/UserManagement/user_classes/Staff.php';
+include_once '../../View/UserManagement/user_classes/AdminFactory.php';
+include_once '../../View/UserManagement/user_classes/ParticipantFactory.php';
+include_once '../../View/UserManagement/user_classes/StaffFactory.php';
 
 /**
  * Description of UserDBConnection
@@ -86,14 +86,45 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
     public function displayPrivilege(){
         $userRole = $_SESSION["role"];
    
-        if ($userRole == "participant") {
-          return new Participant();
+        if ($userRole == "student") {
+            //if(isset($_SESSION["userID"])) {
+              /*  $query = "SELECT * FROM user INNER JOIN participant WHERE user_ID = '" . $_SESSION["userID"] . "'";
+                $stmt = parent::$db->prepare($query);
+                $stmt->execute();
+
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                $user_name = $result["user_name"];
+                $user_email = $result["user_email"];
+                $user_dob = $result["user_dob"];
+                $user_address = $result["user_address"];
+                $user_contact = $result["user_contact"];
+                $user_pw = $result["user_pw"];
+                $user_pic = $result["user_pic"];
+                $user_IC = $result["user_IC"];
+                $user_role = $result["user_role"];
+                $list_of_participation = $result["list_of_participation"];
+                $total_score = $result["total_score"];
+                $role = $result["role"];
+                
+            //}
+
+        
+            return new Participant($user_name, $user_email, $user_dob, $user_address, $user_contact, $user_pw, 
+                    $user_pic, $user_IC, $user_role, $list_of_participation, $total_score, $role);
+            
+            $participantPrivilege = new Participant($user_name, $user_email, $user_dob, $user_address, $user_contact, $user_pw, $user_pic, $user_IC, $user_role, $list_of_participation, $total_score, $role);
+        
+            return $participantPrivilege;*/
+            
+            return new ParticipantFactory();
+            
         }
         else if ($userRole == "staff") {
-          return new Staff();
+          return new StaffFactory();
         }
         else if ($userRole == "admin"){
-          return new Admin();
+          return new AdminFactory();
         }
         else {
           return "Privileges for Guest" . " <br />" . 

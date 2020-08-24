@@ -69,10 +69,8 @@ and open the template in the editor.
             $result = $db->retrieveUser($useremail, $userpw);
         
             if($result == null){
-                //echo "Login Fail $useremail and $userpw<br/>";
                 echo "Login Fail<br />";
-                error_log("Failed to log in" . " due to email and password entered are not found in database.");
-                //echo $encrypt_pw;
+                error_log("Failed to log in");
                 exit;
             }
             else {
@@ -82,6 +80,7 @@ and open the template in the editor.
                 
                 $_SESSION["role"] = $result["user_role"];
                 $_SESSION["userID"] = $result["user_ID"];
+                
                 //$_SESSION["userNameSS"] = $result["user_name"];
             }
                 
