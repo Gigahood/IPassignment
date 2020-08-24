@@ -16,7 +16,7 @@ include_once 'AbstractDatabaseConnection.php';
 class CompetitionServiceConnection extends AbstractDatabaseConnection {
     //put your code here
     public function getCompDet($name){
-        $query = "SELECT * FROM competition WHERE competition_name = ?";
+        $query = "SELECT * FROM competition WHERE competition_name LIKE '%' ? '%'";
         $stmt = parent::$db->prepare($query);
         $stmt->bindParam(1, $name, PDO::PARAM_STR);
         $stmt->execute();
