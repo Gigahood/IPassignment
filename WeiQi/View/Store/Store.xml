@@ -9,7 +9,8 @@ and open the template in the editor.
 <products>
     <product id="1">
         <name>Chinese Old Board Game Weiqi Checkers Go Game Set</name>
-        <desc>Chinese Old Board Game Weiqi Checkers Go Game Set Family Games For Children Friends Educational Entertainment Board Game.
+        <desc>Chinese Old Board Game Weiqi Checkers Go Game Set Family Games For Children Friends 
+            Educational Entertainment Board Game.
 
             Packing List:
             1 set of black and white chess pieces
@@ -22,12 +23,13 @@ and open the template in the editor.
     </product>
     <product id="2">
         <name>Medium Magnetic Go Game Chess</name>
-        <desc>Chinese Old Board Game Weiqi Checkers Go Game Set Family Games For Children Friends Educational Entertainment Board Game.
+        <desc>19*19 Line Magnetic Go Game Foldable Weiqi Acrylic Black White Chessman 
+            Chess Set For Children Puzzle Chess Board Game Toys Gift
 
-            Packing List:
-            1 set of black and white chess pieces
-            1*chess board
-            1*black chess box</desc>
+            Specifications:
+            Chess Pieces Diameter: 12mm
+            Chess Pieces Thickness: 5.3mm
+            Chessboard Specifications: 286*296mm</desc>
         <quantity>10</quantity>
         <category>Chess Sets</category>
         <price>100.29</price>
