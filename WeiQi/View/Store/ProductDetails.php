@@ -2,7 +2,6 @@
 <?php
 include('../MasterPage.html');
 include_once '../../Model/StoreDBConnection.php';
-include_once 'Store.php';
 ?>
 
 <html>
@@ -30,7 +29,7 @@ include_once 'Store.php';
                 $_SESSION["role"] = "admin";
 
                 $db = StoreDBConnection::getInstance($_SESSION["role"]);
-                
+
 //                print_r($_GET["id"]);
 
                 if (isset($_GET["id"])) {
@@ -46,8 +45,8 @@ include_once 'Store.php';
                     echo '<p style="font-size: 20px">Category: ';
                     echo "<span style='color: blue'><b>" . $value['pro_category'] . "</b></span></p>";
                     echo '<p class="itemDivider">';
-                    echo '<img src = "data:image;base64,' . base64_encode($value['pro_image']) 
-                           . '" width = "500" height = "300" alt = "Picture1"/>';
+                    echo '<img src = "data:image;base64,' . base64_encode($value['pro_image'])
+                    . '" width = "500" height = "300" alt = "Picture1"/>';
                     echo '<h1 name = "itemName"><b>' . $value['pro_name'] . '</b><br/></h1>';
                     echo '<span style="display: inline; float:right; margin-right:20px;">Qty: ';
                     echo $value['total_qty'] . '</span>';
@@ -69,45 +68,75 @@ include_once 'Store.php';
                 <div>  
                     <dialog id="deleteDialog" style="width:50%;background-color:#F4FFEF;border:1px dotted black;">  
                         <p> Do you want to delete this item <br/>  
-                            - <cite><?php print_r($_GET["id"]); ?> ? </cite></p> 
+                            - <cite>
+                                <?php
+                                foreach ($result as $value) {
+                                    $value['pro_name'];
+                                }
+                                ?> ? </cite></p> 
 
-                        <button id="yes" style="background-color: #4959EA; color:white; height: 30px; width: 100px; float: right;">Yes</button> 
+                        <button id="yes" data-href="DeleteProduct.php" data-id=" <?php echo $_GET['id']; ?>"
+                                style="background-color: #4959EA; color:white; height: 30px; width: 100px; float: right;">Yes</button> 
 
                         <button id="no" style="background-color: red; color:white; height: 30px; width: 100px; float: right; margin-right: 20px">No</button>  
 
                     </dialog>  
-
-                    <form id="btnDelete" method="get" action="" class="button" style="background-color: red; ">
-                        <img src="../Store/image/delete.png" width="20px" height="20px" class="btnicon"/>
-                        Delete
-                    </form>
-
                     <?php
+                    foreach ($result as $value) {
+                        echo " <form id=\"btnDelete\" method=\"get\" data-href='DeleteProduct.php' data-id='" . $_GET['id'] . "'
+                          class=\"button\" style=\"background-color: red;\">";
+//                        <a href="DeleteProduct.php?rn=$value[pro_ID]" onclick="return
+//                                checkdelete" > </a>
+                            
+                        echo '
+                        <form id="btnDelete" method="get" action="" class="button" style="background-color: red; ">
+                                <img src="../Store/image/delete.png" width="20px" height="20px" class="btnicon"/>
+                                Delete
+                        </form>
+                        
+                        ';
+                    }
+
+                    // -- edit button --//
                     echo " <form id=\"btnEdit\" method=\"get\" data-href='EditProduct.php' data-id='" . $_GET['id'] . "'
                           class=\"button\" style=\"background-color: #F2BA08; margin-right: 20px;\">";
                     ?>
-                        <img src="../Store/image/edit.png" width="20px" height="20px" class="btnicon"/>
-                        Edit
+                    <img src="../Store/image/edit.png" width="20px" height="20px" class="btnicon"/>
+                    Edit
                     </form>
 
                 </div>  
 
                 <!-- JavaScript to provide the "Show/Close" functionality -->  
                 <script type="text/JavaScript">  
+                    function checkdelete(){
+                        return confirm('Are you sure want to delete this item');
+                    }
+                    
                     (function() {    
-                        var dialog = document.getElementById('deleteDialog');    
-                        document.getElementById('btnDelete').onclick = function() {    
-                        dialog.show();    
+                    var dialog = document.getElementById('deleteDialog');    
+                    document.getElementById('btnDelete').onclick = function() {    
+                    dialog.show();   
                     };    
                     document.getElementById('no').onclick = function() {    
-                        dialog.close();    
+                    dialog.close();    
                     }; 
                     
-                    
+                    document.getElementById('yes').onclick = function() {    
+                    window.location.href = this.getAttribute('data-href') + "?id="
+                    + this.getAttribute('data-id') + "";  
+                    }; 
+
+
                     document.getElementById('btnEdit').addEventListener("click", function(e){
-                        window.location.href = this.getAttribute('data-href') + "?id="
-                            + this.getAttribute('data-id') + "";
+                    window.location.href = this.getAttribute('data-href') + "?id="
+                    + this.getAttribute('data-id') + "";
                     })
+                    
+//                    document.getElementById('btnDelete').addEventListener("click", function(e){
+//                    window.location.href = this.getAttribute('data-href') + "?id="
+//                    + this.getAttribute('data-id') + "";
+//                    })
                     
                     })();   
                 </script>  
