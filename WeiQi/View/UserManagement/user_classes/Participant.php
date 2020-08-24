@@ -12,10 +12,7 @@
  * @author Jane Chew
  */
 
-//NO USE //
-
 require_once 'User.php';
-require_once 'UserADT.php';
 
 class Participant extends User {
     //put your code here
@@ -24,7 +21,7 @@ class Participant extends User {
     private $role;
             
     public function __construct($user_name, $user_email, $user_dob, $user_address, 
-            $user_contact, $user_pw, $user_pic, $user_IC,
+            $user_contact, $user_pw, $user_pic, $user_IC, $user_role, 
             $list_of_participation, $total_score, $role) {
         
         parent::__construct($user_name);
@@ -35,6 +32,7 @@ class Participant extends User {
         parent::__construct($user_pw);
         parent::__construct($user_pic);
         parent::__construct($user_IC);
+        parent::__construct($user_role);
         $this->list_of_participation = $list_of_participation;
         $this->total_score = $total_score;
         $this->role = $role;
@@ -42,17 +40,31 @@ class Participant extends User {
     }
     
     public function __set($name, $value) {
-        if(property_exists($this, $name))
+        if (property_exists($this, $name)) {
             $this->$name = $value;
-        else
+        } else {
             parent::__set($name, $value);
+        }
     }
     
     public function __get($name) {
-        if (property_exists($this, $name))
+        if (property_exists($this, $name)) {
             return $this->$name;
-        else
+        }
+        else {
             return parent::__get($name);
-    }  
-   
+        }
+    }
+    
+    public function getUserRole(){
+        return parent::getUserRole();
+    }
+    
+    public function userPrivilege(){
+        return parent::userPrivilege() . $this->getUserRole() . " <br />" .  
+                "- View & Update user account <br />" . 
+                "- Participate in a competition <br />" . 
+                "- View competition details and history <br />" . 
+                "- View store items <br />";
+    }
 }
