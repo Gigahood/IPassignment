@@ -99,7 +99,6 @@ require '../../Controller/History/HistoryController.php';
                     </select>
                     <br/>
                     <br/>
-                    <p>Insert Moves</p>
                     <input type="reset" value="Reset" />
                     <input type="submit" name="submit" value="Confirm" />
                 </form>
