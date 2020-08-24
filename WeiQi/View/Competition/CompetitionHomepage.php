@@ -4,9 +4,14 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!--TO PUSH -->
+<!--
+ * Competition Homepage Webpage
+ *
+ * @author Cheng Qing Xiang
+ *-->
 <?php
-    include '../MasterPage.html';
+    include '../MasterPage.php';
+    include_once '../../Model/CompetitionDBConnection.php';
 ?>
 <html>
     <head>
@@ -23,10 +28,26 @@ and open the template in the editor.
                 Competition Name : 
                 
                 <!--Options need to bind from DB by concatenate(combine)competition name & year -->
-                <select name="ddlCompetitionName">
+                <!--<select name="ddlCompetitionName">
                     <option value="01">WeiQi Middle Class Match (2016)</option>
                     <option value="02">WeiQi Student Grade 2 Exam (2017)</option>
-                </select>
+                </select>-->
+                
+                <?php
+                session_start();
+                $_SESSION["role"] = "admin";
+                
+                $compName = "";
+                
+                $db = CompetitionDBConnection::getInstance($_SESSION["role"]);
+                $result = $db->retrieveCompetition();
+                print_r($result);
+                //$str = "<table> ";
+                        
+                //echo $result;
+                //echo $str;
+                $db = null;
+                ?>
             </div>
             <br /><br /><br /><br /><br />
             
@@ -41,6 +62,15 @@ and open the template in the editor.
 
         <?php
         // put your code here
+        
+        
+        
+        
+        
+        
+        
+         
+        
         ?>
     </body>
 </html>
