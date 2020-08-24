@@ -35,26 +35,26 @@ require '../../Controller/History/HistoryController.php';
                 <div>
                     <p class="text">Black Player : 
                         <?php
-                        echo $match["black_User"];
+                        echo getName($match["black_User"],$_SESSION["role"]);
                         ?>
                     </p>
                     <p class="text">Black Player Score :
                         <?php
-                        echo $match["black_User"];
+                        echo $match["black_Score"];
                         ?>
                     </p>
                     <p class="text">White Player : 
                         <?php
-                        echo $match["black_Score"];
+                        echo getName($match["white_User"],$_SESSION["role"]);
                         ?>
                     </p>
                     <p class="text">White Player Score : 
                         <?php
-                        echo $match["white_User"];
+                        echo $match["white_Score"];
                         ?></p>
                     <p class="text">Match Remark : 
                         <?php
-                        echo $match["white_Score"];
+                        echo $match["match_Detail"];
                         ?> </p>
                     <p class="text">Start Time : 
                         <?php

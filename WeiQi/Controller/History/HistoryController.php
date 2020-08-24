@@ -18,7 +18,7 @@ function getHistoryDetail($compID, $dSession) {
                 $result["remark"]);
 
         $matches = $db->getMatch($result["history_ID"]);
-        
+
         if (!empty($matches)) {
             foreach ($matches as $value) {
                 $history->setMatches($value);
@@ -134,8 +134,112 @@ function createHistoryMatch($black, $white, $wScore, $bScore, $remark, $sTime,
     }
 }
 
+function getName($userID, $dSession) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+
+    $dbresult = $db->getUser($userID);
+
+    if (empty($dbresult)) {
+        $result = NULL;
+    } else {
+        $result = $dbresult["user_name"];
+    }
+
+    return $result;
+}
+
+function verifyUser($username, $dSession) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+    $result = $db->verifyUser($username);
+
+    return $result;
+}
+
+function getUserID($username,$dSession) {
+    $db = HistoryDBConnection :: getInstance($dSession);
+    $result = $db->getUserID($username);
+
+    return $result;
+}
+
 function closeCon($dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
 
     $db->closeConnection();
+}
+
+function validateEditHistoryInput($startDate, $endDate, $remark) {
+    $error = "";
+
+    if (!checkValidDate($startDate, $endDate)) {
+        $error .= "Start Date Must BE Earlier Than End Date <br/>";
+    }
+
+    return $error;
+}
+
+function validateEditInput($black, $white, $wScore, $bScore, $sTime, $eTime, $board, $remark, $matchID, $dSession) {
+    $error = "";
+
+    if (empty($black)) {
+        $error .= "Black Player Require Value <br/>";
+    }
+    
+    if (empty($white)) {
+        $error .= "White Player Require Value <br/>";
+    }
+    
+    if (empty($wScore)) {
+        $error .= "White Score Require Value <br/>";
+    }
+    
+    if (empty($bScore)) {
+        $error .= "White Player Require Value <br/>";
+    }
+    
+    if ((verifyUser($black, $dSession)) == null) {
+        $error .= "Invalid Black Player Name <br/>";
+    }
+
+    if (empty(verifyUser($white, $dSession))) {
+        $error .= "Invalid White Player Name <br/>";
+    }
+
+    if (!checkScore($bScore)) {
+        $error .= "Invalid Black Score <br/>";
+    }
+
+    if (!checkScore($wScore)) {
+        $error .= "Invalid White Score <br/>";
+    }
+
+
+    if (!checkTime($sTime, $eTime)) {
+        $error .= "Start Time Must BE Earlier Than End Time <br/>";
+    }
+
+    return $error;
+}
+
+function checkScore($Score) {
+    if ($Score < 0) {
+        return false;
+    }
+    return true;
+}
+
+function checkValidDate($sdate, $edate) {
+    if (strtotime($sdate) >= strtotime($edate)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function checkTime($sTime, $eTime) {
+    if (strtotime($sTime) > strtotime($eTime)) {
+        return false;
+    }
+
+    return true;
 }

@@ -35,7 +35,7 @@ require '../../Controller/History/HistoryController.php';
                 <form class="formStyle" action="EditMatch.php?id=1" method="post">
                     <label class="labelStyle" for="black">Black : </label>
                     <?php
-                    echo "<input type='text' name='black' value='" . $match["black_User"] . "' />";
+                    echo "<input type='text' name='black' value='" . getName($match["black_User"], $_SESSION["role"]) . "' />";
 
                     echo "<input type='hidden' name='matchID' value='" . $match["match_ID"] . "' />";
                     ?>
@@ -49,7 +49,7 @@ require '../../Controller/History/HistoryController.php';
                     <br/>
                     <label class="labelStyle" for="white">White : </label>
                     <?php
-                    echo "<input type='text' name='white' value='" . $match["white_User"] . "' />";
+                    echo "<input type='text' name='white' value='" . getName($match["white_User"], $_SESSION["role"]) . "' />";
                     ?>
                     <br/>
                     <br/>
@@ -79,6 +79,7 @@ require '../../Controller/History/HistoryController.php';
                     <br/>
                     <label class="labelStyle" for="endTime">End Time : </label>
                     <?php
+                    
                     echo "<input type='time' name='endTime' value='" . $match["end_Time"] . "' />";
                     ?>
 
@@ -108,24 +109,42 @@ require '../../Controller/History/HistoryController.php';
         <?php
         if (isset($_POST["submit"])) {
             // header("Location: HistoryView.php");
-            $error;
-            $black = $_POST["black"];
-            $white = $_POST["white"];
-            $wScore = $_POST["whiteScore"];
-            $bScore = $_POST["blackScore"];
-            $sTime = $_POST["startTime"];
-            $eTime = $_POST["endTime"];
-            $board = $_POST["boardSize"];
-            $remark = $_POST["remark"];
-            $matchID = $_POST["matchID"];
+            $error = "";
+
+            $black = trim($_POST["black"]);
+            $white = trim($_POST["white"]);
+            $wScore = trim($_POST["whiteScore"]);
+            $bScore = trim($_POST["blackScore"]);
+            $sTime = trim($_POST["startTime"]);
+            $eTime = trim($_POST["endTime"]);
+            $board = trim($_POST["boardSize"]);
+            $remark = trim($_POST["remark"]);
+            $matchID = trim($_POST["matchID"]);
+
+            $error = validateEditInput($black, $white, $wScore, $bScore, $sTime, $eTime, $board, $remark, $matchID, $_SESSION["role"]);
 
             // validation complete
 
             if (empty($error)) {
-                update($black, $white, $wScore, $bScore, $remark, $sTime,
+
+                $blackArray = getUserID($black, $dSession);
+                $whiteArray = getUserID($white, $dSession);
+
+                foreach ($blackArray as $value) {
+                    $blackID = $value;
+                }
+
+                foreach ($whiteArray as $value) {
+                    $whiteID = $value;
+                }
+
+                update($blackID, $whiteID, $wScore, $bScore, $remark, $sTime,
                         $eTime, $board, $_SESSION["role"], $matchID);
-                
+
                 header("Location: HistoryView.php");
+                echo "no error";
+            } else {
+                echo "<h3>$error</h3>";
             }
         }
         closeCon($_SESSION["role"]);
