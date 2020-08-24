@@ -8,7 +8,7 @@
 function __autoload($class_name) {
     include $class_name . '.php';
 }
-include_once '../Store/Products.php';
+include_once '../Store/class/Products.php';
 
 class PriceDecorator {
 
