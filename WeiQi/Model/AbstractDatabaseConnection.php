@@ -29,19 +29,15 @@ abstract class AbstractDatabaseConnection {
         try {
             if ($dSession == "student") {
                 $user = $ini['db_student_user'];
-//                $password = $ini['db_student_password'];
                 $password = $cryptor1->decrypt($ini['db_student_password']);
             } else if ($dSession == "staff") {
                 $user = $ini['db_staff_user'];
-//                $password = $ini['db_student_password'];
                 $password = $cryptor1->decrypt($ini['db_staff_password']);
             } else if ($dSession == "admin") {
                 $user = $ini['db_admin_user'];
-//                $password = $ini['db_admin_password'];
                 $password = $cryptor1->decrypt($ini['db_admin_password']);
             } else {
                 $user = $ini['db_guest_user'];
-//                $password = $ini['db_guest_password'];
                 $password = $cryptor1->decrypt($ini['db_guest_password']);
             }
             static::$db = new PDO($dsn, $user, $password);

@@ -7,22 +7,16 @@
  */
 
 /**
- * Description of Participant
+ * Description of Admin
  *
  * @author Jane Chew
  */
-
 require_once 'User.php';
 
-class Participant extends User {
+class Admin extends User{
     //put your code here
-    private $list_of_participation;
-    private $total_score;
-    private $role;
-
     public function __construct($user_name, $user_email, $user_dob, $user_address, 
-            $user_contact, $user_pw, $user_pic, $user_IC, $user_role, 
-            $list_of_participation, $total_score, $role) {
+            $user_contact, $user_pw, $user_pic, $user_IC, $user_role) {
         
         parent::__construct($user_name);
         parent::__construct($user_email);
@@ -33,10 +27,6 @@ class Participant extends User {
         parent::__construct($user_pic);
         parent::__construct($user_IC);
         parent::__construct($user_role);
-
-        $this->list_of_participation = $list_of_participation;
-        $this->total_score = $total_score;
-        $this->role = $role;
         
     }
     
@@ -57,15 +47,23 @@ class Participant extends User {
         }
     }
     
-    public function getUserRole(){
+    /*public function getUserRole(){
         return parent::getUserRole();
     }
     
     public function userPrivilege(){
-        return $this->getUserRole() . " <br />" .  
+        return $this->getUserRole() . " <br />" . 
+                "&emsp;- Create an user account <br /> " . 
                 "&emsp;- View & Update user account <br />" . 
-                "&emsp;- Participate in a competition <br />" . 
+                "&emsp;- Create a competition event <br />" . 
+                "&emsp;- Delete own or others user account <br />" .
+                "&emsp;- View and Update a competition event <br />" . 
+                "&emsp;- Delete a competition event <br />" .
                 "&emsp;- View competition details and history <br />" . 
-                "&emsp;- View store items <br />";
-    }
+                "&emsp;- View store items <br />" . 
+                "&emsp;- Add a new store item <br />" . 
+                "&emsp;- Update & Delete a new store item <br />";
+        
+    }*/
+    
 }

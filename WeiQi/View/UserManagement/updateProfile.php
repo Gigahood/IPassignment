@@ -108,6 +108,15 @@ and open the template in the editor.
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Email : </span>
                     <input type="text" name="email" value="<?php echo $emailGet; ?>" size="30" />
+                    <br /><br />
+                    
+                    <span class="lblRightStyle">User Privilege : </span>
+                    <?php 
+                        $dbPri = UserDBConnection::getInstance($_SESSION["role"]);
+                        $resultPri = $dbPri->displayPrivilege(); 
+                        echo $resultPri->privilege();
+                        $db->closeConnection();
+                    ?>
                     <br /><br /><br />
                     
                     <input type="submit" value="Update" name="action" class="loginStyle"/>
@@ -118,8 +127,8 @@ and open the template in the editor.
         
         <?php
         // put your code here
-        session_start();
-            $_SESSION["role"] = "student";
+        //session_start();
+            //$_SESSION["role"] = "student";
             
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -129,7 +138,7 @@ and open the template in the editor.
               $user_pic = file_get_contents($_POST['profileUpload']);
 
               $db = UserDBConnection::getInstance($_SESSION["role"]);
-              $db->createAccount($user_email, $user_address, $user_contact, $user_pic);
+              $db->updateProfile($user_email, $user_address, $user_contact, $user_pic);
               echo "<p>Updated successful!</p>";
                echo "<a href='../Competition/CompetitionHomepage.php'>Click to Competition Homepage.</a>";
               $db->closeConnection();

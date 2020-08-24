@@ -43,7 +43,14 @@ abstract class User {
     public function __get($name) {
         return $this->$name;
     }
+    
+  /*  public function getUserRole(){
+        return $this->user_role;
+    }
 
+    public function userPrivilege(){
+        return " ";
+    }*/
     /*public function __toString() {
         return "$this->user_name!<br />";
     }*/

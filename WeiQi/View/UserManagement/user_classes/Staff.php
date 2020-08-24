@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* TO PUSH*/
+/* TO PUSH TO PUSH*/
 /**
  * Description of Staff
  *
@@ -19,7 +19,7 @@ class Staff extends User {
     private $list_of_staffInvolvement;
     
     public function __construct($user_name, $user_email, $user_dob, $user_address, 
-            $user_contact, $user_pw, $user_pic, $user_IC,
+            $user_contact, $user_pw, $user_pic, $user_IC, $user_role,
             $list_of_staffInvolvement) {
         
         parent::__construct($user_name);
@@ -30,6 +30,8 @@ class Staff extends User {
         parent::__construct($user_pw);
         parent::__construct($user_pic);
         parent::__construct($user_IC);
+        parent::__construct($user_role);
+        
         $this->list_of_staffInvolvement = $list_of_staffInvolvement;
         
     }
@@ -50,5 +52,20 @@ class Staff extends User {
             return parent::__get($name);
         }
     }
+    
+    /*public function getUserRole(){
+        return parent::getUserRole();
+    }
+    
+    public function userPrivilege(){
+        return $this->getUserRole() . " <br />" . 
+                "&emsp;- Create an user account <br /> " . 
+                "&emsp;- View & Update user account <br />" . 
+                "&emsp;- Create a competition event <br />" . 
+                "&emsp;- Register as committee or others position in a competition <br />" .
+                "&emsp;- View and Update a competition event <br />" . 
+                "&emsp;- View competition details and history <br />" . 
+                "&emsp;- View store items <br />";
+    }*/
     
 }
