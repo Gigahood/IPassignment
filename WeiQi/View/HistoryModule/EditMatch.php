@@ -33,7 +33,7 @@ require '../../Controller/History/HistoryController.php';
 
             <div class="formContainer">
                 <form class="formStyle" action="EditMatch.php?id=1" method="post">
-                    <label class="labelStyle" for="black">Black : </label>
+                    <label class="labelStyle" for="black">Black Player : </label>
                     <?php
                     echo "<input type='text' name='black' value='" . getName($match["black_User"], $_SESSION["role"]) . "' />";
 
@@ -47,7 +47,7 @@ require '../../Controller/History/HistoryController.php';
                     ?>
                     <br/>
                     <br/>
-                    <label class="labelStyle" for="white">White : </label>
+                    <label class="labelStyle" for="white">White Player : </label>
                     <?php
                     echo "<input type='text' name='white' value='" . getName($match["white_User"], $_SESSION["role"]) . "' />";
                     ?>
@@ -99,7 +99,6 @@ require '../../Controller/History/HistoryController.php';
                     </select>
                     <br/>
                     <br/>
-                    <p>Insert Moves</p>
                     <input type="reset" value="Reset" />
                     <input type="submit" name="submit" value="Confirm" />
                 </form>
@@ -120,6 +119,7 @@ require '../../Controller/History/HistoryController.php';
             $board = trim($_POST["boardSize"]);
             $remark = trim($_POST["remark"]);
             $matchID = trim($_POST["matchID"]);
+            $dSession = $_SESSION["role"];
 
             $error = validateEditInput($black, $white, $wScore, $bScore, $sTime, $eTime, $board, $remark, $matchID, $_SESSION["role"]);
 
