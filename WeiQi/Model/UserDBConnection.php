@@ -66,10 +66,14 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
         
     }
 
-    public function updateProfile($user_email, $user_address, $user_contact, $user_pic) {
+    /*public function updateProfile($user_email, $user_address, $user_contact, $user_pic) {
         if(isset($_SESSION["userID"])) {
             $query = "UPDATE user SET user_email=?, user_address=?, user_contact=?, user_pic=? WHERE user_ID = '" . $_SESSION["userID"] . "'";
             $stmt = parent::$db->prepare($query);
+            $stmt->bindParam(1, $user_email, PDO::PARAM_STR);
+            $stmt->bindParam(2, $user_address, PDO::PARAM_STR);
+            $stmt->bindParam(3, $user_contact, PDO::PARAM_STR);
+            $stmt->bindParam(4, $user_pic, PDO::PARAM_LOB);
             $stmt->execute();
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -78,6 +82,26 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
         else {
             return null;
         }
+    }*/
+    
+    public function updateProfile($user_email, $user_address, $user_contact, $user_pic) {
+        if(isset($_SESSION["userID"])) {
+            $query = "UPDATE user SET user_email=?, user_address=?, user_contact=?, user_pic=? WHERE user_ID = '" . $_SESSION["userID"] . "'";
+            $stmt = parent::$db->prepare($query);
+            $stmt->bindParam(1, $user_email, PDO::PARAM_STR);
+            $stmt->bindParam(2, $user_address, PDO::PARAM_STR);
+            $stmt->bindParam(3, $user_contact, PDO::PARAM_STR);
+            $stmt->bindParam(4, $user_pic, PDO::PARAM_LOB);
+        
+            $stmt->execute();
+
+            //$result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return "Success";
+        }
+        else {
+            return null;
+        }
+        
     }
 
 

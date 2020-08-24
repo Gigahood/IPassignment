@@ -12,9 +12,6 @@
  * @author Jane Chew
  */
 
-//NO USE //
-
-
 abstract class User {
     //put your code here
     private $user_name;

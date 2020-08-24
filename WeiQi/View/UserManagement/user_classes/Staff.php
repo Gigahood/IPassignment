@@ -5,24 +5,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+/* TO PUSH */
 /**
- * Description of Participant
+ * Description of Staff
  *
  * @author Jane Chew
  */
 
 require_once 'User.php';
 
-class Participant extends User {
+class Staff extends User {
     //put your code here
-    private $list_of_participation;
-    private $total_score;
-    private $role;
-            
+    private $list_of_staffInvolvement;
+    
     public function __construct($user_name, $user_email, $user_dob, $user_address, 
             $user_contact, $user_pw, $user_pic, $user_IC,
-            $list_of_participation, $total_score, $role) {
+            $list_of_staffInvolvement) {
         
         parent::__construct($user_name);
         parent::__construct($user_email);
@@ -32,9 +30,7 @@ class Participant extends User {
         parent::__construct($user_pw);
         parent::__construct($user_pic);
         parent::__construct($user_IC);
-        $this->list_of_participation = $list_of_participation;
-        $this->total_score = $total_score;
-        $this->role = $role;
+        $this->list_of_staffInvolvement = $list_of_staffInvolvement;
         
     }
     
@@ -53,6 +49,6 @@ class Participant extends User {
         else {
             return parent::__get($name);
         }
-    }  
-   
+    }
+    
 }

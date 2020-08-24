@@ -39,7 +39,7 @@ and open the template in the editor.
                         $result = $db->viewProfile();
   
                         if($result == null){
-                            echo '<a href="../UserManagement/updateProfile.php"> <img src="../image/user.svg" alt="profilePicture" height="50"/></a>';
+                            echo '<a href="../UserManagement/login.php"> <img src="../image/user.svg" alt="profilePicture" height="50"/></a>';
                         }
                         else {
                             echo '<a href="../UserManagement/updateProfile.php"><img src="data:image/jpeg;base64,'.base64_encode( $result['user_pic'] ).'" alt="profilePicture" height="50"/></a>';
@@ -55,7 +55,7 @@ and open the template in the editor.
                         $result = $db->viewProfile();
   
                         if($result == null){
-                            echo '<a href="../UserManagement/updateProfile.php"  style="text-decoration: none; color: white;">User Name</a>';
+                            echo '<a href="../UserManagement/login.php"  style="text-decoration: none; color: white;">User Name</a>';
                             
                         }
                         else {
