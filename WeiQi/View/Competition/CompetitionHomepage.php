@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <!--TO PUSH -->
 <?php
-    include '../MasterPage.html';
+    include '../MasterPage.php';
 ?>
 <html>
     <head>
