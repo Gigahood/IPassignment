@@ -25,7 +25,7 @@ include_once '../../Model/StoreDBConnection.php';
 
             <div class="detailContainer">
                 <?php
-                session_start();
+                // session_start();
                 $_SESSION["role"] = "admin";
 
                 $db = StoreDBConnection::getInstance($_SESSION["role"]);

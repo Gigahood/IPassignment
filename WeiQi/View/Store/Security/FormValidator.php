@@ -25,7 +25,7 @@ class FormValidator {
 
     public static function  validateEmptyString($pro_name, $pro_desc, $total_qty, $pro_category,
                             $normal_price, $discount_rate, $pro_image) {
-        $error = "* ";
+        $error = " ";
 
         if (empty($pro_name)) {
             $error .= "Name is require. <br/>";
@@ -37,10 +37,10 @@ class FormValidator {
 
         if (empty($total_qty)) {
             $error .= "Available Stock is require.<br/>";
-        } else if (preg_match('/^[-]?[0-9,]+$/', $total_qty)){
+        } else if (!is_numeric($total_qty)){
             $error .= "Available Stock must be integer.<br/>";
-        } else if ($total_qty > 0){
-            $error .= "At least have one item.<br/>";
+        } else if (!$total_qty >= 1){
+            $error .= "At least one quantity.<br/>";
         }
 
         if (empty($pro_category)) {
@@ -49,17 +49,17 @@ class FormValidator {
 
         if (empty($normal_price)) {
             $error .= "Price is require. <br/>";
-        } else if (preg_match('/^[-]?[0-9,]+$/', $normal_price)){
+        } else if (!is_numeric($normal_price)){
             $error .= "Price must be digit.<br/>";
         }
 
         if (empty($discount_rate)) {
             $error .= "Discount rate is require. <br/>";
-        } else if (preg_match('/^[-]?[0-9,]+$/', $discount_rate)){
+        } else if (!preg_match('/^[-]?[0-9,]+$/', $discount_rate)){
             $error .= "Discount rate must be digit.<br/>";
         }
 
-        else if (empty($pro_image)) {
+        if (empty($pro_image)) {
             $error .= "Please upload a photo. <br/>";
         }
 

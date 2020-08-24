@@ -66,7 +66,7 @@ include_once '../../Model/StoreDBConnection.php';
                 }
 
                 foreach ($result as $value) {
-                ?>
+                    ?>
                     <form name="addNewItemForm" action="" method="POST">
                         <label for="proName" class="label"><span style="color: red;">* </span>
                             Product Name: 
@@ -164,28 +164,34 @@ include_once '../../Model/StoreDBConnection.php';
         <?php
         // put your code here
         $_SESSION['userID'] = 4;
-
-        print_r($_POST);    
+       // if (isset($_POST['addNewCat'])) {
+        //   print_r($_POST["proName"]); 
+      //  }
         
+
         if (isset($_POST["update"])) {
             $pro_name = $_POST["proName"];
             $pro_desc = $_POST["proDesc"];
             $total_qty = $_POST["qty"];
+//            if(isset($_POST['addNewCat'])){
+//                $pro_category =$_POST["newCat"];
+//                exit();
+//            } else {
             $pro_category = $_POST["category"];
+            //}
             $normal_price = $_POST["price"];
             $discount_rate = $_POST["discountRate"];
             $pro_image = $_POST["proImg"];
             $admin_ID = $_SESSION['userID'];
             $pro_ID = $_GET["id"];
-            
-         
+
 
             $updateItem = $db->updateItem($pro_name, $pro_desc, $total_qty, $pro_category,
                     $normal_price, $discount_rate, $pro_image, $admin_ID, $pro_ID);
 
-            echo "<p>Add successful!</p>";
+            echo "<p>Update successful!</p>";
         } else {
-            echo "no Subtmit";
+            echo "Update failed.";
         }
 
         $db->closeConnection();

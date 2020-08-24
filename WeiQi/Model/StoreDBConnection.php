@@ -76,8 +76,6 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
 
-
-
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
@@ -108,8 +106,6 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
             $stmt->bindParam(9, $pro_ID, PDO::PARAM_STR);
-
-
 
             $stmt->execute();
         } catch (Exception $ex) {
