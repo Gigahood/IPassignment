@@ -218,6 +218,7 @@ and open the template in the editor.
             </form>
         </div>
 
+        <!--TO PUSH -->
         <?php
         
             class EncryptionRegister {
