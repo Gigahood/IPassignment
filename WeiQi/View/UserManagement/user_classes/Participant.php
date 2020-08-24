@@ -12,8 +12,6 @@
  * @author Jane Chew
  */
 
-//NO USE //
-
 require_once 'User.php';
 
 class Participant extends User {
