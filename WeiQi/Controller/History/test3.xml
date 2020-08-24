@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<competitions>
+    <competition>
+        <competitionID>1</competitionID>
+        <competitionName>WeiQi Middle Class Match</competitionName>
+        <history>
+            <historyStartDate>2016-07-11 00:00:00</historyStartDate>
+            <historyEndDate>2016-07-28 00:00:00</historyEndDate>
+            <matches>
+                <match>
+                    <matchDetail>123 something happen</matchDetail>
+                </match>
+                <match>
+                    <matchDetail>12312</matchDetail>
+                </match>
+            </matches>
+        </history>
+    </competition>
+</competitions>

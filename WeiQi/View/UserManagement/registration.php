@@ -220,7 +220,7 @@ and open the template in the editor.
 
         <?php
         
-            class Encryption {
+            class EncryptionRegister {
                 public static function oneWayHash($value){
                     $hashedValue = password_hash($value, PASSWORD_DEFAULT);
                     
@@ -252,7 +252,7 @@ and open the template in the editor.
                   //Verify password & echo the value//
                   $user_contact = trim($_POST['contactNo']);
                   $user_pw = trim($_POST['rePW']);
-                  $encrypt_pw = Encryption::oneWayHash($user_pw);
+                  $encrypt_pw = EncryptionRegister::oneWayHash($user_pw);
                   //$user_pic = "NULL";
                   $user_pic = file_get_contents($_POST['profileUpload']);
                   $user_IC = trim($_POST['icPre'] . "-" . $_POST['icMid'] . "-" . $_POST['icPost']);

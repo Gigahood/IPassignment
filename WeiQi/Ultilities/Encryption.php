@@ -11,7 +11,11 @@ class Encryption {
     public static function verify($value, $hashValue) {
         $hash = crypt($value, $hashValue);
                
-        echo $hash === $hashValue;
+        if ($hash === $hashValue) {
+            echo "correct";
+        } else {
+            echo "wrong";
+        }
         
         return $hash === $hashValue;
     }
@@ -19,5 +23,11 @@ class Encryption {
 }
 $b = "123";
 $a = Encryption ::oneWayHash($b);
+
+if (Encryption :: verify($b, $a)) {
+    echo "password is correct";
+} else {
+    echo "password not correct";
+}
 
 echo Encryption :: verify($b, $a);

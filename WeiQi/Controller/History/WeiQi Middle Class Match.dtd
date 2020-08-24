@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    TODO define vocabulary identification
+    PUBLIC ID: -//vendor//vocabulary//EN
+    SYSTEM ID: http://server/path/WeiQi Middle Class Match.dtd
+
+-->
+
+<!--
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE competitions SYSTEM "WeiQi Middle Class Match.dtd">
+
+    <competitions>
+    ...
+    </competitions>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT competitions (competition)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT competition (competitionID|competitionName|history)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT competitionID (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT competitionName (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT history (historyStartDate|historyEndDate|matches)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT historyStartDate (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT historyEndDate (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT matches (match)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT match (matchDetail|startTime|endTime|blackUser|whiteUser|blackScore|whiteScore|boardSize)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT matchDetail (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT startTime (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT endTime (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT blackUser (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT whiteUser (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT blackScore (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT whiteScore (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT boardSize (#PCDATA)>

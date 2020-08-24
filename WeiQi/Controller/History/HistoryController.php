@@ -4,6 +4,7 @@ include_once '../../Model/HistoryDBConnection.php';
 include_once '../../View/HistoryModule/Class/HistoryMatch.php';
 include_once '../../View/HistoryModule/Class/history.php';
 include_once '../../View/HistoryModule/Class/participant.php';
+include_once 'SAXParser.php';
 
 function getHistoryDetail($compID, $dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
@@ -33,35 +34,8 @@ function getHistoryDetail($compID, $dSession) {
                 $result["competition_name"],
                 "");
     }
-//    $remark = $db->getRemark($result["history_ID"]);
-//
-//    foreach ($remark as $value) {
-//        $history->setRemark($value["remark"]);
-//    }
-
-
-
     return $history;
 }
-
-//function viewHistoryScore($historyID, $dSession) {
-//    $participants = array();
-//
-//    $db = HistoryDBConnection :: getInstance($dSession);
-//    $result = $db->getParticipant($historyID);
-//
-//    if (!empty($result)) {
-//        foreach ($result as $value) {
-//            $participant = new Participant($value["participant_List_ID"],
-//                    $value["history_ID"],
-//                    $value["user_ID"]);
-//                    
-//
-//            array_push($participants, $participant);
-//        }
-//    }
-//    return $participants;
-//}
 
 function calculateHistoryScore($matches) {
     $participants = array();
@@ -94,6 +68,8 @@ function calculateHistoryScore($matches) {
 
 function getMatch($matchID, $dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
+    
+   
 
     $result = $db->getMatchDetail($matchID);
 
@@ -155,7 +131,7 @@ function verifyUser($username, $dSession) {
     return $result;
 }
 
-function getUserID($username,$dSession) {
+function getUserID($username, $dSession) {
     $db = HistoryDBConnection :: getInstance($dSession);
     $result = $db->getUserID($username);
 
@@ -184,19 +160,19 @@ function validateEditInput($black, $white, $wScore, $bScore, $sTime, $eTime, $bo
     if (empty($black)) {
         $error .= "Black Player Require Value <br/>";
     }
-    
+
     if (empty($white)) {
         $error .= "White Player Require Value <br/>";
     }
-    
+
     if (empty($wScore)) {
         $error .= "White Score Require Value <br/>";
     }
-    
+
     if (empty($bScore)) {
         $error .= "White Player Require Value <br/>";
     }
-    
+
     if ((verifyUser($black, $dSession)) == null) {
         $error .= "Invalid Black Player Name <br/>";
     }
@@ -242,4 +218,57 @@ function checkTime($sTime, $eTime) {
     }
 
     return true;
+}
+
+function insertWithXML($path) {
+    $error = validatePath($path);
+    
+
+    return $error;
+}
+
+function validatePath($path) {
+   
+    try {
+       
+        $doc = new SAXParser($path);
+
+        $id = getID($doc->getHistory()->getName());
+        $startDate = $doc->getHistory()->getHstart();
+        $endDate = $doc->getHistory()->getHend();
+        $remark = $doc->getHistory()->getRemark();  
+       
+        print_r($doc->getHistory());
+
+        createHistory($id["competition_ID"], $startDate, $endDate, $remark, "admin");
+
+        foreach ($doc->getMatches() as $match) {
+            $black = getUserID($match->getBlack(),"admin");
+            $white = getUserID($match->getWhite(),"admin");
+            $bScore = $match->getB_Score();
+            $wScore = $match->getW_Score();
+            $remark = $match -> getMatchDetail();
+            $sTime = $match-> getStartTime();
+            $eTime = $match -> getEndTime();
+            $board = $match -> getBoardSize();
+            $historyID = $id["competition_ID"];
+            
+
+            createHistoryMatch($black["user_ID"], $white["user_ID"], $wScore, $bScore, $remark, $sTime,
+            $eTime, $board, "admin", $historyID);
+        }
+        
+    } catch (Exception $ex) {
+        echo "123";
+    }
+
+
+    return $doc;
+}
+
+function getID($name) {
+    $db = HistoryDBConnection :: getInstance("admin");
+    $result = $db->getCompetitionID($name);
+
+    return $result;
 }
