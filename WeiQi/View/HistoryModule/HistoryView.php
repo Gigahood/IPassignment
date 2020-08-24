@@ -1,5 +1,5 @@
 <?php
-include('../MasterPage.html');
+include('../MasterPage.php');
 ?>
 
 <!DOCTYPE html>

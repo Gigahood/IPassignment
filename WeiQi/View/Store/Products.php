@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-include('../MasterPage.html');
+include('../MasterPage.php');
 ?>
 <html>
     <head>

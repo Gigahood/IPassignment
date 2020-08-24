@@ -269,9 +269,6 @@ and open the template in the editor.
 
                 }
         
-                
-            
-            
         session_destroy();
         
       ?>

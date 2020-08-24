@@ -50,14 +50,27 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
           
           $stmt->execute();
     }
+    
+    public function viewProfile(){
+        if(isset($_SESSION["userID"])) {
+            $query = "SELECT * FROM user WHERE user_ID = '" . $_SESSION["userID"] . "'";
+            $stmt = parent::$db->prepare($query);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }
+        else {
+            return null;
+        }
+        
+    }
 
     public function updateProfile() {
         
     }
 
-    public function viewProfile() {
-        
-    }
+
 
 }
 
