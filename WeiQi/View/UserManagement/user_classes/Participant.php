@@ -19,7 +19,14 @@ require_once 'UserADT.php';
 
 class Participant extends User {
     //put your code here
-    public function __construct($user_name, $user_email, $user_dob, $user_address, $user_contact, $user_pw, $user_pic, $user_IC) {
+    private $list_of_participation;
+    private $total_score;
+    private $role;
+            
+    public function __construct($user_name, $user_email, $user_dob, $user_address, 
+            $user_contact, $user_pw, $user_pic, $user_IC,
+            $list_of_participation, $total_score, $role) {
+        
         parent::__construct($user_name);
         parent::__construct($user_email);
         parent::__construct($user_dob);
@@ -28,6 +35,10 @@ class Participant extends User {
         parent::__construct($user_pw);
         parent::__construct($user_pic);
         parent::__construct($user_IC);
+        $this->list_of_participation = $list_of_participation;
+        $this->total_score = $total_score;
+        $this->role = $role;
+        
     }
     
     public function __set($name, $value) {
