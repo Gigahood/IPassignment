@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-include('../MasterPage.html');
+include('../MasterPage.php');
 ?>
 <html>
     <head>
