@@ -127,5 +127,11 @@ class StoreDBConnection extends AbstractDatabaseConnection {
             echo $ex->getMessage();
         }
     }
+    
+    public function calMemberPrice($normal_price, $discount_rate) {
+        $memPrice = $normal_price - ($normal_price * $discount_rate);
+        return number_format($memPrice, 2);
+    }
+    
 
 }

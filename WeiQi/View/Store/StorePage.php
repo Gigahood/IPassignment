@@ -93,7 +93,7 @@ include_once '../../Model/StoreDBConnection.php';
                   
                     foreach ($result as $value) {
                         
-                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
+                       // $memPrice = new PriceDecorator();
 
                         echo '<div class="column" onclick="printID(this.id);" >';
                         
