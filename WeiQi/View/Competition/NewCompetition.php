@@ -1,4 +1,8 @@
-<!--TO PUSH -->
+<!--
+ * New Competition Webpage
+ *
+ * @author Cheng Qing Xiang
+ *-->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -105,12 +109,52 @@
                     <br /><br /><br />
                     
                     <input type="submit" value="Create" name="action" class="createStyle" style='background-color: red; margin-left: auto; margin-right: auto; display: block;'/>
+                    
                     <br /><br />
                 </div>
             </form>
         </div>
+        
         <?php
-        // put your code here
+        
+                if (isset($_POST["submit"])) {
+            
+         
+                  
+                  $competition_ID = '';
+                  $competition_year = trim($_POST['year']);
+                  $competition_name = trim($_POST['userName']);
+                  $competition_start_date = trim($_POST['day'] . "/" . $_POST['month'] . "/" . $_POST['year']);
+                  $competition_end_date = '';;
+                  $competition_venue = trim($_POST['venue']);
+                  $competition_reg_fee = trim($_POST['regFeePre'] . "." . $_POST['regFeePost']);
+                  $competition_PIC = trim($_POST['PIC']);
+                  $competition_prize_pool = trim($_POST['firstPrize']) + trim($_POST['secondPrize'] + trim($_POST['thirdPrize']));
+                  $competition_total_participate = '';
+                  
+                  
+                  
+                  //Verify password & echo the value//
+                  //$user_contact = trim($_POST['contactNo']);
+                  //$user_pw = trim($_POST['rePW']);
+                  //$encrypt_pw = Encryption::oneWayHash($user_pw);
+                  //$user_pic = "NULL";
+                  //$user_pic = file_get_contents($_POST['profileUpload']);
+                 // $user_IC = trim($_POST['icPre'] . "-" . $_POST['icMid'] . "-" . $_POST['icPost']);
+                  //$user_role = "participant";
+
+
+                  //$db = UserDBConnection::getInstance($_SESSION["role"]);
+                  $db->createCompetition($competitionID, $competitionYear, $competitionName, $competitionStartDate, $competitionEndDate, $competitionVenue, $competitionRegFee, $competitionPIC, $competitionPrizePool, $competitionTotalParticipate);
+                  echo "<p>Registration successful!</p>";
+                  //echo "<a href='login.php'>Click to login page.</a>";
+                  $db->closeConnection();
+
+
+                }
+        
+        //session_destroy();
+        
         ?>
     </body>
 </html>
