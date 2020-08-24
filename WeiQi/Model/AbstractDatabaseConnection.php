@@ -21,7 +21,7 @@ abstract class AbstractDatabaseConnection {
 
         $host = $ini['db_host'];
         $dbName = $ini['db_name'];
-
+        
         $dsn = "mysql:host=$host;dbname=$dbName";
 
         static::$session = $dSession;
