@@ -16,7 +16,6 @@ require_once 'User.php';
 
 class Staff extends User {
     //put your code here
-    
     private $list_of_staffInvolvement;
     
     public function __construct($user_name, $user_email, $user_dob, $user_address, 
@@ -50,5 +49,6 @@ class Staff extends User {
         else {
             return parent::__get($name);
         }
-    }  
+    }
+    
 }
