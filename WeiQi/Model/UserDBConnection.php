@@ -66,8 +66,18 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
         
     }
 
-    public function updateProfile() {
-        
+    public function updateProfile($user_email, $user_address, $user_contact, $user_pic) {
+        if(isset($_SESSION["userID"])) {
+            $query = "UPDATE user SET user_email=?, user_address=?, user_contact=?, user_pic=? WHERE user_ID = '" . $_SESSION["userID"] . "'";
+            $stmt = parent::$db->prepare($query);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }
+        else {
+            return null;
+        }
     }
 
 

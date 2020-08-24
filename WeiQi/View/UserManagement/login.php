@@ -78,6 +78,8 @@ and open the template in the editor.
                 //print_r($result);
                 //print("\n");
                 echo "<p>Login successful!</p>";
+                echo "<br /><script type='text/javascript'>location.href = '../Competition/CompetitionHomepage.php';</script>";
+                
                 $_SESSION["role"] = $result["user_role"];
                 $_SESSION["userID"] = $result["user_ID"];
             }
