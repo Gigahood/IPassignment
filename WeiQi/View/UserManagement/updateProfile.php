@@ -129,7 +129,7 @@ and open the template in the editor.
               $user_pic = file_get_contents($_POST['profileUpload']);
 
               $db = UserDBConnection::getInstance($_SESSION["role"]);
-              $db->createAccount($user_email, $user_address, $user_contact, $user_pic);
+              $db->updateProfile($user_email, $user_address, $user_contact, $user_pic);
               echo "<p>Updated successful!</p>";
                echo "<a href='../Competition/CompetitionHomepage.php'>Click to Competition Homepage.</a>";
               $db->closeConnection();
