@@ -61,8 +61,7 @@ class Participant extends User {
     }
     
     public function userPrivilege(){
-        return parent::userPrivilege() . $this->getUserRole() . " <br />" . 
-                "- Create an user account <br /> " . 
+        return parent::userPrivilege() . $this->getUserRole() . " <br />" .  
                 "- View & Update user account <br />" . 
                 "- Participate in a competition <br />" . 
                 "- View competition details and history <br />" . 
