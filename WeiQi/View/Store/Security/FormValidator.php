@@ -20,9 +20,7 @@ class FormValidator {
     public function __construct($post_data) {
         $this->data = $post_data;
     }
-    
-    
-    
+
     public function validateForm() {
         foreach (self::$fields as $field){
             if(array_key_exists($field, $this->data)){
