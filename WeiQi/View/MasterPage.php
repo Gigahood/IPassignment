@@ -24,7 +24,7 @@ and open the template in the editor.
                 </div>
                 <div class="headerLink">
                     <a href="../Competition/CompetitivePage.php">Home</a>
-                    <a href="../Store/Products.php">Store</a>
+                    <a href="../Store/StorePage.php">Store</a>
                     <a href="../Competition/CompetitivePage.php">Competition Info</a>
                 </div>
             </div>

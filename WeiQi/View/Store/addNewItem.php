@@ -5,7 +5,8 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-include('../MasterPage.html');
+session_start();
+include('../MasterPage.php');
 include_once '../../Model/StoreDBConnection.php';
 require_once '../Store/Security/FormValidator.php';
 ?>
@@ -44,18 +45,11 @@ require_once '../Store/Security/FormValidator.php';
     </head>
     <body onload=enable_text(false);>
         <?php
-        session_start();
+        
         $_SESSION["role"] = "admin";
         $db = StoreDBConnection::getInstance($_SESSION["role"]);
 
-        // error message
-        $nameErr = "Name is require.";
-        $descErr = "Description is require.";
-        $catErr = "Name is require.";
-        $avaistockErr = "Available Stock is require.";
-        $priceErr = "Price is require.";
-        $discountErr = "Discount rate is require.";
-        $imgErr = "Please upload a photo.";
+        
         ?>
 
         <div id="ItemFormStyle">
@@ -69,14 +63,6 @@ require_once '../Store/Security/FormValidator.php';
                 <b style="font-size: 25px; font-family: Arial">Add New Item</b>
                 <hr width="100%"/>
 
-                <div style="padding: 10px;text-align: center;">
-                    <?php
-                    if (isset($_POST['submit'])) {
-                        $validation = new FormValidator($_POST);
-                        $errors = $validation->validateForm();
-                    }
-                    ?>
-                </div>    
                 <form name="addNewItemForm" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
                     <label for="proName" class="label">
@@ -86,7 +72,7 @@ require_once '../Store/Security/FormValidator.php';
 
                     <input type="text" id="proName" name="proName" value="" placeholder="Product name" size="70">
                     <div class="error">
-                        <?php echo 'hi'; echo $errors['proName'] ?? ''; echo 'hi';?>
+                        <?php // echo $errors['proName'] ?? '';?>
                     </div>
                     <br />
                     <br />
@@ -176,38 +162,44 @@ require_once '../Store/Security/FormValidator.php';
                 </form>  
 
 
-<?php
-//                $_SESSION['userID'] = 4;
-//                
-//                if (isset($_POST["submit"])) {
-//                    // if validation return true;
-//                    if (empty($_POST["proName"])) {
-//                        echo "Name is required";
-//                        exit;
-//                    } else {
-//                        
-//                        $pro_name = $_POST["proName"];
-//                    }
-//
-//                    $pro_desc = $_POST["proDesc"];
-//                    $total_qty = $_POST["qty"];
-//                    $pro_category = $_POST["category"];
-//                    $normal_price = $_POST["price"];
-//                    $discount_rate = $_POST["discountRate"];
-//                    $pro_image = $_POST["proImg"];
-//                    $admin_ID = $_SESSION['userID'];
-//
-//
-//                    $addItem = $db->addNewItem($pro_name, $pro_desc, $total_qty, $pro_category,
-//                            $normal_price, $discount_rate, $pro_image, $admin_ID);
-//
-//                    echo "<p>Add successful!</p>";
-//                } else {
-// echo "no Subtmit";
-//                }
+                <?php
+                $_SESSION['userID'] = 4;
 
-$db->closeConnection();
-?>
+                if (isset($_POST["submit"])) {
+                    // if validation return true;
+                    if (empty($_POST["proName"])) {
+                        echo "Name is required";
+                        exit;
+                    } else {
+
+                        $pro_name = $_POST["proName"];
+                    }
+
+                    $pro_desc = $_POST["proDesc"];
+                    $total_qty = $_POST["qty"];
+                    $pro_category = $_POST["category"];
+                    $normal_price = $_POST["price"];
+                    $discount_rate = $_POST["discountRate"];
+                    $pro_image = $_POST["proImg"];
+                    $admin_ID = $_SESSION['userID'];
+
+                    $error = FormValidator::validateEmptyString($pro_name, $pro_desc, $total_qty, $pro_category,
+                            $normal_price, $discount_rate, $pro_image);
+                    if (empty($error)) {
+                        $addItem = $db->addNewItem($pro_name, $pro_desc, $total_qty, $pro_category,
+                            $normal_price, $discount_rate, $pro_image, $admin_ID);
+                    
+                        echo "<p>Add successful!</p>";
+                    } else{
+                        echo "<h3 style='color:red;'>$error</h3>";
+                        
+                    }
+                } else {
+                    echo 'no Subtmit';
+                }
+
+                $db->closeConnection();
+                ?>
 
 
             </div>

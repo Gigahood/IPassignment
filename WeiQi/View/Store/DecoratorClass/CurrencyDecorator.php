@@ -7,12 +7,11 @@
  */
 
 /**
- * Description of DescDecorator
+ * Description of CurrencyDecorator
  *
  * @author Lim Yi En
  */
-class DescDecorator extends AbstractDecorator {
-
+class CurrencyDecorator extends AbstractDecorator {
     //put your code here
     private $description;
 
@@ -30,7 +29,11 @@ class DescDecorator extends AbstractDecorator {
     }
 
     public function decorate() {
-        return $this->description . $this->products->calMemberPrice($this->getNormal_price(), $this->getDiscount_rate());
+        $normalUSD = $this->description .
+                number_format(($this->products->getNormal_price())* 4.18, 2);
+        $memUSD = $this->description . 
+                ($this->products->calMemberPrice($this->getNormal_price(), $this->getDiscount_rate()))* 4.18;
+        return "$normalUSD <br/> $memUSD";
     }
 
     public function calMemberPrice($normal_price, $discount_rate) {
@@ -44,4 +47,4 @@ class DescDecorator extends AbstractDecorator {
     public function getNormal_price() {
         return $this->products->getNormal_Price();
     }
-}    
+}
