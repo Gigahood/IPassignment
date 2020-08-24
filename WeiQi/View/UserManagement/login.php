@@ -77,7 +77,7 @@ and open the template in the editor.
         if(isset($_POST['email']) && isset($_POST['PW'])){
             $useremail = trim($_POST['email']);
             $userpw = trim($_POST['PW']);
-            $encrypt_pw = EncryptionTest::oneWayHash(trim($_POST['PW']));
+            //$encrypt_pw = EncryptionTest::oneWayHash(trim($_POST['PW']));
             
             if((!$useremail) && (!$userpw)){
                 echo '<p>Failed to log in' . '. You have not entered your login details.</p>';
