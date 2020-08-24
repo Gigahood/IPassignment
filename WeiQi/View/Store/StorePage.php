@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-session_start();
+//session_start();
 include '../MasterPage.php';
 include_once '../../Model/StoreDBConnection.php';
 ?>
@@ -93,7 +93,7 @@ include_once '../../Model/StoreDBConnection.php';
                   
                     foreach ($result as $value) {
                         
-                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
+//                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
 
                         echo '<div class="column" onclick="printID(this.id);" >';
                         
