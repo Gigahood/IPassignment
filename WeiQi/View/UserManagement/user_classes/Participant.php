@@ -15,7 +15,6 @@
 //NO USE //
 
 require_once 'User.php';
-require_once 'UserADT.php';
 
 class Participant extends User {
     //put your code here
