@@ -8,21 +8,29 @@ include_once '../../View/UserManagement/user_classes/UserADT.php';
  */
 class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
     
+    
     public function retrieveUser($useremail, $userpw){
-        $query = "SELECT * FROM user WHERE user_email = ? AND user_pw = ?";
+        $getEmail = $useremail;
+        $query = "SELECT * FROM user WHERE user_email = '$getEmail' ";
         $stmt = parent::$db->prepare($query);
-        $stmt->bindParam(1, $useremail, PDO::PARAM_STR);
-        $stmt->bindParam(2, $userpw, PDO::PARAM_STR);
         $stmt->execute();
-        
         $totalrows = $stmt->rowCount();
         if($totalrows == 0){
-            return null;
+            $result = null;
+            $encryptPW = null;
         }
         else {
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $encryptPW = $result["user_pw"];
+        }
+
+        if(Encryption::verify($userpw, $encryptPW)){
             return $result;
         }
+        else {
+            return null;
+        }
+   
     }
     
     public function createAccount($userID, $username, $useremail, $userdob, $useraddress, $usercontact, $userpw, $userpic, $userIC, $userrole) {
@@ -42,13 +50,49 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
           
           $stmt->execute();
     }
+    
+    public function viewProfile(){
+        if(isset($_SESSION["userID"])) {
+            $query = "SELECT * FROM user WHERE user_ID = '" . $_SESSION["userID"] . "'";
+            $stmt = parent::$db->prepare($query);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }
+        else {
+            return null;
+        }
+        
+    }
 
     public function updateProfile() {
         
     }
 
-    public function viewProfile() {
-        
-    }
+
 
 }
+
+class Encryption {
+                public static function oneWayHash($value){
+                    $hashedValue = password_hash($value, PASSWORD_DEFAULT);
+                    
+                    return $hashedValue;
+                }
+                
+                public static function verify($value, $hashValue){
+                    $hash = crypt($value, $hashValue);
+                    
+                    if ($hash === $hashValue) {
+                        echo "correct";
+                    }
+                    else {
+                        echo "wrong";
+                    }
+                        
+                    
+                    return $hash === $hashValue;
+                }
+            }
+
