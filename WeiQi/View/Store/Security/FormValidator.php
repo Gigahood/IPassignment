@@ -15,7 +15,7 @@ class FormValidator {
     
     public static function  validateEmptyString($pro_name, $pro_desc, $total_qty, $pro_category,
                             $normal_price, $discount_rate, $pro_image) {
-        $error = " ";
+        $error = "";
 
         if (empty($pro_name)) {
             $error .= "Name is require. <br/>";
