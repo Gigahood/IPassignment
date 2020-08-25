@@ -86,7 +86,7 @@ and open the template in the editor.
                 
                 <br /><br />
                 <div class="profileName">
-                    <a href='../UserManagement/login.php?logout=true'>Logout</a>
+                    <a href='../UserManagement/login.php?logout=true' style="text-decoration: none; color: white;">Logout</a>
                 </div>
             </div>
         </div>
