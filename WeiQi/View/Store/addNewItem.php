@@ -129,13 +129,13 @@ require_once '../Store/Security/FormValidator.php';
                     <br />
                     <br />
 
-                    <label for="memPrice" class="label">
+<!--                    <label for="memPrice" class="label">
                         <span style="color: red;">* </span>
                         Member Price: 
                     </label>
                     <b style="color: red">RM 0.00</b>
                     <br />
-                    <br />
+                    <br />-->
 
                     <form action="" method="post" runat="server" >
                         <label for="proImg" class="label">
@@ -164,17 +164,20 @@ require_once '../Store/Security/FormValidator.php';
 
                 <?php
                 $_SESSION['userID'] = 4;
-
+                $newCat = "";
+                
+                    
                 if (isset($_POST["submit"])) {
-                    // if validation return true;
-                    if (empty($_POST["proName"])) {
-                        echo "Name is required";
-                        exit;
-                    } else {
-
-                        $pro_name = $_POST["proName"];
-                    }
-
+                   
+                     //if validation return true;
+                     
+                    if (isset($_POST['addNewCat'])){
+                        $newCat = $_POST['newCat'];
+                    } else{
+                        $newCat = $_POST["category"];
+                 }
+                    
+                    $pro_name = $_POST["proName"];
                     $pro_desc = $_POST["proDesc"];
                     $total_qty = $_POST["qty"];
                     $pro_category = $_POST["category"];
@@ -185,17 +188,19 @@ require_once '../Store/Security/FormValidator.php';
 
                     $error = FormValidator::validateEmptyString($pro_name, $pro_desc, $total_qty, $pro_category,
                             $normal_price, $discount_rate, $pro_image);
+                    
                     if (empty($error)) {
+//                        echo 'HI';
                         $addItem = $db->addNewItem($pro_name, $pro_desc, $total_qty, $pro_category,
                             $normal_price, $discount_rate, $pro_image, $admin_ID);
                     
-                        echo "<p>Add successful!</p>";
+                        echo "<p style='color:red;'>Add successful!</p>";
                     } else{
                         echo "<h3 style='color:red;'>$error</h3>";
-                        
+//                        //exit();
                     }
                 } else {
-                    echo 'no Subtmit';
+                    echo 'Add item failed.';
                 }
 
                 $db->closeConnection();
