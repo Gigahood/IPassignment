@@ -32,9 +32,9 @@ and open the template in the editor.
                     RLD
                 </div>
                 <div class="headerLink">
-                    <a href="../Competition/CompetitivePage.php">Home</a>
+                    <a href="../Competition/CompetitionHomePage.php">Home</a>
                     <a href="../Store/StorePage.php">Store</a>
-                    <a href="../Competition/CompetitivePage.php">Competition Info</a>
+                    <a href="../Competition/CompetitionHomePage.php">Competition Info</a>
                 </div>
             </div>
             <div class="userNameContainer">
