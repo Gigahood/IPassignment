@@ -22,7 +22,12 @@ require '../../Controller/History/HistoryXMLController.php';
         <div class="container">
             <div class="detailContainer">
                 <?php
-                $_SESSION["compID"] = 1;
+                
+                if(isset($_SESSION["from"])) {
+                    $_SESSION["compID"] = $_GET["id"];
+                }
+                
+                
                 $_SESSION["role"] = "admin";
                 $compID = $_SESSION["compID"];
                 $compHistory = getHistoryDetail($compID, $_SESSION["role"]);

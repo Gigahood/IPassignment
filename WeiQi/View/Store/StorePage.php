@@ -96,6 +96,7 @@ include_once '../../Model/StoreDBConnection.php';
 
 //                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
 
+//                        $memPrice = $db->calMemberPrice($value['normal_price'], $value['discount_rate']);
 
                         echo '<div class="column" onclick="printID(this.id);" >';
                         

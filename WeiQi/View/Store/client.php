@@ -16,12 +16,15 @@ if (isset($_POST['submit'])) {
     }
 
     if (!empty($name)) {
-        $url = "http://localhost/IPassignment/WeiQi/View/Store/service.php?name=" . urlencode($name);
+        $url = "http://localhost/IPassignment/WeiQi/View/Store/service.php?name=" . rawurlencode($name);
 
+        
         $client = curl_init($url);
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($client);
         $result = json_decode($response, true);
+        
+        print_r($result);
 
         function display($array) {
             echo "<p>Product Name : " . $array["pro_name"] . "</p>";

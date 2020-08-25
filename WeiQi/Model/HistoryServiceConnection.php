@@ -3,9 +3,9 @@
 include_once 'AbstractDatabaseConnection.php';
 
 /**
- * Description of UserDBConnection
+ * Description of HistoryServiceConnection
  *
- * @author Chew Jane
+ * @author Kuek Yong Boon
  */
 class HistoryServiceConnection extends AbstractDatabaseConnection {
 

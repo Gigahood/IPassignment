@@ -19,7 +19,11 @@ require '../../Controller/History/HistoryController.php';
     <body>
         <div class="container">
             <?php
-            $_SESSION["compID"] = 1;
+            if(isset($_SESSION["from"])) {
+                    $_SESSION["compID"] = $_GET["id"];
+                }
+            
+//            $_SESSION["compID"] = $_GET["id"];
             $compID = $_SESSION["compID"];
             $_SESSION["role"] = "admin";
 

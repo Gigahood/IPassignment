@@ -12,7 +12,8 @@ if (!empty($_GET['name'])) {
     
     $product = $db->retrieveProInfo($name);
     
-
+    print_r($product);
+    
     $db->closeConnection();
 
     if (empty($product)) {
