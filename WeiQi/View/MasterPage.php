@@ -15,6 +15,15 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="../css/header.css">
     </head>
     <body>
+        <?php
+            function runLogOut(){
+                session_destroy();
+            }
+            
+            if(isset($_GET['logout'])){
+                runLogOut();
+            }
+        ?>
         <div class="headerContainer">
             <div class="topContainer">
                 <div class="headerLogo">
@@ -73,6 +82,11 @@ and open the template in the editor.
                         
                         unset($_SESSION["role"]);
                     ?>
+                </div>
+                
+                <br /><br />
+                <div class="profileName">
+                    <a href='../UserManagement/login.php?logout=true'>Logout</a>
                 </div>
             </div>
         </div>
