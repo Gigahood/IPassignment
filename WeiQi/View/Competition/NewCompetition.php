@@ -3,6 +3,10 @@
  *
  * @author Cheng Qing Xiang
  *-->
+<?php
+    include_once '../../Model/CompetitionDBConnection.php';
+?>
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -10,6 +14,11 @@
         <link rel="stylesheet" type="text/css" href="compCSS.css" />
     </head>
     <body>
+        
+        <?php
+            session_start();
+            $_SESSION["role"] = "guest";
+            ?>
         <div id="registerFormStyle">
             <div>
                 <img src="comp_image/nworldLogo.png" alt="N-World logo" style="width: 30%; margin-left: auto; margin-right: auto; display: block;"/>
@@ -23,89 +32,53 @@
                 <hr width="95%"/>
             </div>
             
-            <form id="registerForm">
+            <form id="registerForm" method="post" action="NewCompetition.php" >
                 <div style="font-size: 20px; font-family: Arial;">
                     <span class="lblRightStyle"><span style="color: red;">* </span>Full Name : </span>
-                    <input type="text" name="userName" value="" size="80" />
+                    <input type="text" name="compName" value="<?php echo isset($_POST['compDay']) ? $_POST['compDay'] : '' ?>" size="80" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Start Date : </span>
-                    <select name="day" id="day">
-                        <option value="01">1</option>
-                        <option value="02">2</option>
-                        <option value="03">3</option>
-                        <option value="04">4</option>
-                        <option value="05">5</option>
-                        <option value="06">6</option>
-                        <option value="07">7</option>
-                        <option value="08">8</option>
-                        <option value="09">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                        <option value="29">29</option>
-                        <option value="30">30</option>
-                        <option value="31">31</option>
-                    </select>
+                    <input type="text" name="startDay" id="startDay" value="<?php echo isset($_POST['startDay']) ? $_POST['startDay'] : '' ?>" size="2" placeholder="00" />
                     &nbsp;/&nbsp;
-                    <select name="month" id="month" >
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </select>
+                    <input type="text" name="startMonth" id="startMonth" value="<?php echo isset($_POST['startMonth']) ? $_POST['startMonth'] : '' ?>" size="2" placeholder="00" />
                     &nbsp;/&nbsp;
-                    <input type="text" name="year" value="" size="20" placeholder="yyyy" />
+                    <input type="text" name="startYear" id="startYear" value="<?php echo isset($_POST['startYear']) ? $_POST['startYear'] : '' ?>" size="20" placeholder="yyyy" />
                     <br /><br />
+                    
+                    <span class="lblRightStyle"><span style="color: red;">* </span>End Date : </span>
+                    <input type="text" name="endDay" id="endDay" value="<?php echo isset($_POST['endDay']) ? $_POST['endDay'] : '' ?>" size="2" placeholder="00" />
+                    &nbsp;/&nbsp;
+                    <input type="text" name="endMonth" id="endMonth" value="<?php echo isset($_POST['endMonth']) ? $_POST['endMonth'] : '' ?>" size="2" placeholder="00" />
+                    &nbsp;/&nbsp;
+                    <input type="text" name="endYear" id="endYear" value="<?php echo isset($_POST['endYear']) ? $_POST['endYear'] : '' ?>" size="20" placeholder="yyyy" />
+                    <br /><br />
+                    
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Venue : </span>
-                    <input type="text" name="venue" value="" size="80" />
+                    <input type="text" name="venue" value="<?php echo isset($_POST['venue']) ? $_POST['venue'] : '' ?>" size="80" />
                     <br /><br />
                     
-                    <span class="lblRightStyle"><span style="color: red;">* </span>Person In Charge (PIC) : </span>
-                    <input type="text" name="PIC" value="" size="80" />
+                    <span class="lblRightStyle"><span style="color: red;">* </span>Person In Charge (PIC)*Staff ID only* : </span>
+                    <input type="text" name="PIC" value="<?php echo isset($_POST['PIC']) ? $_POST['PIC'] : '' ?>" size="80" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Registration Fee (RM) : </span>
-                    <input type="text" name="regFeePre" value="" size="5" />
+                    <input type="text" name="regFeePre" value="<?php echo isset($_POST['regFeePre']) ? $_POST['regFeePre'] : '' ?>" size="5" />
                     &nbsp;.&nbsp;
                     <input type="text" name="regFeePost" value="00" size="2" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Prize Pool (RM) : </span>&nbsp;
-                    1. <input type="text" name="firstPrize" value="" size="30" />
+                    1. <input type="text" name="firstPrize" value="<?php echo isset($_POST['firstPrize']) ? $_POST['firstPrize'] : '' ?>" size="30" />
                     <br /><span style='padding-left: 30%;'></span>&nbsp;
-                    2. <input type="text" name="secondPrize" value="" size="30" />
+                    2. <input type="text" name="secondPrize" value="<?php echo isset($_POST['secondPrize']) ? $_POST['secondPrize'] : '' ?>" size="30" />
                     <br /><span style='padding-left: 30%;'></span>&nbsp;
-                    3. <input type="text" name="thirdPrize" value="" size="30" />
+                    3. <input type="text" name="thirdPrize" value="<?php echo isset($_POST['thirdPrize']) ? $_POST['thirdPrize'] : '' ?>" size="30" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Maximum Participant : </span>
-                    <input type="number" name="maxParticipant" value="" size="10" />
+                    <input type="number" name="maxParticipant" id="maxParticipant" value="<?php echo isset($_POST['maxParticipant']) ? $_POST['maxParticipant'] : '' ?>" size="10" />
                     <br /><br /><br />
                     
                     <input type="submit" value="Create" name="action" class="createStyle" style='background-color: red; margin-left: auto; margin-right: auto; display: block;'/>
@@ -117,36 +90,32 @@
         
         <?php
         
-                if ($_SERVER["REQUEST_METHOD"] == "POST" && strcmp($errorMessage, "") == 0) {
+                if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
             
-                  //$user_ID = '';
-                  //$user_name = trim($_POST['userName']);
-                  //$user_email = trim($_POST['email']);
-                  //$user_dob = trim($_POST['day'] . "/" . $_POST['month'] . "/" . $_POST['year']);
-                  //$user_address = trim($_POST['address']);
+         
                   
-                  
-                  
-                  //Verify password & echo the value//
-                  //$user_contact = trim($_POST['contactNo']);
-                  //$user_pw = trim($_POST['rePW']);
-                  //$encrypt_pw = Encryption::oneWayHash($user_pw);
-                  //$user_pic = "NULL";
-                  //$user_pic = file_get_contents($_POST['profileUpload']);
-                 // $user_IC = trim($_POST['icPre'] . "-" . $_POST['icMid'] . "-" . $_POST['icPost']);
-                  //$user_role = "participant";
+                  $competition_ID = '';
+                  $competition_year = trim($_POST['endYear']);
+                  $competition_name = trim($_POST['compName']);
+                  $competition_start_date = trim($_POST['startYear'] . "/" . $_POST['startMonth'] . "/" . $_POST['startDay']);
+                  $competition_end_date = trim($_POST['endYear'] . "/" . $_POST['endMonth'] . "/" . $_POST['endDay']);
+                  $competition_venue = trim($_POST['venue']);
+                  $competition_reg_fee = trim($_POST['regFeePre'] . "." . $_POST['regFeePost']);
+                  $competition_PIC = trim($_POST['PIC']);
+                  $competition_prize_pool = trim($_POST['firstPrize']) . "\r\n" . trim($_POST['secondPrize'] . "\r\n" . trim($_POST['thirdPrize']));
+                  $competition_total_participate = trim($_POST['maxParticipant']);
 
-
-                  //$db = UserDBConnection::getInstance($_SESSION["role"]);
-                  //$db->createAccount($user_ID, $user_name, $user_email, $user_dob, $user_address, $user_contact, $encrypt_pw, $user_pic, $user_IC, $user_role);
-                  //echo "<p>Registration successful!</p>";
+                  $db = CompetitionDBConnection::getInstance($_SESSION["role"]);
+                  $db->createCompetition($competition_ID, $competition_year, $competition_name, $competition_start_date, $competition_end_date, 
+                          $competition_venue, $competition_reg_fee, $competition_PIC, $competition_prize_pool, $competition_total_participate);
+                  echo "<p>Registration successful!</p>";
                   //echo "<a href='login.php'>Click to login page.</a>";
-                  //$db->closeConnection();
+                  $db->closeConnection();
 
 
                 }
         
-        session_destroy();
+        //session_destroy();
         
         ?>
     </body>

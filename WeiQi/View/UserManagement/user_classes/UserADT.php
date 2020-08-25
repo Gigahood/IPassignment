@@ -31,7 +31,7 @@ interface UserADT {
     Return          : the user profile web page with correct data.
     */
     
-    public function updateProfile($user_email, $user_address, $user_contact, $user_pic);
+    public function updateProfile($user_email, $user_address, $user_contact);
     /*
     Description     : to update a user profile
     Precondition    : user has login into the account successfully.

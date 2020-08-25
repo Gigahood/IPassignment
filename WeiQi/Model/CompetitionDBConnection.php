@@ -35,15 +35,15 @@ class CompetitionDBConnection extends AbstractDatabaseConnection {
                   . " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
           $stmt = parent::$db->prepare($query);
           $stmt->bindParam(1, $competitionID, PDO::PARAM_INT);
-          $stmt->bindParam(2, $competitionYear, PDO::PARAM_STR);
+          $stmt->bindParam(2, $competitionYear, PDO::PARAM_INT);
           $stmt->bindParam(3, $competitionName, PDO::PARAM_STR);
           $stmt->bindParam(4, $competitionStartDate, PDO::PARAM_STR);
           $stmt->bindParam(5, $competitionEndDate, PDO::PARAM_STR);
           $stmt->bindParam(6, $competitionVenue, PDO::PARAM_STR);
-          $stmt->bindParam(7, $competitionRegFee, PDO::PARAM_STR);
-          $stmt->bindParam(8, $competitionPIC, PDO::PARAM_LOB);
+          $stmt->bindParam(7, $competitionRegFee, PDO::PARAM_INT);
+          $stmt->bindParam(8, $competitionPIC, PDO::PARAM_INT);
           $stmt->bindParam(9, $competitionPrizePool, PDO::PARAM_STR);
-          $stmt->bindParam(10, $competitionTotalParticipate, PDO::PARAM_STR);
+          $stmt->bindParam(10, $competitionTotalParticipate, PDO::PARAM_INT);
           
           $stmt->execute();
     }

@@ -48,19 +48,25 @@ and open the template in the editor.
             session_start();
             $_SESSION["role"] = "student";
                         
-            $db = UserDBConnection::getInstance($_SESSION["role"]);
-            $result = $db->viewProfile();
+            if ($_SERVER["REQUEST_METHOD"] != "POST"){
+                $db = UserDBConnection::getInstance($_SESSION["role"]);
+                $result = $db->viewProfile();
 
-            if($result == null){
-                echo 'Error. Please log in to your account first. <br />';
-                echo "<a href='login.php'>Click to go to login page</a>";
-            }
-            else {
-                $nameGet = $result['user_name'];
-                $contactGet = $result['user_contact'];
-                $addressGet = $result['user_address'];
-                $picGet = '<img src="data:image/jpeg;base64,'.base64_encode( $result['user_pic'] ).'" alt="profilePicture" height="120"/>';
-                $emailGet = $result['user_email'];
+                if($result == null){
+                    echo 'Error. Please log in to your account first. <br />';
+                    echo "<a href='login.php'>Click to go to login page</a>";
+                }
+                else {
+                    $nameGet = $result['user_name'];
+                    $contactGet = $result['user_contact'];
+                    $addressGet = $result['user_address'];
+                    //$picGet = '<img src="data:image/jpeg;base64,'.base64_encode( $result['user_pic'] ).'" alt="profilePicture" height="120"/>';
+                    $emailGet = $result['user_email'];
+                    
+                    //$_SESSION["userID"] = $result["user_ID"];
+                }
+                
+                $db->closeConnection();
             }
         ?>
         <div id="registerFormStyle">
@@ -76,38 +82,39 @@ and open the template in the editor.
                 <hr width="95%"/>
             </div>
             
-            <form id="registerForm">
+            <form id="registerForm" method="post" action="updateProfile.php">
                 <div style="font-size: 20px; font-family: Arial;">
                     <span class="lblRightStyle"><span style="color: red;">* </span>Full Name : </span>
-                    <input type="text" name="userName" value="<?php echo $nameGet; ?>" size="80" readonly="readonly" />
+                    <input type="text" name="userName" value="
+                        <?php echo (isset($nameGet)) ? $nameGet: ''?>" size="80" readonly="readonly" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Contact No. : </span>
                     <input type="text" name="contactPre" value="+60" size="3" />
                     &nbsp;-&nbsp;
-                    <input type="text" name="contactNo" value="<?php echo $contactGet; ?>" size="20" />
+                    <input type="text" name="contactNo" value="<?php echo (isset($contactGet)) ? $contactGet: '' ?>" size="20" />
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Address : </span>
                     <textarea name="address" rows="6" cols="60">
-                        <?php echo $addressGet; ?>
+                        <?php echo (isset($addressGet)) ? $addressGet: '' ?>
                     </textarea>
                     <br /><br />
                     
-                    <span class="lblRightStyle"><span style="color: red;">* </span>Profile Picture : </span>
+                    <!--<span class="lblRightStyle"><span style="color: red;">* </span>Profile Picture : </span>
                     <input type="file" name="profileUpload" id="profileUpload" onchange="readURL(this);"/>
                     <br /><br />
-                    <div style="text-align: center">
-                        <?php echo $picGet; ?>
+                    <div style="text-align: center">-->
+                        <?php /*echo (isset($picGet)) ? $picGet: ''*/ ?>
                         
-                        &emsp; --> &emsp;
+                   <!--     &emsp;  &emsp;
                         <img id="proImg" src="#" width="150" height="180" alt="profile picture" style="border-style: solid; border-width: 1px; border-color: black;"/>
                         
                     </div>
-                    <br /><br />
+                    <br /><br />-->
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Email : </span>
-                    <input type="text" name="email" value="<?php echo $emailGet; ?>" size="30" />
+                    <input type="text" name="email" value="<?php echo (isset($emailGet)) ? $emailGet: '' ?>" size="30" />
                     <br /><br />
                     
                     <span class="lblRightStyle">User Privilege : </span>
@@ -115,7 +122,7 @@ and open the template in the editor.
                         $dbPri = UserDBConnection::getInstance($_SESSION["role"]);
                         $resultPri = $dbPri->displayPrivilege(); 
                         echo $resultPri->privilege();
-                        $db->closeConnection();
+                        $dbPri->closeConnection();
                     ?>
                     <br /><br /><br />
                     
@@ -135,17 +142,19 @@ and open the template in the editor.
               $user_email = trim($_POST['email']);
               $user_address = trim($_POST['address']);
               $user_contact = trim($_POST['contactNo']);
-              $user_pic = file_get_contents($_POST['profileUpload']);
+              //$user_pic = file_get_contents($_POST['profileUpload']);
 
               $db = UserDBConnection::getInstance($_SESSION["role"]);
-              $db->updateProfile($user_email, $user_address, $user_contact, $user_pic);
+              $db->updateProfile($user_email, $user_address, $user_contact);
               echo "<p>Updated successful!</p>";
-               echo "<a href='../Competition/CompetitionHomepage.php'>Click to Competition Homepage.</a>";
+               echo "<a href='login.php'>Click to login to your user account.</a>";
               $db->closeConnection();
 
             }
 
-        session_destroy();
+            session_destroy();
+            //unset($_SESSION["role"]);
+
         ?>
     </body>
 </html>
