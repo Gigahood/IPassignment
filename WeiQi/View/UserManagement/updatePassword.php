@@ -64,8 +64,8 @@ and open the template in the editor.
             if ($_SERVER["REQUEST_METHOD"] != "POST"){
                 
                 $userID = $_GET["ID"]; 
-                $db = UserDBConnection::getInstance($userID);
-                $result = $db->viewProfile($userID);
+                $db = UserDBConnection::getInstance($_SESSION["role"]);
+                $result = $db->viewName($userID);
 
                 if($result == null){
                     echo 'Error. Please log in to your account first. <br />';
@@ -143,13 +143,13 @@ and open the template in the editor.
                 }
             }
             
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && strcmp($errorMessage, "") == 0) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
               $user_newPW = trim($_POST['rePW']);
-              $encrypt_pw = EncryptionRegister::oneWayHash($user_pw);
+              $encrypt_pw = EncryptionRegister::oneWayHash($user_newPW);
 
               $db = UserDBConnection::getInstance($_SESSION["role"]);
-              $db->updatePassword($encrypt_pw);
+              $db->updatePassword($userID, $encrypt_pw);
               echo "<p>Updated successful!</p>";
                echo "<a href='login.php'>Click to login to your user account.</a>";
               $db->closeConnection();

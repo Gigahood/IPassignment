@@ -135,7 +135,7 @@ and open the template in the editor.
                     echo ("<a href=updatePassword.php?ID=" . $IDget . ">Click here to update your password.</a>");
                     ?>
             
-                    
+                    <!--<a href=updatePassword.php?">Click here to update your password.</a>-->
                 </div>
             </form>
         </div>
