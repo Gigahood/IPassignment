@@ -9,7 +9,7 @@ function __autoload($class_name) {
     include $class_name . '.php';
 }
 
-include_once '../class/Products.php';
+include_once 'class/Products.php';
 
 
 class PriceDecorator {
@@ -42,8 +42,8 @@ class PriceDecorator {
 
 }
 
-$worker = new PriceDecorator();
+//$worker = new PriceDecorator();
 
-echo $worker->getDescription();
+//echo $worker->getDescription();
 
 ?>

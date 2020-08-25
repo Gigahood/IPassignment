@@ -1,5 +1,5 @@
 <?php
-require_once '../DecoratorClass/ProductInterface.php';
+require_once 'DecoratorClass/ProductInterface.php';
 
 /*
  * To change this license header, choose License Headers in Project Properties.

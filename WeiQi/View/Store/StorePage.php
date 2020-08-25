@@ -3,6 +3,7 @@
 //session_start();
 include '../MasterPage.php';
 include_once '../../Model/StoreDBConnection.php';
+require_once '../Store/DecoratorClass/PriceDecorator.php';
 ?>
 
 <html>
@@ -113,7 +114,14 @@ include_once '../../Model/StoreDBConnection.php';
                         echo '<p id="'. $value["pro_ID"] .'" >';
                         echo "<b>". $value['pro_name'] . " </b><br/>";
                         echo "Normal Price: RM " . number_format($value['normal_price'], 2) . " <br/>";
-                       // echo "<span id='". $value["pro_ID"] . "'>" . $memPrice->getDescription() ."</span>";
+                        $memPrice = new PriceDecorator($value["pro_ID"], $value["pro_name"],
+                                $value["pro_desc"],$value["total_qty"],
+                                $value["pro_category"],$value["normal_price"],
+                                $value["discount_rate"],
+                                $value["pro_image"],
+                                $value["admin_ID"]
+                                );
+                        echo "<span id='". $value["pro_ID"] . "'>" . $memPrice->getDescription() ."</span>";
                         echo '</p></a></div>';
                         
                     }
