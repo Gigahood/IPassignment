@@ -64,7 +64,7 @@ and open the template in the editor.
                     $emailGet = $result['user_email'];
                     
                     $IDget = $result['user_ID'];
-                    $_SESSION["userID"] = $IDget;
+                    //$_SESSION["userID"] = $IDget;
                 }
                 
                 $db->closeConnection();
@@ -130,7 +130,10 @@ and open the template in the editor.
 
                     <input type="submit" value="Update" name="action" class="loginStyle"/>
                     <br /><br />
-                    <a href="updatePassword.php">Click here to update your password.</a>
+                    
+                    <?php 
+                    echo ("<a href=updatePassword.php?ID=" . $IDget . ">Click here to update your password.</a>");
+                    ?>
             
                     
                 </div>
@@ -157,8 +160,8 @@ and open the template in the editor.
 
             }
 
-            //session_destroy();
-            unset($_SESSION["role"]);
+            session_destroy();
+            //unset($_SESSION["role"]);
             //unset($_SESSION["userID"]);
 
         ?>

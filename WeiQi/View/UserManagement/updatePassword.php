@@ -62,8 +62,10 @@ and open the template in the editor.
             }
                         
             if ($_SERVER["REQUEST_METHOD"] != "POST"){
-                $db = UserDBConnection::getInstance($_SESSION["role"]);
-                $result = $db->viewProfile();
+                
+                $userID = $_GET["ID"]; 
+                $db = UserDBConnection::getInstance($userID);
+                $result = $db->viewProfile($userID);
 
                 if($result == null){
                     echo 'Error. Please log in to your account first. <br />';
@@ -71,7 +73,7 @@ and open the template in the editor.
                 }
                 else {
                     $nameGet = $result['user_name'];
-                    $_SESSION["userID"] = $result["user_ID"];
+                    
                 }
                 
                 $db->closeConnection();
