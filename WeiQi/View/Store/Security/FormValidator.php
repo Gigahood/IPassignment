@@ -12,17 +12,7 @@
  * @author User
  */
 class FormValidator {
-
-    //put your code here
-   // private $data;
-   // private $errors = [];
-   // private static $fields = ['proName', 'proDesc', 'category', 'qty', 'price', 'discountRate', 'proImg'];
-
-//    public function __construct($post_data) {
-//        $this->data = $post_data;
-//    }
     
-
     public static function  validateEmptyString($pro_name, $pro_desc, $total_qty, $pro_category,
                             $normal_price, $discount_rate, $pro_image) {
         $error = " ";
