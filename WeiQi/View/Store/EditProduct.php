@@ -66,8 +66,8 @@ include_once '../../Model/StoreDBConnection.php';
                 }
 
                 foreach ($result as $value) {
-                ?>
-                    <form name="addNewItemForm" action="" method="POST">
+                    ?>
+                    <form name="addNewItemForm" action="" method="post">
                         <label for="proName" class="label"><span style="color: red;">* </span>
                             Product Name: 
                         </label>
@@ -86,7 +86,7 @@ include_once '../../Model/StoreDBConnection.php';
                         </label>
 
                         <select id="category" name="category" style="width: 180px">
-                            <option></option>
+                            
                             <?php
                             $isUnique = $db->isUniqueCat();
 
@@ -119,27 +119,30 @@ include_once '../../Model/StoreDBConnection.php';
                         <input type="text" id="discountRate" name="discountRate"style="text-align:right;" 
                                value="<?php echo $value['discount_rate']; ?>" placeholder="0.00" size="25"> % <br /><br />
 
-                        <label for="memPrice" class="label">
-                            Member Price: 
-                        </label>
-                        <b style="color: red">RM 
-                            <?php
-                            // $memPrice = $db->calMemberPrice($_POST['price'], $_POST['discountRate']);
-                            // echo $_POST['price'];
-                            // echo $_POST['discountRate'];
-                            // echo number_format($memPrice, 2);
-                            ?>
-                        </b>
-                        <br /><br />
+                        <!--                        <label for="memPrice" class="label">
+                                                    Member Price: 
+                                                </label>
+                                                <b style="color: red">RM -->
+                        <?php
+                        // $memPrice = $db->calMemberPrice($_POST['price'], $_POST['discountRate']);
+                        // echo $_POST['price'];
+                        // echo $_POST['discountRate'];
+                        // echo number_format($memPrice, 2);
+                        ?>
+                        <!--                        </b>
+                                                <br /><br />-->
 
                         <form action="" method="post" runat="server" >
                             <label for="proImg" class="label"><span style="color: red;">* </span>
                                 Upload Image: 
                             </label>
+                            
                             <input type="file" name="proImg" onchange="readURL(this);" /><br/>
+                            
                             <div class="uploadImg">
                                 <?php echo '<img src="data:image;base64,' . base64_encode($value['pro_image']) . ' " alt="your image" style="width: 300px; height: 300px; " />' ?>
                             </div>
+                            
                             <br /><br />
                             <br /><br />
                             <div>
@@ -164,28 +167,40 @@ include_once '../../Model/StoreDBConnection.php';
         <?php
         // put your code here
         $_SESSION['userID'] = 4;
+        // if (isset($_POST['addNewCat'])) {
+        //   print_r($_POST["proName"]); 
+        //  }
 
-        print_r($_POST);    
-        
+
         if (isset($_POST["update"])) {
+
             $pro_name = $_POST["proName"];
             $pro_desc = $_POST["proDesc"];
             $total_qty = $_POST["qty"];
+//            if(isset($_POST['addNewCat'])){
+//                $pro_category =$_POST["newCat"];
+//                exit();
+//            } else {
             $pro_category = $_POST["category"];
+            //}
             $normal_price = $_POST["price"];
             $discount_rate = $_POST["discountRate"];
             $pro_image = $_POST["proImg"];
             $admin_ID = $_SESSION['userID'];
             $pro_ID = $_GET["id"];
             
-         
-
+            echo $_POST["category"];
+            echo $_POST["proName"];
+            
             $updateItem = $db->updateItem($pro_name, $pro_desc, $total_qty, $pro_category,
                     $normal_price, $discount_rate, $pro_image, $admin_ID, $pro_ID);
-
-            echo "<p>Add successful!</p>";
+            
+            echo $_POST["category"];
+            echo $_POST["proName"];
+            
+            echo "<p>Update successful!</p>";
         } else {
-            echo "no Subtmit";
+            echo "Update failed.";
         }
 
         $db->closeConnection();

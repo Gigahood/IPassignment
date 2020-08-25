@@ -67,14 +67,14 @@ class StoreDBConnection extends AbstractDatabaseConnection {
 
         try {
             $stmt = parent::$db->prepare($query);
-            $stmt->bindParam(1, $pro_name, PDO::PARAM_INT);
+            $stmt->bindParam(1, $pro_name, PDO::PARAM_STR);
             $stmt->bindParam(2, $pro_desc, PDO::PARAM_STR);
-            $stmt->bindParam(3, $total_qty, PDO::PARAM_STR);
+            $stmt->bindParam(3, $total_qty, PDO::PARAM_INT);
             $stmt->bindParam(4, $pro_category, PDO::PARAM_STR);
             $stmt->bindParam(5, $normal_price, PDO::PARAM_STR);
             $stmt->bindParam(6, $discount_rate, PDO::PARAM_STR);
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
-            $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
+            $stmt->bindParam(8, $admin_ID, PDO::PARAM_INT);
 
             $stmt->execute();
         } catch (Exception $ex) {
@@ -97,16 +97,16 @@ class StoreDBConnection extends AbstractDatabaseConnection {
 
         try {
             $stmt = parent::$db->prepare($query);
-            $stmt->bindParam(1, $pro_name, PDO::PARAM_INT);
+            $stmt->bindParam(1, $pro_name, PDO::PARAM_STR);
             $stmt->bindParam(2, $pro_desc, PDO::PARAM_STR);
-            $stmt->bindParam(3, $total_qty, PDO::PARAM_STR);
+            $stmt->bindParam(3, $total_qty, PDO::PARAM_INT);
             $stmt->bindParam(4, $pro_category, PDO::PARAM_STR);
             $stmt->bindParam(5, $normal_price, PDO::PARAM_STR);
             $stmt->bindParam(6, $discount_rate, PDO::PARAM_STR);
             $stmt->bindParam(7, $pro_image, PDO::PARAM_STR);
             $stmt->bindParam(8, $admin_ID, PDO::PARAM_STR);
-            $stmt->bindParam(9, $pro_ID, PDO::PARAM_STR);
-            
+            $stmt->bindParam(9, $pro_ID, PDO::PARAM_INT);
+
             $stmt->execute();
         } catch (Exception $ex) {
             echo $ex->getMessage();
