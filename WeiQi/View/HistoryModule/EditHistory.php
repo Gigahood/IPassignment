@@ -20,6 +20,8 @@ require '../../Controller/History/HistoryController.php';
         <div class="container">
             <?php
             $compID = $_SESSION["compID"];
+            
+            print_r($compID);
             $_SESSION["role"] = "admin";
 
             $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
@@ -54,6 +56,8 @@ require '../../Controller/History/HistoryController.php';
                 <form class="formStyle" method="POST" action="">
                     <label for="startDate">Start Date : </label>
                     <?php
+                    
+                    
                     echo "<input type=\"Date\" name=\"startDate\" value=\"" . date('Y-m-d', strtotime($compHistory->getHstart())) . "\" />";
 //                    echo "<input id='hiddenButton' name'history_ID' type='hidden' value='" . $compHistory->getHistory_ID() . "'/>";
                     echo "<input id='hiddenButton' type=\"hidden\" name=\"history_ID\" value=\"" . $compHistory->getHistory_ID() . "\" />";
@@ -106,6 +110,7 @@ require '../../Controller/History/HistoryController.php';
             let historyID = document.getElementById("hiddenButton").value;
 
             addMatchButton.addEventListener("click", function (e) {
+             
                 window.location.href = "addMatch.php?type=edit&id=" + historyID;
             });
 

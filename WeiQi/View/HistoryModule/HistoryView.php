@@ -23,7 +23,7 @@ require '../../Controller/History/HistoryXMLController.php';
             <div class="detailContainer">
                 <?php
                 
-                if(isset($_SESSION["from"])) {
+                if(isset($_GET["from"])) {
                     $_SESSION["compID"] = $_GET["id"];
                 }
                 
@@ -31,6 +31,7 @@ require '../../Controller/History/HistoryXMLController.php';
                 $_SESSION["role"] = "admin";
                 $compID = $_SESSION["compID"];
                 $compHistory = getHistoryDetail($compID, $_SESSION["role"]);
+                
 
                 echo "<h1> " . $compHistory->getName() . " Competition History</h1>";
                 echo "<h3> Date : " . date('d/m/Y', strtotime($compHistory->getHstart())) . " - " . date('d/m/Y', strtotime($compHistory->getHend())) . "</h3>"

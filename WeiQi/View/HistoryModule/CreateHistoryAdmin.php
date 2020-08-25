@@ -19,10 +19,10 @@ require '../../Controller/History/HistoryController.php';
     <body>
         <div class="container">
             <?php
-            if(isset($_SESSION["from"])) {
-                    $_SESSION["compID"] = $_GET["id"];
-                }
-            
+            if (isset($_GET["from"])) {
+                $_SESSION["compID"] = $_GET["id"];
+            }
+
 //            $_SESSION["compID"] = $_GET["id"];
             $compID = $_SESSION["compID"];
             $_SESSION["role"] = "admin";
@@ -66,8 +66,9 @@ require '../../Controller/History/HistoryController.php';
                 <?php
 //                    do validation here
                 if (isset($_POST["submit"])) {
-                    $error ;
+                    $error;
 
+                    
                     if (!empty($_POST["file"])) {
                         insertWithXML($_POST["file"]);
                     } else {
@@ -79,6 +80,8 @@ require '../../Controller/History/HistoryController.php';
                         createHistory($id, $startDate, $endDate, $remark, $role);
                     }
 
+
+                    
                     if (empty($error)) {
                         header("Location: HistoryView.php");
                     } else {
