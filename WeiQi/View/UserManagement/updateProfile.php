@@ -63,7 +63,8 @@ and open the template in the editor.
                     //$picGet = '<img src="data:image/jpeg;base64,'.base64_encode( $result['user_pic'] ).'" alt="profilePicture" height="120"/>';
                     $emailGet = $result['user_email'];
                     
-                    //$_SESSION["userID"] = $result["user_ID"];
+                    $IDget = $result['user_ID'];
+                    //$_SESSION["userID"] = $IDget;
                 }
                 
                 $db->closeConnection();
@@ -129,9 +130,12 @@ and open the template in the editor.
 
                     <input type="submit" value="Update" name="action" class="loginStyle"/>
                     <br /><br />
-                    <a href="updatePassword.php">Click here to update your password.</a>
-            
                     
+                    <?php 
+                    echo ("<a href=updatePassword.php?ID=" . $IDget . ">Click here to update your password.</a>");
+                    ?>
+            
+                    <!--<a href=updatePassword.php?">Click here to update your password.</a>-->
                 </div>
             </form>
         </div>
@@ -158,6 +162,7 @@ and open the template in the editor.
 
             session_destroy();
             //unset($_SESSION["role"]);
+            //unset($_SESSION["userID"]);
 
         ?>
     </body>
