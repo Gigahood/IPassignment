@@ -45,7 +45,7 @@ include_once '../../Model/StoreDBConnection.php';
                 $result = $db->retrieveStoreData("null");
             } else {
                 $result = $db->retrieveStoreData($_POST["category"][0]);
-                $memPrice = new PriceDecorator();
+              //  $memPrice = new PriceDecorator();
             }
 
 

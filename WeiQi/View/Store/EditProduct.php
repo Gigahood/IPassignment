@@ -32,7 +32,7 @@ include_once '../../Model/StoreDBConnection.php';
 
                     reader.onload = function (e) {
                         $('#proImg').attr('src', e.target.result);
-                    };
+                    }
 
                     reader.readAsDataURL(input.files[0]);
                 }
@@ -86,7 +86,7 @@ include_once '../../Model/StoreDBConnection.php';
                         </label>
 
                         <select id="category" name="category" style="width: 180px">
-                            
+
                             <?php
                             $isUnique = $db->isUniqueCat();
 
@@ -136,13 +136,25 @@ include_once '../../Model/StoreDBConnection.php';
                             <label for="proImg" class="label"><span style="color: red;">* </span>
                                 Upload Image: 
                             </label>
-                            
+
                             <input type="file" name="proImg" onchange="readURL(this);" /><br/>
-                            
-                            <div class="uploadImg">
-                                <?php echo '<img src="data:image;base64,' . base64_encode($value['pro_image']) . ' " alt="your image" style="width: 300px; height: 300px; " />' ?>
-                            </div>
-                            
+                            <?php
+                            //if (empty($_POST['proImg'])) {
+                                echo '<div class="uploadImg">';
+                                echo '<img src="data:image;base64,' . base64_encode($value['pro_image']) . ' " alt="your image" style="width: 300px; height: 300px; " /></div>';
+                           // } else if(!empty($_POST['proImg'])) {
+                             //   echo '<div class="uploadImg">';
+                             // echo '<img id="proImg" src="#" alt="your image" style="width: 300px; height: 300px; "/></div>';
+                           // }
+                            ?>
+
+                            <!--                            <div class="uploadImg">
+                                                            
+                                                            <img id="proImg" src="#" alt="your image" style="width: 300px; height: 300px; "/>
+                                                            
+    <?php ?>
+                                                        </div>-->
+
                             <br /><br />
                             <br /><br />
                             <div>
@@ -150,7 +162,7 @@ include_once '../../Model/StoreDBConnection.php';
                                 <input type="submit" value="Update" name="update" class="btnCreate">
                             </div>
                         </form>
-                    <?php } ?>
+<?php } ?>
 
                     <script>
                         function goBack() {
@@ -164,46 +176,42 @@ include_once '../../Model/StoreDBConnection.php';
 
             </div>
         </div>
-        <?php
-        // put your code here
-        $_SESSION['userID'] = 4;
-        // if (isset($_POST['addNewCat'])) {
-        //   print_r($_POST["proName"]); 
-        //  }
+<?php
+// put your code here
+$_SESSION['userID'] = 4;
+// if (isset($_POST['addNewCat'])) {
+//   print_r($_POST["proName"]); 
+//  }
 
 
-        if (isset($_POST["update"])) {
+if (isset($_POST["update"])) {
 
-            $pro_name = $_POST["proName"];
-            $pro_desc = $_POST["proDesc"];
-            $total_qty = $_POST["qty"];
+    $pro_name = $_POST["proName"];
+    $pro_desc = $_POST["proDesc"];
+    $total_qty = $_POST["qty"];
 //            if(isset($_POST['addNewCat'])){
 //                $pro_category =$_POST["newCat"];
 //                exit();
 //            } else {
-            $pro_category = $_POST["category"];
-            //}
-            $normal_price = $_POST["price"];
-            $discount_rate = $_POST["discountRate"];
-            $pro_image = $_POST["proImg"];
-            $admin_ID = $_SESSION['userID'];
-            $pro_ID = $_GET["id"];
-            
-            echo $_POST["category"];
-            echo $_POST["proName"];
-            
-            $updateItem = $db->updateItem($pro_name, $pro_desc, $total_qty, $pro_category,
-                    $normal_price, $discount_rate, $pro_image, $admin_ID, $pro_ID);
-            
-            echo $_POST["category"];
-            echo $_POST["proName"];
-            
-            echo "<p>Update successful!</p>";
-        } else {
-            echo "Update failed.";
-        }
+    $pro_category = $_POST["category"];
+    //}
+    $normal_price = $_POST["price"];
+    $discount_rate = ($_POST["discountRate"])/100;
+    $pro_image = $_POST["proImg"];
+    $admin_ID = $_SESSION['userID'];
+    $pro_ID = $_GET["id"];
 
-        $db->closeConnection();
-        ?>
+
+    $updateItem = $db->updateItem($pro_name, $pro_desc, $total_qty, $pro_category,
+            $normal_price, $discount_rate, $pro_image, $admin_ID, $pro_ID);
+
+
+    echo "<p>Update successful!</p>";
+} else {
+    echo "Update failed.";
+}
+
+$db->closeConnection();
+?>
     </body>
 </html>

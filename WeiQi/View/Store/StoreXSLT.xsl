@@ -35,7 +35,7 @@
                         <br/>
                         Price: <xsl:value-of select="price"/>
                         <br/>
-                        Member Price: <xsl:value-of select="memPrice"/>
+                        Discount Rate: <xsl:value-of select="discountRate"/>
                         <br/>
                     </p>
                 </xsl:for-each>

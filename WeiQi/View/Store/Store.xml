@@ -19,7 +19,7 @@ and open the template in the editor.
         <quantity>10</quantity>
         <category>Chess Sets</category>
         <price>73.29</price>
-        <discountRate>0.15</discountRate>
+        <discountRate>0.15%</discountRate>
     </product>
     <product id="2">
         <name>Medium Magnetic Go Game Chess</name>
@@ -33,7 +33,7 @@ and open the template in the editor.
         <quantity>10</quantity>
         <category>Chess Sets</category>
         <price>100.29</price>
-        <discountRate>0.15</discountRate>
+        <discountRate>0.15%</discountRate>
     </product>
     <product id="3">
         <name>Yunzi Go Stones, Go Bowls Set</name>
@@ -49,6 +49,6 @@ and open the template in the editor.
         <quantity>10</quantity>
         <category>Chessboard</category>
         <price>57.00</price>
-        <discountRate>0.15</discountRate>
+        <discountRate>0.15%</discountRate>
     </product>
 </products>
