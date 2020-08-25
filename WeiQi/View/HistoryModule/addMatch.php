@@ -74,6 +74,7 @@ require '../../Controller/History/HistoryController.php';
 //                header("Location: HistoryView.php");
 //            }
 
+
             $role = $_SESSION["role"];
             $historyId = $_GET["id"];
 
@@ -118,6 +119,7 @@ require '../../Controller/History/HistoryController.php';
                     
                     createHistoryMatch($blackID, $whiteID, $wScore, $bScore, $remark, $sTime,
                             $eTime, $board, $role, $historyId);
+                    
                     if ($_GET["type"] == "edit") {
                         header("Location: EditHistory.php");
                     } else {

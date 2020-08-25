@@ -15,7 +15,7 @@ require_once 'UserFactory.php';
 
 class AdminFactory extends UserFactory {
     //put your code here
-      function __construct() {
+  function __construct() {
   }
   
   public function role(){

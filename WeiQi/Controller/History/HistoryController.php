@@ -234,9 +234,12 @@ function validatePath($path) {
         $endDate = $doc->getHistory()->getHend();
         $remark = $doc->getHistory()->getRemark();  
        
-        print_r($doc->getHistory());
 
         createHistory($id["competition_ID"], $startDate, $endDate, $remark, "admin");
+        
+        $matchID = getMatchID($id["competition_ID"]);
+        
+        print_r($matchID);
 
         foreach ($doc->getMatches() as $match) {
             $black = getUserID($match->getBlack(),"admin");
@@ -247,7 +250,7 @@ function validatePath($path) {
             $sTime = $match-> getStartTime();
             $eTime = $match -> getEndTime();
             $board = $match -> getBoardSize();
-            $historyID = $id["competition_ID"];
+            $historyID = $matchID["history_ID"];
             
 
             createHistoryMatch($black["user_ID"], $white["user_ID"], $wScore, $bScore, $remark, $sTime,
@@ -265,6 +268,13 @@ function validatePath($path) {
 function getID($name) {
     $db = HistoryDBConnection :: getInstance("admin");
     $result = $db->getCompetitionID($name);
+
+    return $result;
+}
+
+function getMatchID($id) {
+    $db = HistoryDBConnection :: getInstance("admin");
+    $result = $db->getMatchID($id);
 
     return $result;
 }

@@ -285,5 +285,21 @@ WHERE historymatch.match_ID  = ? and participantList.user_ID = ?";
             return $result;
         }
     }
+    
+    public function getMatchID($id) {
+        $query = "SELECT history_ID FROM history where competition_ID = ?";
+        $stmt = parent::$db->prepare($query);
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $totalrows = $stmt->rowCount();
+
+        if ($totalrows == 0) {
+            return null;
+        } else {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    }
 
 }

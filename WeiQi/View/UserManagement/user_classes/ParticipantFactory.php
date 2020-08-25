@@ -16,7 +16,7 @@ require_once 'UserFactory.php';
 
 class ParticipantFactory extends UserFactory {
     //put your code here
-    function __construct() {
+  function __construct() {
   }
   
   public function role(){

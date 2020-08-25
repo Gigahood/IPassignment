@@ -15,6 +15,15 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="../css/header.css">
     </head>
     <body>
+        <?php
+            function runLogOut(){
+                session_destroy();
+            }
+            
+            if(isset($_GET['logout'])){
+                runLogOut();
+            }
+        ?>
         <div class="headerContainer">
             <div class="topContainer">
                 <div class="headerLogo">
@@ -23,9 +32,9 @@ and open the template in the editor.
                     RLD
                 </div>
                 <div class="headerLink">
-                    <a href="../Competition/CompetitivePage.php">Home</a>
+                    <a href="../Competition/CompetitionHomePage.php">Home</a>
                     <a href="../Store/StorePage.php">Store</a>
-                    <a href="../Competition/CompetitivePage.php">Competition Info</a>
+                    <a href="../Competition/CompetitionHomePage.php">Competition Info</a>
                 </div>
             </div>
             <div class="userNameContainer">
@@ -73,6 +82,11 @@ and open the template in the editor.
                         
                         unset($_SESSION["role"]);
                     ?>
+                </div>
+                
+                <br /><br />
+                <div class="profileName">
+                    <a href='../UserManagement/login.php?logout=true' style="text-decoration: none; color: white;">Logout</a>
                 </div>
             </div>
         </div>
