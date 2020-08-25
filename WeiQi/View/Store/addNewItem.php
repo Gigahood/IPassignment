@@ -186,19 +186,19 @@ require_once '../Store/Security/FormValidator.php';
                     $pro_image = $_POST["proImg"];
                     $admin_ID = $_SESSION['userID'];
 
-//                    $error = FormValidator::validateEmptyString($pro_name, $pro_desc, $total_qty, $pro_category,
-//                            $normal_price, $discount_rate, $pro_image);
-//                    
-//                    if (empty($error)) {
+                    $error = FormValidator::validateEmptyString($pro_name, $pro_desc, $total_qty, $pro_category,
+                            $normal_price, $discount_rate, $pro_image);
+                    
+                    if (empty($error)) {
 //                        echo 'HI';
                         $addItem = $db->addNewItem($pro_name, $pro_desc, $total_qty, $pro_category,
                             $normal_price, $discount_rate, $pro_image, $admin_ID);
                     
                         echo "<p style='color:red;'>Add successful!</p>";
-//                    } else{
-//                        echo "<h3 style='color:red;'>$error</h3>";
+                    } else{
+                        echo "<h3 style='color:red;'>$error</h3>";
 //                        //exit();
-//                    }
+                    }
                 } else {
                     echo 'Add item failed.';
                 }
