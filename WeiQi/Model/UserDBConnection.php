@@ -136,6 +136,21 @@ class UserDBConnection extends AbstractDatabaseConnection implements UserADT{
         }
         
     }
+    
+    public function updatePasssword($password) {
+        if(isset($_SESSION["userID"])) {
+            $query = "UPDATE user SET user_pw=? WHERE user_ID = '" . $_SESSION["userID"] . "'";
+            $stmt = parent::$db->prepare($query);
+            $stmt->bindParam(1, $password, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }
+        else {
+            return null;
+        }
+    }
 
 
 }

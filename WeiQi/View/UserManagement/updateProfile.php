@@ -126,8 +126,12 @@ and open the template in the editor.
                     ?>
                     <br /><br /><br />
                     
+
                     <input type="submit" value="Update" name="action" class="loginStyle"/>
                     <br /><br />
+                    <a href="updatePassword.php">Click here to update your password.</a>
+            
+                    
                 </div>
             </form>
         </div>
