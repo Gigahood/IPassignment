@@ -158,6 +158,6 @@ and open the template in the editor.
             //unset($_SESSION["role"]);
 
         ?>
-        ?>
+        
     </body>
 </html>

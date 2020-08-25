@@ -63,7 +63,8 @@ and open the template in the editor.
                     //$picGet = '<img src="data:image/jpeg;base64,'.base64_encode( $result['user_pic'] ).'" alt="profilePicture" height="120"/>';
                     $emailGet = $result['user_email'];
                     
-                    //$_SESSION["userID"] = $result["user_ID"];
+                    $IDget = $result['user_ID'];
+                    $_SESSION["userID"] = $IDget;
                 }
                 
                 $db->closeConnection();
@@ -156,8 +157,9 @@ and open the template in the editor.
 
             }
 
-            session_destroy();
-            //unset($_SESSION["role"]);
+            //session_destroy();
+            unset($_SESSION["role"]);
+            //unset($_SESSION["userID"]);
 
         ?>
     </body>
