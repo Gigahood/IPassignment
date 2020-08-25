@@ -157,9 +157,9 @@ and open the template in the editor.
                     <br /><br />
                     
                     <span class="lblRightStyle"><span style="color: red;">* </span>Date of Birth : </span>
-                    <input type="text" name="day" id="day" value="<?php echo isset($_POST['day']) ? $_POST['day'] : '' ?>" size="2" placeholder="00" />
+                    <input type="text" name="day" id="day" value="<?php echo isset($_POST['day']) ? $_POST['day'] : '' ?>" size="2" placeholder="dd" />
                     &nbsp;/&nbsp;
-                    <input type="text" name="month" id="month" value="<?php echo isset($_POST['month']) ? $_POST['month'] : '' ?>" size="2" placeholder="00" />
+                    <input type="text" name="month" id="month" value="<?php echo isset($_POST['month']) ? $_POST['month'] : '' ?>" size="2" placeholder="mm" />
                     &nbsp;/&nbsp;
                     <input type="text" name="year" id="year" value="<?php echo isset($_POST['year']) ? $_POST['year'] : '' ?>" size="20" placeholder="yyyy" />
                     <br /><br />
@@ -189,7 +189,7 @@ and open the template in the editor.
                     </textarea>
                     <br /><br />
                     
-                    <span class="lblRightStyle">Profile Picture : </span>
+                    <span class="lblRightStyle"><span style="color: red;">* </span>Profile Picture : </span>
                     
                     <form action="" method="post" runat="server">
                     <input type="file" name="profileUpload" id="profileUpload" onchange="readURL(this);"/>
