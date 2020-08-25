@@ -11,6 +11,7 @@ and open the template in the editor.
  * @author Chew Jane
  *-->
 
+<!--Session Problem -->
 <?php
     include_once '../../Model/UserDBConnection.php';
 ?>
